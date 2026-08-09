@@ -1,5 +1,9 @@
 # 数据容器
 
+前文回顾（来自李笑来的 Python 版本请点击「阅读原文」）：
+
+> [#前端](https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzI0NTM0MzE5Mw==&scene=1&album_id=3953635132766044162&count=3&scene=21#wechat_redirect)
+
 在 JavaScript 中，有个**数据容器**（Container）的概念。
 
 其中包括**字符串**、由 `Array.from()` 方法生成的**数组**、**数组**（Array）、**对象**（Object）、**集合**（Set）、**映射**（Map）。
@@ -10,7 +14,7 @@
 
 另外，集合没有*重复*元素。
 
-## 迭代（Iterate）
+## 1 迭代（Iterate）
 
 数据容器里的元素是可以被**迭代的**（Iterable），它们其中包含的元素，可以被逐个访问，以便被处理。
 
@@ -32,13 +36,13 @@ for (let i of Array.from({ length: 10 }, (_, i) => i)) {
 }
 ```
 
-## 数组（Array）
+## 2 数组（Array）
 
 数组和字符串一样，是个*有序类型*（Sequence Type）的容器，其中包含着有索引编号的元素。
 
 数组中的元素可以是不同类型。不过，在解决现实问题的时候，我们总是倾向于创建由同一个类型的数据构成的数组。遇到由不同类型数据构成的数组，我们更可能做的是想办法把不同类型的数据分门别类地拆分出来，整理清楚 —— 这种工作甚至有个专门的名称与之关联：*数据清洗*。
 
-### 数组的生成
+### 2.1 数组的生成
 
 生成一个数组，有以下几种方式：
 
@@ -72,7 +76,7 @@ Array.from({ length: 8 }, (_, i) => 2 ** i);
 
 Array comprehension 可以嵌套使用 `for`，甚至可以加上条件 `if`。官方文档里有个例子，是用来把两个元素并不完全相同的数组去同后拼成一个数组。
 
-### 数组的操作符
+### 2.2 数组的操作符
 
 数组的操作符和字符串一样，因为它们都是有序容器。数组的操作符有：
 
@@ -91,7 +95,7 @@ console.log(7 in cArray);
 console.log(aArray > bArray);
 ```
 
-### 根据索引提取数组元素
+### 2.3 根据索引提取数组元素
 
 数组当然也可以根据索引操作，但由于数组是可变序列，所以，不仅可以提取，还可以删除，甚至替换。
 
@@ -134,7 +138,7 @@ aArray.splice(2, 1);
 console.log(aArray);
 ```
 
-### 数组可用的内建函数
+### 2.4 数组可用的内建函数
 
 数组和字符串都是容器，它们可使用的内建函数也其实都是一样的：
 
@@ -155,7 +159,7 @@ console.log(Math.max(...aArray)); // 自定义实现
 console.log(Math.min(...aArray)); // 自定义实现
 ```
 
-### Methods
+### 2.5 Methods
 
 字符串常量和数组都可以进行一些基本的操作，但数组是**可变类型**（Mutable type），所以，它最起码可以被排序 —— 使用 `sort()` Method：
 
@@ -272,7 +276,7 @@ result = cArray.forEach((ele, index, array) => {
 console.log(result);
 ```
 
-### 数组的 Generator Expression
+### 2.6 数组的 Generator Expression
 
 数组当然也可以用 **Generator Expression**：
 
@@ -295,3 +299,8 @@ console.log(result);
 这个代码段中，`filter()` Method 的含义，是**筛选出**数组中那些**符合条件**的元素——其中 `filter()` Method 里传入的 `callback` 函数作为一个 **Predicate**，其返回值要么是 `true` 要么是 `false`，所以，筛选后的结果只有那些 `callback` 函数返回 `true` 的元素。
 
 关于数组和字符串，以及它们之间的转换，还有很多细节的知识，但重要的都在这儿了。
+
+## 3 练习题💡
+
+1. 在 `deno` 中设计一个接口，实现传入数量不定的 Arrays，然后把它们拼接在一起返回。
+

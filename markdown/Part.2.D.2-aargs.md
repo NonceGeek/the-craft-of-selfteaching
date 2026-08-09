@@ -3,23 +3,27 @@
 
 ## 可以接收一系列值的位置参数
 
-如果你在定义参数的时候，在一个*位置参数*（Positional Arguments）前面标注了星号，`*`，那么，这个位置参数可以接收一系列值，在函数内部可以对这一系列值用 `for ... in ...` 循环进行逐一的处理。
+如果你在定义参数的时候，在一个*位置参数*（Positional Arguments）前面标注了 `...`，那么，这个位置参数可以接收一系列值，在函数内部可以对这一系列值用 `for(...of...){}` 循环进行逐一的处理。
 
-带一个星号的参数，英文名称是 “Arbitrary Positional Arguments”，姑且翻译为 “随意的位置参数”。
+带 `...` 的参数，英文名称是 “Arbitrary Positional Arguments”，姑且翻译为 “随意的位置参数”。
 
-还有带两个星号的参数，一会儿会讲到，英文名称是 “Arbitrary Keyword Arguments”，姑且翻译为 “随意的关键字参数”。
+还有另一种升级写法，一会儿会讲到，英文名称是 “Arbitrary Keyword Arguments”，姑且翻译为 “随意的关键字参数”。
 
 > 有些中文书籍把 “Arbitrary Positional Arguments” 翻译成 “可变位置参数”。事实上，在这样的地方，无论怎样的中文翻译都是令人觉得非常吃力的。前面的这个翻译还好了，我还见过把 “Arbitrary Keyword Arguments” 翻译成 “武断的关键字参数” 的 —— 我觉得这样的翻译肯定会使读者产生说不明道不白的疑惑。
 >
 > 所以，**入门之后就尽量只用英文**是个好策略。虽然刚开始有点吃力，但后面会很省心，很长寿 —— 是呀，少浪费时间、少浪费生命，其实就相当于更长寿了呀！
 
 ```python
-def say_hi(*names):
-    for name in names:
-        print(f'Hi, {name}!')
-say_hi()
-say_hi('ann')
-say_hi('mike', 'john', 'zeo')
+// 基础版本，与 say_hi(*names) 类似
+function sayHi(...names) {
+  for (const name of names) {
+    console.log(`Hi, ${name}!`);
+  }
+}
+
+sayHi();                        // 没有输出
+sayHi('ann');                  // Hi, ann!
+sayHi('mike', 'john', 'zeo');  // Hi, mike! / Hi, john! / Hi, zeo!
 ```
 
     Hi, ann!
@@ -27,7 +31,9 @@ say_hi('mike', 'john', 'zeo')
     Hi, john!
     Hi, zeo!
 
-`say_hi()` 这一行没有任何输出。因为你在调用函数的时候，没有给它传递任何值，于是，在函数内部代码执行的时候，`name in names` 的值是 `False`，所以，`for` 循环内部的代码没有被执行。
+`sayHi()` 这一行没有任何输出。因为你在调用函数的时候，没有给它传递任何值，于是，在函数内部代码执行的时候，`const name  of names` 要遍历的循环体 `names` 是空的，所以，`for` 循环内部的代码没有被执行。
+
+MARK
 
 在函数内部，是把 `names` 这个参数当作容器处理的 —— 否则也没办法用 `for ... in ...` 来处理。而在调用函数的时候，我们是可以将一个容器传递给函数的 Arbitrary Positional Arguments 的 —— 做法是，在调用函数的时候，在参数前面加上星号 `*`：
 
@@ -221,7 +227,7 @@ say_hi('Welcome', 'mike', 'john', 'zeo', capitalized=True)
     Hi, mike!
     Hi, john!
     Hi, zeo!
-
+    
     Welcome, Mike!
     Welcome, John!
     Welcome, Zeo!

@@ -21,9 +21,9 @@ Python 的代码是开源的，它的代码仓库在 Github 上：
 
 > https://github.com/python/
 
-在这个代码仓库中，有一个目录下，保存着若干 Python Demo 程序：
+在这个代码仓库中，有一个目录下，保存着若干 Python Demo 程序，这里有个 fork 的仓库链接🔗：
 
-> https://github.com/python/cpython/tree/master/Tools/demo
+> https://github.com/NonceGeek/old-demos
 
 这个目录下的 README 中有说明：
 
@@ -54,6 +54,47 @@ Python 的代码是开源的，它的代码仓库在 Github 上：
 > * [queens.py](https://github.com/python/cpython/blob/master/Tools/demo/queens.py)      Well-known programming example: N-Queens problem.
 
 就算读不懂也没关系，把读不懂的部分标记下来，接下来就可以 “带着问题学习”……
+
+然后，在 AI 的辅助下，我们还可以自行「创造」 Javascript 的版本，例如给 GPT 提供如下 Prompt：
+
+```python
+#!/usr/bin/env python3
+
+"""
+A Python version of the classic "bottles of beer on the wall" programming
+example.
+
+By Guido van Rossum, demystified after a version by Fredrik Lundh.
+"""
+
+import sys
+
+n = 100
+if sys.argv[1:]:
+    n = int(sys.argv[1])
+
+def bottle(n):
+    if n == 0: return "no more bottles of beer"
+    if n == 1: return "one bottle of beer"
+    return str(n) + " bottles of beer"
+
+for i in range(n, 0, -1):
+    print(bottle(i), "on the wall,")
+    print(bottle(i) + ".")
+    print("Take one down, pass it around,")
+    print(bottle(i-1), "on the wall.")
+
+Here is the python code, give me the javascript version of it.
+```
+
+<img src="/Users/liaohua/Documents/image-20250809103240550.png" alt="image-20250809103240550" style="zoom:50%;" />
+
+回复：
+<img src="/Users/liaohua/Documents/image-20250809103315820.png" alt="image-20250809103315820" style="zoom:50%;" />
+
+同理，我们在学习其他任意编程语言的时候，也可以用同样的方法快速生成一套「实战教材」。
+
+
 
 在未来的时间里，一个好的习惯就是，有空了去读读别人写的代码 —— 理解能力的提高，就靠这个了。你会发现这事跟其他领域的学习没什么区别。你学英语也一样，读多了，自然就读得快了，理解得快了，并且在那过程中自然而然地习得了很多 “句式”，甚至很多 “说理的方法”、“讲故事的策略”…… 然后就自然而然地会写了，从能写一点开始，慢慢到 “很能写”！
 

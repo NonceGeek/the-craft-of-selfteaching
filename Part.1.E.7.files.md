@@ -1,6 +1,14 @@
 # 文件
 
+> #前端
+
 我们需要处理的数据，一定是很多，所以才必须由计算机帮我们处理 —— 大量的数据保存、读取、写入，需要的就是文件（Files）。在这一章里，我们只介绍最简单的文本文件。
+
+> 💡 `Javascript` 是是一门全能型语言，即可以用于 **前端程序** ，也可以用于  **后端程序**。所有的应用，我们都可以将其看作一个公式：
+>
+> 应用 = 前端 + 后端 + 数据库
+>
+> 所以，要成为 **独立开发者**，Javascript 是「最经济」的上手语言。
 
 ## 创建文件
 
@@ -16,13 +24,13 @@ fs.writeFileSync(path, data[, options])
 
 ```javascript
 const fs = require('fs');
-fs.writeFileSync('/tmp/test-file.txt', 'Hello World!');
+fs.writeFileSync('./test-file.txt', 'Hello World!');
 ```
 
 打开一个文件的示例代码是：
 
 ```javascript
-const fd = fs.openSync('/tmp/test-file.txt', 'w');
+const fd = fs.openSync('./test-file.txt', 'w');
 ```
 
 ## 删除文件
@@ -32,11 +40,11 @@ const fd = fs.openSync('/tmp/test-file.txt', 'w');
 ```javascript
 const fs = require('fs');
 
-fs.writeFileSync('/tmp/test-file.txt', 'Temporary file');
+fs.writeFileSync('./test-file.txt', 'Temporary file');
 console.log('File created.');
 
-if (fs.existsSync('/tmp/test-file.txt')) {
-    fs.unlinkSync('/tmp/test-file.txt');
+if (fs.existsSync('./test-file.txt')) {
+    fs.unlinkSync('./test-file.txt');
     console.log('File deleted.');
 } else {
     console.log('File does not exist.');
@@ -51,10 +59,10 @@ if (fs.existsSync('/tmp/test-file.txt')) {
 const fs = require('fs');
 
 // 写入文件
-fs.writeFileSync('/tmp/test-file.txt', '第一行\n第二行\n第三行\n');
+fs.writeFileSync('./test-file.txt', '第一行\n第二行\n第三行\n');
 
 // 读取文件
-const data = fs.readFileSync('/tmp/test-file.txt', 'utf8');
+const data = fs.readFileSync('./test-file.txt', 'utf8');
 console.log(data);
 ```
 
@@ -64,10 +72,10 @@ console.log(data);
 const fs = require('fs');
 
 // 写入文件
-fs.writeFileSync('/tmp/test-file.txt', '第一行\n第二行\n第三行\n');
+fs.writeFileSync('./test-file.txt', '第一行\n第二行\n第三行\n');
 
 // 读取文件并按行处理
-const data = fs.readFileSync('/tmp/test-file.txt', 'utf8');
+const data = fs.readFileSync('./test-file.txt', 'utf8');
 const lines = data.split('\n');
 
 lines.forEach((line) => {
@@ -83,10 +91,10 @@ lines.forEach((line) => {
 const fs = require('fs');
 
 // 使用 writeFileSync 方法写入文件
-fs.writeFileSync('/tmp/test-file.txt', '第一行\n第二行\n第三行\n');
+fs.writeFileSync('./test-file.txt', '第一行\n第二行\n第三行\n');
 
 // 使用 readFileSync 方法读取文件
-const data = fs.readFileSync('/tmp/test-file.txt', 'utf8');
+const data = fs.readFileSync('./test-file.txt', 'utf8');
 console.log(data);
 ```
 
