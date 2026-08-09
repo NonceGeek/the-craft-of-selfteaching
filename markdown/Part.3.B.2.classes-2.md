@@ -1,5 +1,4 @@
-
-# 类 —— Python 的实现
+# 类 —— Javascript 的实现
 
 既然已经在不碰代码的情况下，把 OOP 中的主要概念梳理清楚了，以下的行文中，那些概念就直接用英文罢，省得理解上还得再绕个弯……
 
@@ -7,258 +6,208 @@
 
 Class 使用 `class` 关键字进行定义。
 
-与函数定义不同的地方在于，Class 接收参数不是在 `class Classname():` 的括号里完成 —— 那个圆括号有另外的用处。
+与函数定义不同的地方在于，Class 接收参数不是在 `class ClassName { ... }` 的花括号外面用括号完成 —— 参数是在 `constructor(...)` 里接收的。
 
 让我们先看看代码，而后再逐一解释：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-import datetime
+```javascript
+class Golem {
+  constructor(name = null) {
+    this.name = name;
+    this.builtYear = new Date().getFullYear();
+  }
 
-class Golem:
+  sayHi() {
+    console.log('Hi!');
+  }
+}
 
-    def __init__(self, name=None):
-        self.name = name
-        self.built_year = datetime.date.today().year
-
-    def say_hi(self):
-        print('Hi!')
-
-g = Golem('Clay')
-g.name
-g.built_year
-g.say_hi
-g.say_hi()
-type(g)
-type(g.name)
-type(g.built_year)
-type(g.__init__)
-type(g.say_hi)
+const g = new Golem('Clay');
+console.log(g.name);
+console.log(g.builtYear);
+console.log(g.sayHi);
+g.sayHi();
+console.log(typeof g);           // 'object'
+console.log(g.constructor.name); // 'Golem'
+console.log(typeof g.name);
+console.log(typeof g.builtYear);
+console.log(typeof g.sayHi);
 ```
 
-    'Clay'
-    2019
-    <bound method Golem.say_hi of <__main__.Golem object at 0x10430e7b8>>
+    Clay
+    2026
+    [Function: sayHi]
     Hi!
-    __main__.Golem
-    str
-    int
-    method
-    method
+    object
+    Golem
+    string
+    number
+    function
 
 以上，我们创建了一个 Class:
 
-```python
-class Golem:
-
-    def __init__(self, name=None):
-        self.name = name
-        self.built_year = datetime.date.today().year
+```javascript
+class Golem {
+  constructor(name = null) {
+    this.name = name;
+    this.builtYear = new Date().getFullYear();
+  }
+}
 ```
 
-其中定义了当我们根据这个 Class 创建一个实例的时候，那个 Object 的初始化过程，即 `__init__()` 函数 —— 又由于这个函数是在 Class 中定义的，我们称它为 Class 的一个 Method。
+其中定义了当我们根据这个 Class 创建一个实例的时候，那个 Object 的初始化过程，即 `constructor()` —— 又由于这个函数是在 Class 中定义的，我们称它为 Class 的一个 Method（更准确说，是构造方法）。
 
-这里的 `self` 就是个变量，跟程序中其它变量的区别在于，它是一个系统默认可以识别的变量，用来指代将来用这个 Class 创建的 Instance。
+这里的 `this` 就是个特殊绑定：在实例方法被调用时，用来指代“当前这个 Instance”。
 
-比如，我们创建了 Golem 这个 Class 的一个 Instance，`g = Golem('Clay')` 之后，我们写 `g.name`，那么解析器就去找 `g` 这个实例所在的 Scope 里有没有 `self.name`……
+比如，我们创建了 Golem 这个 Class 的一个 Instance，`const g = new Golem('Clay')` 之后，我们写 `g.name`，访问的就是该实例上的 `name` 属性 —— 它是在 `constructor` 里通过 `this.name = name` 挂上去的。
 
-注意：`self` 这个变量的定义，是在 `def __init__(self, ...)` 这一句里完成的。对于这个变量的名称取名没有强制要求，你实际上可以随便用什么名字，很多 C 程序员会习惯于将这个变量命名为 `this` —— 但根据惯例，你最好还是只用 `self` 这个变量名，省得给别人造成误会。
+注意：在 class 方法里，惯例就是用 `this`；不要在这里把它和普通变量名混着乱改。也请留心：普通函数里的 `this` 绑定规则和 class 方法、箭头函数并不完全一样（后面用到回调时会再碰到）。
 
-在 Class 的代码中，如果定义了 `__init__()` 函数，那么系统就会将它当作 Instance 在创建后被初始化的函数。这个函数名称是强制指定的，初始化函数必须使用这个名称；注意 `init` 两端各有两个下划线 `_`。
+在 Class 的代码中，如果定义了 `constructor()`，那么创建实例时（`new Golem(...)`）就会调用它来做初始化。这个方法名称是强制指定的；一个 class 里通常只写一个 `constructor`。
 
-当我们用 `g = Golem('Clay')` 这一句创建了一个 Golem 的 Instance 的时候，以下一连串的事情发生了：
+当我们用 `const g = new Golem('Clay')` 这一句创建了一个 Golem 的 Instance 的时候，以下一连串的事情发生了：
 
 > * `g` 从此之后就是一个根据 Golem 这个 Class 创建的 Instance，对使用者来说，它就是个 Object；
-> * 因为 Golem 这个 Class 的代码中有 `__init__()`，所以，当 `g` 被创建的时候，`g` 就需要被初始化……
-> * 在 `g` 所在的变量目录中，出现了一个叫做 `self` 的用来指代 `g` 本身的变量；
-> * self.name 接收了一个参数，`'Clay'`，并将其保存了下来；
-> * 生成了一个叫做 `self.built_year` 的变量，其中保存的是 `g` 这个 Object 被创建时的年份……
+> * 因为 Golem 这个 Class 的代码中有 `constructor()`，所以，当 `g` 被创建的时候，`g` 就需要被初始化……
+> * 在构造过程中，`this` 指向正在创建的那个实例；
+> * `this.name` 接收了一个参数，`'Clay'`，并将其保存了下来；
+> * 生成了一个叫做 `this.builtYear` 的变量，其中保存的是 `g` 这个 Object 被创建时的年份……
 
 对了，Golem 和 Robot 一样，都是机器人的意思；Golem 的本义来自于犹太神话，一个被赋予了生命的泥人……
 
 ## Inheritance
 
-我们刚刚创建了一个 Golem Class，如果我们想用它 Inherite 一个新的 Class，比如，`Running_Golem`，一个能跑的机器人，那就像以下的代码那样做 —— 注意 `class Running_Golem` 之后的圆括号：
+我们刚刚创建了一个 Golem Class，如果我们想用它 Inherit 一个新的 Class，比如，`RunningGolem`，一个能跑的机器人，那就像以下的代码那样做 —— 注意 `extends`：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-import datetime
+```javascript
+class Golem {
+  constructor(name = null) {
+    this.name = name;
+    this.builtYear = new Date().getFullYear();
+  }
 
-class Golem:
+  sayHi() {
+    console.log('Hi!');
+  }
+}
 
-    def __init__(self, name=None):
-        self.name = name
-        self.built_year = datetime.date.today().year
+class RunningGolem extends Golem {
+  run() {
+    console.log("Can't you see? I'm running...");
+  }
+}
 
-    def say_hi(self):
-        print('Hi!')
+const rg = new RunningGolem('Clay');
 
-class Running_Golem(Golem):      # 刚刚就说，这个圆括号另有用途……
-
-    def run(self):
-        print("Can't you see? I'm running...")
-
-rg = Running_Golem('Clay')
-
-rg.run
-rg.run()
-rg.name
-rg.built_year
-rg.say_hi()
+console.log(rg.run);
+rg.run();
+console.log(rg.name);
+console.log(rg.builtYear);
+rg.sayHi();
 ```
 
-    <bound method Running_Golem.run of <__main__.Running_Golem object at 0x1068b37b8>>
+    [Function: run]
     Can't you see? I'm running...
-    'Clay'
-    2019
+    Clay
+    2026
     Hi!
 
-如此这般，我们根据 Golem 这个 Class 创造了一个 Subclass —— `Running_Golem`，既然它是 Golem 的 Inheritance，那么 Golem 有的 Attributes 和 Methods 它都有，并且还多了一个 Method —— `self.run`。
+如此这般，我们根据 Golem 这个 Class 创造了一个 Subclass —— `RunningGolem`，既然它是 Golem 的 Inheritance，那么 Golem 有的 Attributes 和 Methods 它都有，并且还多了一个 Method —— `run`。
+
+> 💡 若子类自己也要写 `constructor`，里面通常需要先调用 `super(...)`，再使用 `this`。
 
 ## Overrides
 
 当我们创建一个 Inherited Class 的时候，可以重写（Overriding）Parent Class 中的 Methods。比如这样：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-import datetime
+```javascript
+class Golem {
+  constructor(name = null) {
+    this.name = name;
+    this.builtYear = new Date().getFullYear();
+  }
 
-class Golem:
+  sayHi() {
+    console.log('Hi!');
+  }
+}
 
-    def __init__(self, name=None):
-        self.name = name
-        self.built_year = datetime.date.today().year
+class RunningGolem extends Golem {
+  run() {
+    console.log("Can't you see? I'm running...");
+  }
 
-    def say_hi(self):
-        print('Hi!')
+  sayHi() {
+    // 不再使用 Parent Class 中的定义，而是新的……
+    console.log('Hey! Nice day, Huh?');
+  }
+}
 
-class runningGolem(Golem):
-
-    def run(self):
-        print("Can't you see? I'm running...")
-
-    def say_hi(self):                            # 不再使用 Parent Class 中的定义，而是新的……
-        print('Hey! Nice day, Huh?')
-
-rg = runningGolem('Clay')
-rg.run
-rg.run()
-rg.name
-rg.built_year
-rg.say_hi()
+const rg = new RunningGolem('Clay');
+console.log(rg.run);
+rg.run();
+console.log(rg.name);
+console.log(rg.builtYear);
+rg.sayHi();
 ```
 
-    <bound method runningGolem.run of <__main__.runningGolem object at 0x1068c8128>>
+    [Function: run]
     Can't you see? I'm running...
-    'Clay'
-    2019
+    Clay
+    2026
     Hey! Nice day, Huh?
 
 ## Inspecting A Class
 
-当我们作为用户想了解一个 Class 的 Interface，即，它的 Attributes 和 Methods 的时候，常用的有三种方式：
+当我们作为用户想了解一个 Class 的 Interface，即，它的 Attributes 和 Methods 的时候，常用的有几种方式：
 
-```python
-1. help(object)
-2. dir(object)
-3. object.__dict__
+```javascript
+1. console.log(object)                 // 看实例自身数据
+2. Object.keys(object)                 // 实例“自己的”可枚举属性名
+3. Object.getOwnPropertyNames(Object.getPrototypeOf(object))
+                                       // 原型上的方法名等
+4. 'builtYear' in object               // 是否能访问到该属性（含原型链）
 ```
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-import datetime
+Javascript **没有** Python 那种内建的 `help(rg)`；日常更常靠 JSDoc + 编辑器悬停，或自己打印原型信息。
 
-class Golem:
+```javascript
+class Golem {
+  constructor(name = null) {
+    this.name = name;
+    this.builtYear = new Date().getFullYear();
+  }
 
-    def __init__(self, name=None):
-        self.name = name
-        self.built_year = datetime.date.today().year
+  sayHi() {
+    console.log('Hi!');
+  }
+}
 
-    def say_hi(self):
-        print('Hi!')
+class RunningGolem extends Golem {
+  run() {
+    console.log("Can't you see? I'm running...");
+  }
 
-class runningGolem(Golem):
+  sayHi() {
+    console.log('Hey! Nice day, Huh?');
+  }
+}
 
-    def run(self):
-        print('Can\'t you see? I\'m running...')
-
-    def say_hi(self):                            # 不再使用 Parent Class 中的定义，而是新的……
-        print('Hey! Nice day, Huh?')
-
-rg = runningGolem('Clay')
-help(rg)
-dir(rg)
-rg.__dict__
-hasattr(rg, 'built_year')
+const rg = new RunningGolem('Clay');
+console.log(rg);
+console.log(Object.keys(rg));
+console.log(Object.getOwnPropertyNames(Object.getPrototypeOf(rg)));
+console.log('builtYear' in rg);
+console.log(rg instanceof RunningGolem);
+console.log(rg instanceof Golem);
 ```
 
-    Help on runningGolem in module __main__ object:
-    
-    class runningGolem(Golem)
-     |  runningGolem(name=None)
-     |
-     |  Method resolution order:
-     |      runningGolem
-     |      Golem
-     |      builtins.object
-     |
-     |  Methods defined here:
-     |
-     |  run(self)
-     |
-     |  say_hi(self)
-     |
-     |  ----------------------------------------------------------------------
-     |  Methods inherited from Golem:
-     |
-     |  __init__(self, name=None)
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors inherited from Golem:
-     |
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-    
-    ['__class__',
-     '__delattr__',
-     '__dict__',
-     '__dir__',
-     '__doc__',
-     '__eq__',
-     '__format__',
-     '__ge__',
-     '__getattribute__',
-     '__gt__',
-     '__hash__',
-     '__init__',
-     '__init_subclass__',
-     '__le__',
-     '__lt__',
-     '__module__',
-     '__ne__',
-     '__new__',
-     '__reduce__',
-     '__reduce_ex__',
-     '__repr__',
-     '__setattr__',
-     '__sizeof__',
-     '__str__',
-     '__subclasshook__',
-     '__weakref__',
-     'built_year',
-     'name',
-     'run',
-     'say_hi']
-    {'name': 'Clay', 'built_year': 2019}
-    True
+    RunningGolem { name: 'Clay', builtYear: 2026 }
+    [ 'name', 'builtYear' ]
+    [ 'constructor', 'run', 'sayHi' ]
+    true
+    true
+    true
 
 ## Scope
 
@@ -268,332 +217,298 @@ hasattr(rg, 'built_year')
 
 另外，我们还要给机器人设置个使用年限，比如 10 年；
 
-…… 而外部会每隔一段时间，用 `Golem.is_active()` 去检查所有的机器人，所以，不需要外部额外操作，到了年头，它应该能关掉自己。—— 当然，又由于以下代码是简化书写的，核心目的是为了讲解 Scope，所以并没有专门写模拟 10 年后某些机器人自动关闭的情形……
+…… 而外部会每隔一段时间，用 `golem.isActive()` 去检查所有的机器人，所以，不需要外部额外操作，到了年头，它应该能关掉自己。—— 当然，又由于以下代码是简化书写的，核心目的是为了讲解 Scope / 类属性，所以并没有专门写模拟 10 年后某些机器人自动关闭的情形……
 
-在运行以下代码之前，需要先介绍三个 Python 的内建函数：
+在运行以下代码之前，需要先介绍几个常用写法：
 
-> * `hasattr(object, attr)` 查询这个 `object` 中有没有这个 `attr`，返回布尔值
-> * `getattr(object, attr)` 获取这个 `object` 中这个 `attr` 的值
-> * `setattr(object, attr, value)` 将这个 `object` 中的 `attr` 值设置为 `value`
+> * `'attr' in object` 查询能不能访问到这个属性，返回布尔值
+> * `object.attr` / `object['attr']` 获取值
+> * `object.attr = value` 设置值
+> * 若要在“不确定有没有”时更稳妥地读：`Object.hasOwn(object, 'attr')`（只看对象自身，不含原型链）
 
-现在的你，应该一眼望过去，就已经能掌握这三个内建函数的用法 —— 还记得之前的你吗？眼睁睁看着，那些字母放在那里对你来说没任何意义…… 这才多久啊！
+现在的你，应该一眼望过去，就已经能掌握这些用法 —— 还记得之前的你吗？眼睁睁看着，那些字母放在那里对你来说没任何意义…… 这才多久啊！
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-import datetime
+```javascript
+class Golem {
+  static population = 0;
+  static #lifeSpan = 10;
 
-class Golem:
-    population = 0
-    __life_span = 10
+  #active = true;
 
-    def __init__(self, name=None):
-        self.name = name
-        self.built_year = datetime.date.today().year
-        self.__active = True
-        Golem.population += 1          # 执行一遍之后，试试把这句改成 population += 1
+  constructor(name = null) {
+    this.name = name;
+    this.builtYear = new Date().getFullYear();
+    Golem.population += 1; // 执行一遍之后，试试把这句改成 population += 1
+  }
 
-    def say_hi(self):
-        print('Hi!')
+  sayHi() {
+    console.log('Hi!');
+  }
 
-    def cease(self):
-        self.__active = False
-        Golem.population -= 1
+  cease() {
+    this.#active = false;
+    Golem.population -= 1;
+  }
 
-    def is_active(self):
-        if datetime.date.today().year - self.built_year >= Golem.__life_span:
-            self.cease()
-        return self.__active
+  isActive() {
+    if (new Date().getFullYear() - this.builtYear >= Golem.#lifeSpan) {
+      this.cease();
+    }
+    return this.#active;
+  }
+}
 
-g = Golem()
-hasattr(Golem, 'population')      # True
-hasattr(g, 'population')          # True
-hasattr(Golem, '__life_span')     # False
-hasattr(g, '__life_span')         # False
-hasattr(g, '__active')            # False
-Golem.population                  # 1
-setattr(Golem, 'population', 10)
-Golem.population                  # 10
-x = Golem()
-Golem.population                  # 11
-x.cease()
-Golem.population                  # 10
-getattr(g, 'population')          # 10
-g.is_active()
+const g = new Golem();
+console.log('population' in Golem);       // true（静态属性挂在构造函数上）
+console.log('population' in g);           // true（也可经构造函数继承式地读到，见下）
+console.log(Object.hasOwn(Golem, 'population')); // true
+console.log(Object.hasOwn(g, 'population'));     // false —— 实例自身没有这个字段
+console.log(Object.hasOwn(Golem, '#lifeSpan'));  // 不能这样查私有字段名
+console.log(Object.hasOwn(g, '#active'));        // 同上
+console.log(Golem.population);            // 1
+Golem.population = 10;
+console.log(Golem.population);            // 10
+const x = new Golem();
+console.log(Golem.population);            // 11
+x.cease();
+console.log(Golem.population);            // 10
+console.log(Golem.population);            // 10
+console.log(g.isActive());
 ```
 
-    True
-    True
-    False
-    False
-    False
+    true
+    true
+    true
+    false
+    false
+    false
     1
     10
     11
     10
     10
-    True
+    true
 
-如果你试过把第 13 行的 `Golem.population += 1` 改成 `population += 1`，你会被如下信息提醒：
+如果你试过把构造函数里的 `Golem.population += 1` 改成 `population += 1`，通常会直接报错：`population is not defined` —— 因为 `constructor` 作用域里并没有这样一个局部变量；类上的共享计数要写成 `Golem.population`（或在静态方法语境里用 `this.population`，那是另一回事）。
 
-```python
-     12         self.__active = True
----> 13         population += 1
-UnboundLocalError: local variable 'population' referenced before assignment
-```
-—— 本地变量 `population` 尚未赋值，就已经提前被引用…… 为什么会这样呢？因为在你所创建 `g` 之后，马上执行的是 `__init()__` 这个初始化函数，而 `population` 是在这个函数之外定义的……
+关于私有：Javascript 用 `#` 前缀声明真正的私有字段，如 `#active`、`static #lifeSpan`。它们**不能**从 class 外部用 `g.#active` 访问，也不是靠“名称约定”装出来的隐私。
 
-如果你足够细心，你会发现这个版本中，有些变量前面有两个下划线 `__`，比如，`__life_span` 和 `self.__active`。这是 Python 的定义，变量名前面加上一个以上下划线（Underscore）`_` 的话，那么该变量是 “私有变量”（Private Variables），不能被外部引用。而按照 Python 的惯例，我们会使用两个下划线起始，去命名私有变量，如：`__life_span`。你可以回去试试，把所有的 `__life_span` 改成 `_life_span`（即，变量名开头只有一个 `_`，那么，`hasattr(Golem, '_life_span')` 和 `hasattr(g, '_life_span')` 的返回值就都变成了 `True`。
+> 💡 社区里还有一种更老的约定：用 `_lifeSpan` 这种单下划线表示“请当成内部实现，别乱碰”。那只是约定，语言并不阻止外部访问。真正要藏住，用 `#`。
 
 看看下面的图示，理解起来更为直观一些，其中每个方框代表一个 Scope：
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/class-variables-scope.png?raw=true)
+![](../images/class-variables-scope.png)
 
-整个代码启动之后，总计有 4 个 Scopes 如图所示：
+（原图按 Python 画的 Scope，把 `__init__` 想成 `constructor`，把 `self.xxx` 想成 `this.xxx`，把类上的 `population` 想成 `static population` 即可。）
+
+整个代码启动之后，总计有若干 Scopes：
 
 > * ① `class Golem` 之外；
-> * ② `class Golem` 之内；
-> * ③ `__init__(self, name=None)` 之内；
-> * ④ `cease(self)` 之内；
+> * ② `class Golem` 的类体之内（静态字段所在层）；
+> * ③ `constructor(name = null)` 之内；
+> * ④ `cease()` 之内；
 
-在 Scope ① 中，可以引用 `Golem.population`，在生成一个 Golem 的实例 `g` 之后，也可以引用 `g.population`；但 `Golem.__life_span` 和 `g.__active` 在 Scope ① 是不存在的；
+在 Scope ① 中，可以引用 `Golem.population`；生成实例 `g` 之后，也可以通过实例去“读到”与类相关的一些信息，但 `#lifeSpan` / `#active` 在外部是触达不到的；
 
-在 Scope ② 中，存在两个变量，`population` 和 `__life_span`；而 `__life_span` 是 Private（私有变量，因为它的变量名中前两个字符是下划线 `__`；于是，在 Scope ① 中，不存在 `Golem.__life_span` —— `hasattr(Golem, '__life_span')` 的值为 `False`；
+在 Scope ② 中，存在静态字段 `population` 和私有静态字段 `#lifeSpan`；
 
-在 Scope ③ 中和 Scope ④ 中，由于都给它们传递了 `self` 这个参数，于是，在这两个 Scope 里，都可以引用 `self.xxx`，比如 `self.population`，比如 `self.__life_span`；
-
-在 Scope ③ 中，`population` 是不存在的，如果需要引用这个值，可以用 `Golem.population`，也可以用 `self.population`。同样的道理，在 Scope ③ 中 `__life_span` 也不存在，如果想用这个值，可以用 `Golem.__life_span` 或者 `self.__life_span`；
-
-Scope ④ 与 Scope ③ 平行存在。所以在这里，`population` 和 `__life_span` 也同样并不存在。
+在 Scope ③ 和 Scope ④ 中，都可以使用 `this.xxx`，也可以用 `Golem.population`、`Golem.#lifeSpan`（仅在 class 内部）这类写法。
 
 **补充**
 
-在本例子中，在 `__init__(self, name=None)` 函数中 `self.population` 和 `Golem.population` 都可以使用，但使用效果是不一样的：
-
-> * `self.population` 总是去读取 `Golem` 类中 `population` 的初始值，即使后面通过 `setattr(Golem, 'population', 10)` 更改 `population` 的值后，`self.population` 的值仍为 `0`，但 `Golem.population` 值则为 `10`，你可以自己动手尝试一下。
+类上的共享状态，请优先写成 `Golem.population`（或 `static` 方法里的明确意图），不要在实例方法里随手制造一个会遮蔽它的局部变量。实例自己的状态（如 `name`、`builtYear`、`#active`）用 `this` / `#` 存放。
 
 ## Encapsulation
 
-到目前为止，Golem 这个 Class 看起来不错，但有个问题，它里面的数据，外面是可以随便改的 —— 虽然，我们已经通过给变量 life_span 前面加上两个下划线，变成 `__life_span`，使其成为私有变量，外部不能触达（你不能引用 `Golem.__life_span`），可 Golem.population 就不一样，外面随时可以引用，还可以随时修改它，只需要写上一句：
+到目前为止，Golem 这个 Class 看起来不错，但有个问题，它里面的数据，外面是可以随便改的 —— 虽然 `#lifeSpan` 已经是私有字段，外部不能触达，可 `Golem.population` 就不一样，外面随时可以引用，还可以随时修改它，只需要写上一句：
 
-```python
-Golem.population = 1000000
+```javascript
+Golem.population = 1000000;
 ```
 
-我们干脆把 `population` 这个变量也改成私有的罢：`__population`，而后需要从外界查看这个变量的话，就在 Class 里面写个函数，返回那个值好了：
+我们干脆把 `population` 也改成私有的罢：`static #population`，而后需要从外界查看这个变量的话，就在 Class 里面写个方法，返回那个值好了：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-import datetime
+```javascript
+class Golem {
+  static #population = 0;
+  static #lifeSpan = 10;
 
-class Golem:
-    __population = 0
-    __life_span = 10
+  #active = true;
 
-    def __init__(self, name=None):
-        self.name = name
-        self.built_year = datetime.date.today().year
-        self.__active = True
-        Golem.__population += 1
+  constructor(name = null) {
+    this.name = name;
+    this.builtYear = new Date().getFullYear();
+    Golem.#population += 1;
+  }
 
-    def say_hi(self):
-        print('Hi!')
+  sayHi() {
+    console.log('Hi!');
+  }
 
-    def cease(self):
-        self.__active = False
-        Golem.__population -= 1
+  cease() {
+    this.#active = false;
+    Golem.#population -= 1;
+  }
 
-    def is_active(self):
-        if datetime.date.today().year - self.built_year >= Golem.__life_span:
-            self.cease
-        return self.__active
+  isActive() {
+    if (new Date().getFullYear() - this.builtYear >= Golem.#lifeSpan) {
+      this.cease();
+    }
+    return this.#active;
+  }
 
-    def population(self):
-        return Golem.__population
+  population() {
+    return Golem.#population;
+  }
+}
 
-g = Golem('Clay')
-g.population
-g.population()
+const g = new Golem('Clay');
+console.log(g.population);
+console.log(g.population());
 ```
 
-    <bound method Golem.population of <__main__.Golem object at 0x1068da160>>
+    [Function: population]
     1
 
-如果，你希望外部能够像获得 Class 的属性那样，直接写 `g.population`，而不是必须加上一个括号 `g.population()` 传递参数（实际上传递了一个隐含的 `self` 参数），那么可以在 `def population(self):` 之前的一行加上一句 `@property`：
+如果，你希望外部能够像获得 Class 的属性那样，直接写 `g.population`，而不是必须加上一个括号 `g.population()`，那么可以用 getter：
 
-```python
-class Golem:
-    __population = 0
-    ...
+```javascript
+class Golem {
+  static #population = 0;
+  // ...
 
-    @property
-    def population(self):
-        return Golem.__population
+  get population() {
+    return Golem.#population;
+  }
+}
 ```
 
 如此这般之后，你就可以用 `g.population` 了：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-import datetime
+```javascript
+class Golem {
+  static #population = 0;
+  static #lifeSpan = 10;
 
-class Golem:
-    __population = 0
-    __life_span = 10
+  #active = true;
 
-    def __init__(self, name=None):
-        self.name = name
-        self.built_year = datetime.date.today().year
-        self.__active = True
-        Golem.__population += 1
+  constructor(name = null) {
+    this.name = name;
+    this.builtYear = new Date().getFullYear();
+    Golem.#population += 1;
+  }
 
-    def say_hi(self):
-        print('Hi!')
+  sayHi() {
+    console.log('Hi!');
+  }
 
-    def cease(self):
-        self.__active = False
-        Golem.__population -= 1
+  cease() {
+    this.#active = false;
+    Golem.#population -= 1;
+  }
 
-    def is_active(self):
-        if datetime.date.today().year - self.built_year >= Golem.__life_span:
-            self.cease
-        return self.__active
+  isActive() {
+    if (new Date().getFullYear() - this.builtYear >= Golem.#lifeSpan) {
+      this.cease();
+    }
+    return this.#active;
+  }
 
-    @property
-    def population(self):
-        return Golem.__population
+  get population() {
+    return Golem.#population;
+  }
+}
 
-g = Golem('Clay')
-g.population
-# g.population = 100
+const g = new Golem('Clay');
+console.log(g.population);
+// g.population = 100; // 只有 getter、没有 setter 时，赋值无效（严格模式会报错）
 ```
 
     1
 
-如此这般之后，不仅你可以直接引用 `g.population`，并且，在外部不能再直接给 `g.population` 赋值了，否则会报错：
-
-```python
----------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-<ipython-input-16-5d8c475304d3> in <module>
-     26 g = Golem('Clay')
-     27 g.population
----> 28 g.population = 100
-
-AttributeError: can't set attribute
-```
+如此这般之后，不仅你可以直接引用 `g.population`，并且，在外部不能再随心所欲地通过这个接口改内部计数 —— 除非你主动提供 setter。
 
 到此为止，Encapsulation 就做得不错了。
 
-如果你非得希望从外部可以设置这个值，那么，你就得再写个函数，并且在函数之前加上一句：
-```python
-    ...
+如果你非得希望从外部可以设置这个值，那么，你就再写一个 setter：
 
-    @property
-    def population(self):
-        return Golem.__population
+```javascript
+get population() {
+  return Golem.#population;
+}
 
-    @population.setter
-    def population(self, value):
-        Golem.__population = value
-
+set population(value) {
+  Golem.#population = value;
+}
 ```
 
-这样之后，`.population` 这个 Attribute 就可以从外部被设定其值了（虽然在当前的例子中显得没必要让外部设定 `__population` 这个值…… 以下仅仅是为了举例）：
+这样之后，`.population` 这个 Attribute 就可以从外部被设定其值了（虽然在当前的例子中显得没必要让外部设定 `#population` 这个值…… 以下仅仅是为了举例）：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-import datetime
+```javascript
+class Golem {
+  static #population = 0;
+  static #lifeSpan = 10;
 
-class Golem:
-    __population = 0
-    __life_span = 10
+  #active = true;
 
-    def __init__(self, name=None):
-        self.name = name
-        self.built_year = datetime.date.today().year
-        self.__active = True
-        Golem.__population += 1
+  constructor(name = null) {
+    this.name = name;
+    this.builtYear = new Date().getFullYear();
+    Golem.#population += 1;
+  }
 
-    def say_hi(self):
-        print('Hi!')
+  sayHi() {
+    console.log('Hi!');
+  }
 
-    def cease(self):
-        self.__active = False
-        Golem.__population -= 1
+  cease() {
+    this.#active = false;
+    Golem.#population -= 1;
+  }
 
-    def is_active(self):
-        if datetime.date.today().year - self.built_year >= Golem.__life_span:
-            self.cease
-        return self.__active
+  isActive() {
+    if (new Date().getFullYear() - this.builtYear >= Golem.#lifeSpan) {
+      this.cease();
+    }
+    return this.#active;
+  }
 
-    @property
-    def population(self):
-        return Golem.__population
+  get population() {
+    return Golem.#population;
+  }
 
-    @population.setter
-    def population(self, value):
-        Golem.__population = value
+  set population(value) {
+    Golem.#population = value;
+  }
+}
 
-g = Golem('Clay')
-g.population
-g.population = 100
-ga = Golem('New')
-g.population
-ga.population
-help(Golem)
-Golem.__dict__
-g.__dict__
-hasattr(Golem, 'population')
-getattr(Golem, 'population')
-setattr(Golem, 'population', 10000)
-g.population    # 所以，在很多的情况下，不把数据封装在 Class 内部的话，后面会有很多麻烦。
+const g = new Golem('Clay');
+console.log(g.population); // 1
+g.population = 100;
+const ga = new Golem('New');
+console.log(g.population);  // 101
+console.log(ga.population); // 101
+
+console.log(Object.keys(g));
+console.log(g);
+// 提醒：即便做了封装，若你再给构造函数乱挂公开属性，外面仍可能绕过设计。
+Golem.population = 10000; // 注意：这是在构造函数对象上新建/改写公开属性，不是走 getter/setter 那条实例接口
+console.log(g.population);
 ```
 
     1
     101
     101
-    Help on class Golem in module __main__:
-    class Golem(builtins.object)
-     |  Golem(name=None)
-     |
-     |  Methods defined here:
-     |
-     |  __init__(self, name=None)
-     |      Initialize self.  See help(type(self)) for accurate signature.
-     |
-     |  cease(self)
-     |
-     |  is_active(self)
-     |
-     |  say_hi(self)
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors defined here:
-     |
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |
-     |  __weakref__
-     |      list of weak references to the object (if defined)
-     |
-     |  population
-    mappingproxy({'__module__': '__main__',
-                  '_Golem__population': 101,
-                  '_Golem__life_span': 10,
-                  '__init__': <function __main__.Golem.__init__(self, name=None)>,
-                  'say_hi': <function __main__.Golem.say_hi(self)>,
-                  'cease': <function __main__.Golem.cease(self)>,
-                  'is_active': <function __main__.Golem.is_active(self)>,
-                  'population': <property at 0x1068f9d68>,
-                  '__dict__': <attribute '__dict__' of 'Golem' objects>,
-                  '__weakref__': <attribute '__weakref__' of 'Golem' objects>,
-                  '__doc__': None})
-    {'name': 'Clay', 'built_year': 2019, '_Golem__active': True}
-    True
-    <property at 0x1068f9d68>
-    10000
+    [ 'name', 'builtYear' ]
+    Golem { name: 'Clay', builtYear: 2026 }
+    101
 
+最后一问很值得自己动手验证：`Golem.population = 10000` 和 `g.population = 10000` 是不是一回事？在上面的设计里，前者碰的是构造函数上的公开属性位，后者走的是实例的 `set population`；封装做得不彻底时，后面会有很多麻烦 —— 所以，在很多的情况下，不把数据封装在 Class 内部的话，后面会有很多麻烦。
+
+> 官方文档可继续对照：
+>
+> * [MDN — Classes](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes)
+> * [MDN — Private properties](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes/Private_properties)
+> * [MDN — get / set](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/get)
+
+<a href="./Part.3.B.3.decorator-iterator-generator.md" ><small>Next Page</small></a>

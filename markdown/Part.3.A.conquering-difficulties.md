@@ -1,4 +1,3 @@
-
 # 战胜难点
 
 无论学什么，都有难点。所谓的 “学习曲线陡峭”，无非就是难点靠前、难点很多、难点貌似很难而已。
@@ -38,7 +37,7 @@
 
 那个 “突然”，其实就是阿基米德的 [Eureka](https://en.wikipedia.org/wiki/Eureka_effect)，那个他从澡堂里冲出来大喊大叫的词汇。
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/archimedes-eureka.png?raw=true)
+![](../images/archimedes-eureka.png)
 
 其实吧，泡澡和冥想，还真是最容易产生 Eureka 状态的两种活动。原理在于，泡澡和打坐的时候，大脑都极其放松，乃至于原本相互之间并无联系的脑神经突触之间突然产生相互关联；而那结果就是日常生活中所描述的 “融会贯通”，于是，突然之间，Eureka！
 
@@ -66,3 +65,5 @@
 在反复阅读编程部分突破难点的过程之中、过程之后，你会对那些关于自学的内容有更深更生动的认识。很多道理过去你都知道是对的，只不过因为没有遇到过生动的例子 —— 主要是没遇到过能让自己感到生动的例子 —— 于是你就一直没有重视起来，于是，就还是那句话，那一点点的差异，造成了后来那么大的差距。
 
 然而，既然知道了真相的你，以后就再也没办法蒙蔽自己了 —— 这就是收获，这就是进步。
+
+<a href="./Part.3.B.1.classes-1.ipynb" ><small>Next Page</small></a>

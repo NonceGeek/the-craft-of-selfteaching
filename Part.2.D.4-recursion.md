@@ -12,22 +12,21 @@
 >
 > **注意**：以上是数学表达，不是程序，所以，`=` 在这一小段中是 “*等于*” 的意思，**不是程序语言中的赋值符号**。
 
-于是，计算 `f(n)` 的 Python 程序如下：
+于是，计算 `f(n)` 的 Javascript 程序如下：
 
+```javascript
+function f(n) {
+  if (n === 1) {
+    return 1;
+  } else {
+    return n * f(n - 1);
+  }
+}
 
-
-```python
-def f(n):
-    if n == 1:
-        return 1
-    else:
-        return n * f(n-1)
-    
-print(f(5))
+console.log(f(5));
 ```
 
     120
-
 
 ## 递归函数的执行过程
 
@@ -35,14 +34,12 @@ print(f(5))
 
 ![](images/recursive-function-call.png)
 
-
-
 当 f(5) 被调用之后，函数开始运行……
 * 因为 `5 > 1`，所以，在计算 `n * f(n-1)` 的时候要再次调用自己 `f(4)`；所以必须等待 `f(4)` 的值返回；
 * 因为 `4 > 1`，所以，在计算 `n * f(n-1)` 的时候要再次调用自己 `f(3)`；所以必须等待 `f(3)` 的值返回；
 * 因为 `3 > 1`，所以，在计算 `n * f(n-1)` 的时候要再次调用自己 `f(2)`；所以必须等待 `f(2)` 的值返回；
 * 因为 `2 > 1`，所以，在计算 `n * f(n-1)` 的时候要再次调用自己 `f(1)`；所以必须等待 `f(1)` 的值返回；
-* 因为 `1 == 1`，所以，这时候不会再次调用 `f()` 了，于是递归结束，开始返回，这次返回的是 `1`；
+* 因为 `1 === 1`，所以，这时候不会再次调用 `f()` 了，于是递归结束，开始返回，这次返回的是 `1`；
 * 下一步返回的是 `2 * 1`；
 * 下一步返回的是 `3 * 2`；
 * 下一步返回的是 `4 * 6`；
@@ -50,21 +47,22 @@ print(f(5))
 
 加上一些输出语句之后，能更清楚地看到大概的执行流程：
 
+```javascript
+function f(n) {
+  console.log('\tn =', n);
+  if (n === 1) {
+    console.log('Returning...');
+    console.log('\tn =', n, 'return:', 1);
+    return 1;
+  } else {
+    const r = n * f(n - 1);
+    console.log('\tn =', n, 'return:', r);
+    return r;
+  }
+}
 
-```python
-def f(n):
-    print('\tn =', n)
-    if n == 1:
-        print('Returning...')
-        print('\tn =', n, 'return:', 1)
-        return 1
-    else:
-        r = n * f(n-1)
-        print('\tn =', n, 'return:', r)
-        return r
-    
-print('Call f(5)...')
-print('Get out of f(n), and f(5) =', f(5))
+console.log('Call f(5)...');
+console.log('Get out of f(n), and f(5) =', f(5));
 ```
 
     Call f(5)...
@@ -81,7 +79,6 @@ print('Get out of f(n), and f(5) =', f(5))
     	n = 5 return: 120
     Get out of f(n), and f(5) = 120
 
-
 有点烧脑…… 不过，分为几个层面去逐个突破，你会发现它真的很好玩。
 
 ## 递归的终点
@@ -94,19 +91,20 @@ print('Get out of f(n), and f(5) =', f(5))
 > > 山上有座庙，庙里有个和尚，和尚讲故事，说……
 > > > 山上有座庙，庙里有个和尚，和尚讲故事，说……
 
-写成 Python 程序大概是这样：
+写成 Javascript 程序大概是这样：
 
-```python
-def a_monk_telling_story():
-    print('山上有座庙，庙里有个和尚，和尚讲故事，他说…… ')
-    return a_monk_telling_story()
+```javascript
+function aMonkTellingStory() {
+  console.log('山上有座庙，庙里有个和尚，和尚讲故事，他说…… ');
+  return aMonkTellingStory();
+}
 
-a_monk_telling_story()
+aMonkTellingStory();
 ```
 
 这是个*无限循环*的递归，因为这个函数里*没有设置中止自我调用的条件*。无限循环还有个不好听的名字，叫做 “死循环”。
 
-在著名的电影**盗梦空间**（_2010_）里，从整体结构上来看，“入梦” 也是个 “递归函数”。只不过，这个函数和 `a_monk_telling_story()` 不一样，它并不是死循环 —— 因为它设定了*中止自我调用的条件*：
+在著名的电影**盗梦空间**（_2010_）里，从整体结构上来看，“入梦” 也是个 “递归函数”。只不过，这个函数和 `aMonkTellingStory()` 不一样，它并不是死循环 —— 因为它设定了*中止自我调用的条件*：
 
 > 在电影里，醒过来的条件有两个
 >> * 一个是在梦里死掉；
@@ -115,114 +113,90 @@ a_monk_telling_story()
 > 如果这两个条件一直不被满足，那就进入 limbo 状态 —— 其实就跟死循环一样，出不来了……
 
 为了演示，我把故事情节改变成这样：
-> * 入梦，`in_dream()`，是个递归函数；
+> * 入梦，`inDream()`，是个递归函数；
 > * 入梦之后醒过来的条件有两个：
->> * 一个是在梦里死掉，`dead is True`；
->> * 一个是在梦里被 kicked，`kicked is True`……
+>> * 一个是在梦里死掉，`dead` 为真；
+>> * 一个是在梦里被 kicked，`kicked` 为真……
 >>
 >> 以上两个条件中任意一个被满足，就苏醒……
 
 至于为什么会死掉，如何被 kick，我偷懒了一下：管它怎样，管它如何，反正，每个条件被满足的概率是 1/10……（也只有这样，我才能写出一个简短的，能够运行的 “*盗梦空间程序*”。）
 
-把这个很抽象的故事写成 Python 程序，看看一次入梦之后能睡多少天，大概是这样：
+把这个很抽象的故事写成 Javascript 程序，看看一次入梦之后能睡多少天，大概是这样：
 
+```javascript
+function inDream(day = 0, dead = false, kicked = false) {
+  dead = Math.floor(Math.random() * 10) === 0;   // 1/10 probability to be dead
+  kicked = Math.floor(Math.random() * 10) === 0; // 1/10 probability to be kicked
+  day += 1;
+  console.log('dead:', dead, 'kicked:', kicked);
 
-```python
-import random
+  if (dead) {
+    console.log(`I slept ${day} days, and was dead to wake up...`);
+    return day;
+  } else if (kicked) {
+    console.log(`I slept ${day} days, and was kicked to wake up...`);
+    return day;
+  }
 
-def in_dream(day=0, dead=False, kicked=False):
-    dead = not random.randrange(0,10) # 1/10 probability to be dead
-    kicked = not random.randrange(0,10) # 1/10 probability to be kicked
-    day += 1
-    print('dead:', dead, 'kicked:', kicked)
-    
-    if dead:
-        print((f"I slept {day} days, and was dead to wake up..."))
-        return day
-    elif kicked:
-        print(f"I slept {day} days, and was kicked to wake up...")
-        return day
-    
-    return in_dream(day)
-    
-print('The in_dream() function returns:', in_dream())
+  return inDream(day);
+}
+
+console.log('The inDream() function returns:', inDream());
 ```
 
-    dead: False kicked: False
-    dead: False kicked: False
-    dead: False kicked: False
-    dead: False kicked: False
-    dead: False kicked: False
-    dead: False kicked: False
-    dead: False kicked: False
-    dead: True kicked: True
+    dead: false kicked: false
+    dead: false kicked: false
+    dead: false kicked: false
+    dead: false kicked: false
+    dead: false kicked: false
+    dead: false kicked: false
+    dead: false kicked: false
+    dead: true kicked: true
     I slept 8 days, and was dead to wake up...
-    The in_dream() function returns: 8
+    The inDream() function returns: 8
 
+如果疑惑为什么 `Math.floor(Math.random() * 10) === 0` 能表示 1/10 的概率，请返回去重新阅读[第一部分中关于布尔值的内容](Part.1.E.2.values-and-their-operators.md)。
 
-如果疑惑为什么 `random.randrange(0,10)` 能表示 1/10 的概率，请返回去重新阅读[第一部分中关于布尔值的内容](Part.1.E.2.values-and-their-operators.ipynb)。
+另外，在 Javascript 中，若是需要将某个值当作真假来判断，尤其是在条件语句中，推荐写法是：
 
-另外，在 Python 中，若是需要将某个值与 True 或者 False 进行比较，尤其是在条件语句中，推荐写法是（参见 [PEP8](https://www.python.org/dev/peps/pep-0008/)）：
-
-
-```python
-if condition:
-    pass
+```javascript
+if (condition) {
+  // ...
+}
 ```
 
-就好像上面代码中的 `if dead:` 一样。
+就好像上面代码中的 `if (dead)` 一样。
 
 而不是（虽然这么写通常也并不妨碍程序正常运行<a href='#fn1' name='fn1b'><sup>[1]</sup></a>）：
 
-```python
-if condition is True:
-    pass
+```javascript
+if (condition === true) {
+  // ...
+}
 ```
 
 抑或：
 
-```python
-if condition == True:
-    pass
+```javascript
+if (condition == true) {
+  // ...
+}
 ```
 
-让我们再返回来接着讲递归函数。正常的**递归函数一定有个退出条件**。否则的话，就*无限循环*下去了…… 下面的程序在执行一会儿之后就会告诉你：`RecursionError: maximum recursion depth exceeded`（上面那个 “山上庙里讲故事的和尚说” 的程序，真要跑起来，也是这样）：
+> 💡 更推荐用 `===` 做相等比较；但在 `if` 条件里，直接写 `if (dead)` 通常就够了。
 
+让我们再返回来接着讲递归函数。正常的**递归函数一定有个退出条件**。否则的话，就*无限循环*下去了…… 下面的程序在执行一会儿之后就会告诉你：`RangeError: Maximum call stack size exceeded`（上面那个 “山上庙里讲故事的和尚说” 的程序，真要跑起来，也是这样）：
 
-```python
-def x(n):
-    return n * x(n-1)
-x(5)
+```javascript
+function x(n) {
+  return n * x(n - 1);
+}
+
+x(5);
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    RecursionError                            Traceback (most recent call last)
-
-    <ipython-input-3-daa4d33fb39b> in <module>
-          1 def x(n):
-          2     return n * x(n-1)
-    ----> 3 x(5)
-    
-
-    <ipython-input-3-daa4d33fb39b> in x(n)
-          1 def x(n):
-    ----> 2     return n * x(n-1)
-          3 x(5)
-
-
-    ... last 1 frames repeated, from the frame below ...
-
-
-    <ipython-input-3-daa4d33fb39b> in x(n)
-          1 def x(n):
-    ----> 2     return n * x(n-1)
-          3 x(5)
-
-
-    RecursionError: maximum recursion depth exceeded
-
+    RangeError: Maximum call stack size exceeded
 
 不用深究上面盗梦空间这个程序的其它细节，不过，通过以上三个递归程序 —— 两个很扯淡的例子，一个正经例子 —— 你已经看到了递归函数的共同特征：
 
@@ -233,19 +207,19 @@ x(5)
 
 再回来看计算阶乘的程序 —— 这是正经程序。这次我们把程序名写完整，`factorial()`:
 
+```javascript
+function factorial(n) {
+  if (n === 1) {
+    return 1;
+  } else {
+    return n * factorial(n - 1);
+  }
+}
 
-```python
-def factorial(n):
-    if n == 1:
-        return 1
-    else:
-        return n * factorial(n-1)
-    
-print(factorial(5))
+console.log(factorial(5));
 ```
 
     120
-
 
 最初的时候，这个函数的执行流程之所以令人迷惑，是因为初学者对*变量*的**作用域**把握得不够充分。
 
@@ -266,24 +240,24 @@ print(factorial(5))
 
 再仔细观察一下以下代码。当一个变量被当做参数传递给一个函数的时候，这个变量本身并不会被函数所改变。比如，`a = 5`，而后，再把 `a` 当作参数传递给 `f(a)` 的时候，这个函数当然应该返回它内部任务完成之后应该传递回来的值，但 `a` 本身不会被改变。
 
+```javascript
+function factorial(n) {
+  if (n === 1) {
+    return 1;
+  } else {
+    return n * factorial(n - 1);
+  }
+}
 
-```python
-def factorial(n):
-    if n == 1:
-        return 1
-    else:
-        return n * factorial(n-1)
-    
-a = 5
-b = factorial(a)   # a 并不会因此改变；
-print(a, b)
-a = factorial(a)   # 这是你主动为 a 再一次赋值……
-print(a, b)
+let a = 5;
+let b = factorial(a); // a 并不会因此改变；
+console.log(a, b);
+a = factorial(a);     // 这是你主动为 a 再一次赋值……
+console.log(a, b);
 ```
 
     5 120
     120 120
-
 
 理解了这一点之后，再看 `factorial()` 这个递归函数的递归执行过程，你就能明白这个事实：
 
@@ -291,43 +265,43 @@ print(a, b)
 
 我们再修改一下上面的代码：
 
+```javascript
+function factorial(n) {
+  if (n === 1) {
+    return 1;
+  } else {
+    return n * factorial(n - 1);
+  }
+}
 
-```python
-def factorial(n):
-    if n == 1:
-        return 1
-    else:
-        return n * factorial(n-1)
-    
-n = 5              # 这一次，这个变量名称是 n
-m = factorial(n)   # n 并不会因此改变；
-print(n, m)
+let n = 5;            // 这一次，这个变量名称是 n
+const m = factorial(n); // n 并不会因此改变；
+console.log(n, m);
 ```
 
     5 120
 
-
-在 `m = factorial(n)` 这一句中，`n` 被 `factorial()` 当做参数调用了，但无论函数内部如何操作，并不会改变变量 `n` 的值。
+在 `const m = factorial(n)` 这一句中，`n` 被 `factorial()` 当做参数调用了，但无论函数内部如何操作，并不会改变变量 `n` 的值。
 
 关键的地方在这里：在函数内部出现的变量 `n`，和函数外部的变量 `n` 不是一回事 —— **它们只是名称恰好相同而已**，函数参数定义的时候，用别的名称也没什么区别：
 
+```javascript
+function factorial(x) { // 在这个语句块中出现的变量，都是局部变量
+  if (x === 1) {
+    return 1;
+  } else {
+    return x * factorial(x - 1);
+  }
+}
 
-```python
-def factorial(x): # 在这个语句块中出现的变量，都是局部变量
-    if x == 1:
-        return 1
-    else:
-        return x * factorial(x-1)
-    
-n = 5           # 这一次，这个变量名称是 n
-m = factorial(n)   # n 并不会因此改变；
-print(n, m)
-# 这个例子和之前再之前的示例代码有什么区别吗？
-# 本质上没区别，就是变量名称换了而已……
+let n = 5;              // 这一次，这个变量名称是 n
+const m = factorial(n); // n 并不会因此改变；
+console.log(n, m);
+// 这个例子和之前再之前的示例代码有什么区别吗？
+// 本质上没区别，就是变量名称换了而已……
 ```
 
     5 120
-
 
 函数开始执行的时候，`x` 的值，是由外部代码（即，函数被调用的那一句）传递进来的。即便函数内部的变量名称与外部的变量名称相同，它们也不是同一个变量。
 
@@ -361,14 +335,16 @@ print(n, m)
 
 至此，封面上的那个 “伪代码” 应该很好理解了：
 
-```python
-def teach_yourself(anything):
-    while not create():
-        learn()
-        practice()
-    return teach_yourself(another)
+```javascript
+function teachYourself(anything) {
+  while (!create()) {
+    learn();
+    practice();
+  }
+  return teachYourself(another);
+}
 
-teach_yourself(coding)
+teachYourself(coding);
 ```
 
 自学还真的就是递归函数呢……
@@ -378,18 +354,17 @@ teach_yourself(coding)
 普林斯顿大学的一个网页，有很多递归的例子
 
 https://introcs.cs.princeton.edu/java/23recursion/
-    
 
 -----
 **脚注**
 
-<a name='fn1'>[1]</a>：参见 Stackoverflow 上的讨论：[Boolean identity == True vs is True](https://stackoverflow.com/questions/27276610/boolean-identity-true-vs-is-true)
+<a name='fn1'>[1]</a>：布尔判断里 `=== true` / `== true` 往往多余；可参见 Stackoverflow 上关于布尔身份比较的讨论：[Boolean identity == True vs is True](https://stackoverflow.com/questions/27276610/boolean-identity-true-vs-is-true)（讨论虽以 Python 为例，道理相通）。
 
 <a href='#fn1b'><small>↑Back to Content↑</small></a>
 
 
-<a name='fn2'>[2]</a>：关于[阿西莫夫三铁律](https://zh.wikipedia.org/wiki/%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%89%E5%AE%9A%E5%BE%8B)（Three Laws of Robotics）的类比，来自著名的 Python 教程，[Think Python: How to Think Like a Computer Scientist](http://greenteapress.com/thinkpython2/html/index.html)
+<a name='fn2'>[2]</a>：关于[阿西莫夫三铁律](https://zh.wikipedia.org/wiki/%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%89%E5%AE%9A%E5%BE%8B)（Three Laws of Robotics）的类比，来自著名的教程，[Think Python: How to Think Like a Computer Scientist](http://greenteapress.com/thinkpython2/html/index.html) —— 递归三原则本身与具体语言无关。
 
-<a href='#fn2b'><small>↑Back to Content↑</small>
+<a href='#fn2b'><small>↑Back to Content↑</small></a>
 
-<a href="./Part.2.D.5-docstrings.ipynb" ><small>Next Page</small></a>
+<a href="./Part.2.D.5-docstrings.md" ><small>Next Page</small></a>

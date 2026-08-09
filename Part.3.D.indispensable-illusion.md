@@ -119,7 +119,7 @@
 
 这基本上是个越早建立越好的习惯。绝大多数人一生都是被动者，终生只是被外界驱动而已。所以，他们会在某一时刻，“发现” 某个技能是刚需，然后再去学，但可惜却肯定的是，到那时候预算总是并不充裕，总是捉襟见肘。
 
-最后一个很简单却很有效的策略是三个字，[之前提到过的](Part.2.E.deliberate-thinking.ipynb)：
+最后一个很简单却很有效的策略是三个字，[之前提到过的](Part.2.E.deliberate-thinking.md)：
 
 > **找活干**
 
@@ -159,73 +159,76 @@
 -----
 **脚注**
 
-<a name='fn1'>[1]</a>：写这本书的时候，前后弄出来那么多 `.ipynb` 文件 —— 于是，到最后哪怕 “生成个目录” 这样看起来简单的活，若是会用正则表达式，就能几分钟完成；但若是不会，那就得逐一手工提取、排序、编辑…… 对我来说怎么可能不是**刚需**！
+<a name='fn1'>[1]</a>：写这本书的时候，前后弄出来那么多 `.md` 文件 —— 于是，到最后哪怕 “生成个目录” 这样看起来简单的活，若是会用正则表达式，就能几分钟完成；但若是不会，那就得逐一手工提取、排序、编辑…… 对我来说怎么可能不是**刚需**！
 
 
-```python
-import re
-import os
+```javascript
+import fs from 'node:fs';
 
-files = [f for f in os.listdir('.') if os.path.isfile(f)]
-files.sort()
-for f in files:
-    if '.ipynb' in f:
-        with open(f, 'r', encoding = 'UTF-8') as file:
-            str = file.read()
-            pttn = r'"# (.*)"\n'
-            r = re.findall(pttn, str)
-            if len(r) > 0:
-                print(f'> - [{f.replace(".ipynb", "")}（**{r[0]}**）]({f})') # 生成 markdown
+const files = fs
+  .readdirSync('.')
+  .filter((f) => fs.statSync(f).isFile())
+  .sort();
+
+for (const f of files) {
+  if (!f.endsWith('.md')) continue;
+  const text = fs.readFileSync(f, 'utf8');
+  const m = text.match(/^# (.+)$/m); // 抓取一级标题
+  if (m) {
+    const stem = f.replace(/\.md$/, '');
+    console.log(`> - [${stem}（**${m[1]}**）](${f})`); // 生成 markdown
+  }
+}
 ```
 
-    > - [01.preface（**前言**）](01.preface.ipynb)
-    > - [02.proof-of-work（**如何证明你真的读过这本书？**）](02.proof-of-work.ipynb)
-    > - [Part.1.A.better.teachyourself（**为什么一定要掌握自学能力？**）](Part.1.A.better.teachyourself.ipynb)
-    > - [Part.1.B.why.start.from.learning.coding（**为什么把编程当作自学的入口？**）](Part.1.B.why.start.from.learning.coding.ipynb)
-    > - [Part.1.C.must.learn.sth.only.by.reading（**只靠阅读习得新技能**）](Part.1.C.must.learn.sth.only.by.reading.ipynb)
-    > - [Part.1.D.preparation.for.reading（**开始阅读前的一些准备**）](Part.1.D.preparation.for.reading.ipynb)
-    > - [Part.1.E.1.entrance（**入口**）](Part.1.E.1.entrance.ipynb)
-    > - [Part.1.E.2.values-and-their-operators（**值及其相应的运算**）](Part.1.E.2.values-and-their-operators.ipynb)
-    > - [Part.1.E.3.controlflow（**流程控制**）](Part.1.E.3.controlflow.ipynb)
-    > - [Part.1.E.4.functions（**函数**）](Part.1.E.4.functions.ipynb)
-    > - [Part.1.E.5.strings（**字符串**）](Part.1.E.5.strings.ipynb)
-    > - [Part.1.E.6.containers（**数据容器**）](Part.1.E.6.containers.ipynb)
-    > - [Part.1.E.7.files（**文件**）](Part.1.E.7.files.ipynb)
-    > - [Part.1.F.deal-with-forward-references（**如何从容应对含有过多 “过早引用” 的知识？**）](Part.1.F.deal-with-forward-references.ipynb)
-    > - [Part.1.G.The-Python-Tutorial-local（**官方教程：The Python Tutorial**）](Part.1.G.The-Python-Tutorial-local.ipynb)
-    > - [Part.2.A.clumsy-and-patience（**笨拙与耐心**）](Part.2.A.clumsy-and-patience.ipynb)
-    > - [Part.2.B.deliberate-practicing（**刻意练习**）](Part.2.B.deliberate-practicing.ipynb)
-    > - [Part.2.C.why-start-from-writing-functions（**为什么从函数开始？**）](Part.2.C.why-start-from-writing-functions.ipynb)
-    > - [Part.2.D.1-args（**关于参数（上）**）](Part.2.D.1-args.ipynb)
-    > - [Part.2.D.2-aargs（**关于参数（下）**）](Part.2.D.2-aargs.ipynb)
-    > - [Part.2.D.3-lambda（**化名与匿名**）](Part.2.D.3-lambda.ipynb)
-    > - [Part.2.D.4-recursion（**递归函数**）](Part.2.D.4-recursion.ipynb)
-    > - [Part.2.D.5-docstrings（**函数的文档**）](Part.2.D.5-docstrings.ipynb)
-    > - [Part.2.D.6-modules（**保存到文件的函数**）](Part.2.D.6-modules.ipynb)
-    > - [Part.2.D.7-tdd（**测试驱动的开发**）](Part.2.D.7-tdd.ipynb)
-    > - [Part.2.D.8-main（**可执行的 Python 文件**）](Part.2.D.8-main.ipynb)
-    > - [Part.2.E.deliberate-thinking（**刻意思考**）](Part.2.E.deliberate-thinking.ipynb)
-    > - [Part.3.A.conquering-difficulties（**战胜难点**）](Part.3.A.conquering-difficulties.ipynb)
-    > - [Part.3.B.1.classes-1（**类 —— 面向对象编程**）](Part.3.B.1.classes-1.ipynb)
-    > - [Part.3.B.2.classes-2（**类 —— Python 的实现**）](Part.3.B.2.classes-2.ipynb)
-    > - [Part.3.B.3.decorator-iterator-generator（**函数工具**）](Part.3.B.3.decorator-iterator-generator.ipynb)
-    > - [Part.3.B.4.regex（**正则表达式**）](Part.3.B.4.regex.ipynb)
-    > - [Part.3.B.5.bnf-ebnf-pebnf（**BNF 以及 EBNF**）](Part.3.B.5.bnf-ebnf-pebnf.ipynb)
-    > - [Part.3.C.breaking-good-and-bad（**拆解**）](Part.3.C.breaking-good-and-bad.ipynb)
-    > - [Part.3.D.indispensable-illusion（**刚需幻觉**）](Part.3.D.indispensable-illusion.ipynb)
-    > - [Part.3.E.to-be-thorough（**全面 —— 自学的境界**）](Part.3.E.to-be-thorough.ipynb)
-    > - [Part.3.F.social-selfteaching（**自学者的社交**）](Part.3.F.social-selfteaching.ipynb)
-    > - [Part.3.G.the-golden-age-and-google（**这是自学者的黄金时代**）](Part.3.G.the-golden-age-and-google.ipynb)
-    > - [Part.3.H.prevent-focus-drifting（**避免注意力漂移**）](Part.3.H.prevent-focus-drifting.ipynb)
-    > - [Q.good-communiation（**如何成为优秀沟通者**）](Q.good-communication.ipynb)
-    > - [R.finale（**自学者的终点**）](R.finale.ipynb)
-    > - [S.whats-next（**下一步干什么？**）](S.whats-next.ipynb)
-    > - [T-appendix.editor.vscode（**Visual Studio Code 的安装与配置**）](T-appendix.editor.vscode.ipynb)
-    > - [T-appendix.git-introduction（**Git 简介**）](T-appendix.git-introduction.ipynb)
-    > - [T-appendix.jupyter-installation-and-setup（**Jupyterlab 的安装与配置**）](T-appendix.jupyter-installation-and-setup.ipynb)
-    > - [T-appendix.symbols（**这些符号都代表什么？**）](T-appendix.symbols.ipynb)
+    > - [01.preface（**前言**）](01.preface.md)
+    > - [02.proof-of-work（**如何证明你真的读过这本书？**）](02.proof-of-work.md)
+    > - [Part.1.A.better.teachyourself（**为什么一定要掌握自学能力？**）](Part.1.A.better.teachyourself.md)
+    > - [Part.1.B.why.start.from.learning.coding（**为什么把编程当作自学的入口？**）](Part.1.B.why.start.from.learning.coding.md)
+    > - [Part.1.C.must.learn.sth.only.by.reading（**只靠阅读习得新技能**）](Part.1.C.must.learn.sth.only.by.reading.md)
+    > - [Part.1.D.preparation.for.reading（**开始阅读前的一些准备**）](Part.1.D.preparation.for.reading.md)
+    > - [Part.1.E.1.entrance（**入口**）](Part.1.E.1.entrance.md)
+    > - [Part.1.E.2.values-and-their-operators（**值及其相应的运算**）](Part.1.E.2.values-and-their-operators.md)
+    > - [Part.1.E.3.controlflow（**流程控制**）](Part.1.E.3.controlflow.md)
+    > - [Part.1.E.4.functions（**函数**）](Part.1.E.4.functions.md)
+    > - [Part.1.E.5.strings（**字符串**）](Part.1.E.5.strings.md)
+    > - [Part.1.E.6.containers（**数据容器**）](Part.1.E.6.containers.md)
+    > - [Part.1.E.7.files（**文件**）](Part.1.E.7.files.md)
+    > - [Part.1.F.deal-with-forward-references（**如何从容应对含有过多 “过早引用” 的知识？**）](Part.1.F.deal-with-forward-references.md)
+    > - [Part.1.G.The-Javascript-Tutorial-local（**官方教程：Javascript@MDN**）](Part.1.G.The-Javascript-Tutorial-local.md)
+    > - [Part.2.A.clumsy-and-patience（**笨拙与耐心**）](Part.2.A.clumsy-and-patience.md)
+    > - [Part.2.B.deliberate-practicing（**刻意练习**）](Part.2.B.deliberate-practicing.md)
+    > - [Part.2.C.why-start-from-writing-functions（**为什么从函数开始？**）](Part.2.C.why-start-from-writing-functions.md)
+    > - [Part.2.D.1-args（**关于参数（上）**）](Part.2.D.1-args.md)
+    > - [Part.2.D.2-aargs（**关于参数（下）**）](Part.2.D.2-aargs.md)
+    > - [Part.2.D.3-lambda（**化名与匿名**）](Part.2.D.3-lambda.md)
+    > - [Part.2.D.4-recursion（**递归函数**）](Part.2.D.4-recursion.md)
+    > - [Part.2.D.5-docstrings（**函数的文档**）](Part.2.D.5-docstrings.md)
+    > - [Part.2.D.6-modules（**保存到文件的函数**）](Part.2.D.6-modules.md)
+    > - [Part.2.D.7-tdd（**测试驱动的开发**）](Part.2.D.7-tdd.md)
+    > - [Part.2.D.8-main（**可执行的 Javascript 文件**）](Part.2.D.8-main.md)
+    > - [Part.2.E.deliberate-thinking（**刻意思考**）](Part.2.E.deliberate-thinking.md)
+    > - [Part.3.A.conquering-difficulties（**战胜难点**）](Part.3.A.conquering-difficulties.md)
+    > - [Part.3.B.1.classes-1（**类 —— 面向对象编程**）](Part.3.B.1.classes-1.md)
+    > - [Part.3.B.2.classes-2（**类 —— Javascript 的实现**）](Part.3.B.2.classes-2.md)
+    > - [Part.3.B.3.decorator-iterator-generator（**函数工具**）](Part.3.B.3.decorator-iterator-generator.md)
+    > - [Part.3.B.4.regex（**正则表达式**）](Part.3.B.4.regex.md)
+    > - [Part.3.B.5.bnf-ebnf-pebnf（**BNF 以及 EBNF**）](Part.3.B.5.bnf-ebnf-pebnf.md)
+    > - [Part.3.C.breaking-good-and-bad（**拆解**）](Part.3.C.breaking-good-and-bad.md)
+    > - [Part.3.D.indispensable-illusion（**刚需幻觉**）](Part.3.D.indispensable-illusion.md)
+    > - [Part.3.E.to-be-thorough（**全面 —— 自学的境界**）](Part.3.E.to-be-thorough.md)
+    > - [Part.3.F.social-selfteaching（**自学者的社交**）](Part.3.F.social-selfteaching.md)
+    > - [Part.3.G.the-golden-age-and-google（**这是自学者的黄金时代**）](Part.3.G.the-golden-age-and-google.md)
+    > - [Part.3.H.prevent-focus-drifting（**避免注意力漂移**）](Part.3.H.prevent-focus-drifting.md)
+    > - [Q.good-communication（**如何成为优秀沟通者**）](Q.good-communication.md)
+    > - [R.finale（**自学者的终点**）](R.finale.md)
+    > - [S.whats-next（**下一步干什么？**）](S.whats-next.md)
+    > - [T-appendix.editor.vscode（**Visual Studio Code 的安装与配置**）](T-appendix.editor.vscode.md)
+    > - [T-appendix.git-introduction（**Git 简介**）](T-appendix.git-introduction.md)
+    > - [T-appendix.symbols（**这些符号都代表什么？**）](T-appendix.symbols.md)
 
 
 <a href='#fn1b'><small>↑Back to Content↑</small></a>
 
-<a href="./Part.3.E.to-be-thorough.ipynb" ><small>Next Page</small></a>
+<a href="./Part.3.E.to-be-thorough.md" ><small>Next Page</small></a>
+

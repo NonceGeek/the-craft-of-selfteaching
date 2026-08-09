@@ -1,4 +1,3 @@
-
 # 拆解
 
 在学习编程的过程中，你会不由自主地学会一个重要技能：
@@ -15,36 +14,22 @@
 
 有个曲子很难（当然也非常好听），曲名是 [Recrerdes Da La Alhambra](https://www.youtube.com/watch?v=OOsRMECWKAE) 阿罕布拉宫的回忆。你看看曲谱就知道它多难了：
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/guitar-tab.gif?raw=true)
+
 
 那怎么办？怎么办？！—— 我的办法听起来看起来都很笨：
 
-> * 每次只弹一个小节；
->   * 而且还是放慢速度弹，刚开始很慢很慢；
->   * 等熟悉了之后逐渐快起来，直到正常速度；
-> * 再开始弹下一个小节；
->   * 同样是放慢速度弹，刚开始很慢很慢；
->   * 等熟悉了之后逐渐快起来，直到正常速度；
-> * 再把两个小节拼起来；
->   * 有些小节拼起来相对容易，另外一些需要挣扎很久才顺畅；
+> - 每次只弹一个小节；
+>   - 而且还是放慢速度弹，刚开始很慢很慢；
+>   - 等熟悉了之后逐渐快起来，直到正常速度；
+> - 再开始弹下一个小节；
+>   - 同样是放慢速度弹，刚开始很慢很慢；
+>   - 等熟悉了之后逐渐快起来，直到正常速度；
+> - 再把两个小节拼起来；
+>   - 有些小节拼起来相对容易，另外一些需要挣扎很久才顺畅；
 
 如此这般，最终就把这个很难的曲子弹出来了 —— 其实所有的初学者都是这么干的。
 
-可以听听这个曲子放松一下（当然肯定不是我弹的哈哈）：
 
-```python
-from IPython.display import IFrame
-
-IFrame('https://www.youtube.com/embed/OOsRMECWKAE?', width='800', height='450')
-```
-
-        <iframe
-            width="800"
-            height="450"
-            src="https://www.youtube.com/embed/OOsRMECWKAE?"
-            frameborder="0"
-            allowfullscreen
-        ></iframe>
 
 提起这事，总是会不由自主地叹口气 —— 因为在这事上我运气太差，刚把这个曲子练完没多久，还没来得及找人显摆，就摔断了掌骨和指骨，给我的手指灵活性造成了不可修复的损伤，于是，后来只能用拨片玩玩吉他了……
 
@@ -56,13 +41,13 @@ IFrame('https://www.youtube.com/embed/OOsRMECWKAE?', width='800', height='450')
 
 那刚开始的时候怎么办？你其实需要运用拆分的本领：
 
-> * 先囫囵吞枣至少读一遍教程；
-> * 给自己搭好测试的环境（或许在 Regex101.com 上，或许用一个编辑器，比如 VS Code）；
-> * 先不管什么意思，找一些 Regex 自己试试；
-> * 正式进入 “精度” 状态，每一小节每一小节地突破；
-> * 搞定一小节之后，就把它与之前的小节再反复翻两三遍；
-> * 把学习任务拆分成若干块，再重新逐个突破，比如，匹配，替换，在编辑器中使用，在 Python 代码中使用；
-> * 把各种操作符与特殊字符拆分成若干个组，而后，熟悉到牢记（而不用将来反复回来查询）；
+> - 先囫囵吞枣至少读一遍教程；
+> - 给自己搭好测试的环境（或许在 Regex101.com 上 —— Flavor 选 ECMAScript / Javascript；或许用一个编辑器，比如 VS Code / Cursor）；
+> - 先不管什么意思，找一些 Regex 自己试试；
+> - 正式进入 “精度” 状态，每一小节每一小节地突破；
+> - 搞定一小节之后，就把它与之前的小节再反复翻两三遍；
+> - 把学习任务拆分成若干块，再重新逐个突破，比如，匹配，替换，在编辑器中使用，在 Javascript 代码中使用；
+> - 把各种操作符与特殊字符拆分成若干个组，而后，熟悉到牢记（而不用将来反复回来查询）；
 > ……
 
 事实上，当你习惯这么做了之后，就会 “发现” 一切的自学任务，其实都不是 “难”，不过是 “繁杂程度不一” 而已。
@@ -73,15 +58,15 @@ IFrame('https://www.youtube.com/embed/OOsRMECWKAE?', width='800', height='450')
 
 拆解的第一种方法是把某个任务拆分成若干个小任务，正如上面的讲解那样，我称它为 “横向拆解”。
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/decompose-x.png?raw=true)
+
 
 另外一种方法，我称它为 “纵向拆解”（有时，我也会用 “分层拆解” 这个说法）。
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/decompose-y.png?raw=true)
+
 
 这种方式在自学复杂的概念体系时特别管用。
 
-编程这种东西，之所以刚开始觉得难学，是因为其中涉及的概念除了之前我们强调的 “[过早引用](Part.1.F.deal-with-forward-references)” 之外，还有个特征：
+编程这种东西，之所以刚开始觉得难学，是因为其中涉及的概念除了之前我们强调的 “[过早引用](Part.1.F.deal-with-forward-references.md)” 之外，还有个特征：
 
 > 有的概念虽然并不同属一个层面，却常常纠缠在一起，没有明确的提示……
 
@@ -97,11 +82,15 @@ for i in range(n):
 ```
 
 ```javascript
-// JavaScript 这么写：
+// Javascript 这么写：
 
-var i;
-for (i = 0; i < n; i++) {
-  ...;
+for (let i = 0; i < n; i++) {
+  // ...
+}
+
+// 遍历可迭代对象时，也常写成：
+for (const item of items) {
+  // ...
 }
 ```
 
@@ -189,4 +178,6 @@ for (i = 0; i < n; i++) {
 
 即便是开始讲如何写，我们的做法也是从 “写函数” 开始，而不是 “来，让我们写个程序……” —— 这一点点看起来不起眼的差异，作用是很大的，因为从 “小而完整” 的东西开始做（任何事）非常重要。
 
-[ “小” 无所谓，“完整” 才是关键](Part.3.F.social-selfteaching.md)。
+ [“小” 无所谓，“完整” 才是关键](Part.3.F.social-selfteaching.md)。
+
+[Next Page](./Part.3.D.indispensable-illusion.md)

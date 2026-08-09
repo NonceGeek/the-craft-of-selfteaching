@@ -80,9 +80,9 @@
 
 比如，我这本就跟别人写的很不一样。我的出发点是把编程当作一个自学的例子，重点在于学会如何自学，并且通过实践真的习得一个起初你觉得不是刚需，学会之后发现干脆离不开的、不可或缺的技能。这本书的内容组织方式也不一样 —— 反正你现在已经知道了。
 
-另外，这本书的目标里有更重要的另外一个：“让你有能力靠自己能够理解所有的官方文档” —— 书里不用讲官方标准库里的每个模块、每个函数究竟如何使用，因为那些在官方文档里定义得非常清楚……
+另外，这本书的目标里有更重要的另外一个：“让你有能力靠自己能够理解所有的官方文档” —— 书里不用讲 Node / 浏览器环境里每个 API、每个函数究竟如何使用，因为那些在 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript) 与各运行时官方文档里定义得非常清楚……
 
-而其他人写的呢？比如 [Think Python](http://greenteapress.com/wp/think-python-2e/)，比如 [A Bite of Python](https://python.swaroopch.com/)，再比如 [Dive into Python](https://linux.die.net/diveintopython/html/)<a href='#fn1' name='fn1b'><sup>[1]</sup></a>，以及网上很多很多免费的 Python 教程都写得很好呢！
+而其他人写的呢？比如 [Eloquent JavaScript](https://eloquentjavascript.net/)，比如 [JavaScript.info](https://javascript.info/)，再比如 [You Don't Know JS (book series)](https://github.com/getify/You-Dont-Know-JS)<a href='#fn1' name='fn1b'><sup>[1]</sup></a>，以及网上很多很多免费的 Javascript 教程都写得很好呢！
 
 没有经验的人不懂而已。当你搞明白了一本书，后面再多读哪怕很多本的时间精力成本都是很低的，但每多读一本，都能让你在这个话题中变得**更为完整**。
 
@@ -142,7 +142,7 @@
 
 这真是个有趣且意味深长的现象。
 
-另外一个有趣的现象是，“下学” 者永远等待 “上学” 者整理好的东西。之前在《[如何从容应对含有过多 “前置引用” 的知识？](Part.1.F.deal-with-forward-references.ipynb)》提到过一个对应策略：
+另外一个有趣的现象是，“下学” 者永远等待 “上学” 者整理好的东西。之前在《[如何从容应对含有过多 “前置引用” 的知识？](Part.1.F.deal-with-forward-references.md)》提到过一个对应策略：
 
 > 尽快开始整理归纳总结
 
@@ -156,7 +156,7 @@
 
 这一次写这本 “书” 的过程中，同样的 “奇迹” 再次发生在我身上。
 
-说实话，正则表达式我一直没有完全掌握 —— 虽然偶尔用用，也都是边查边用。实在解决不了，就算了…… 现在回头想想，多少就是因为 “[仅凭感觉，并没觉得那绝对是刚需](Part.3.D.indispensable-illusion.ipynb)” <a href='#fn3' name='fn3b'><sup>[3]</sup></a> —— 当然，真正会了之后，马上开始时时刻刻都有可能使用，离开它简直活不下去 —— 写这书的后半程，有大量的重新组织的需要，很多文字替换，若是没有正则表达式，就干脆没法干……
+说实话，正则表达式我一直没有完全掌握 —— 虽然偶尔用用，也都是边查边用。实在解决不了，就算了…… 现在回头想想，多少就是因为 “[仅凭感觉，并没觉得那绝对是刚需](Part.3.D.indispensable-illusion.md)” <a href='#fn3' name='fn3b'><sup>[3]</sup></a> —— 当然，真正会了之后，马上开始时时刻刻都有可能使用，离开它简直活不下去 —— 写这书的后半程，有大量的重新组织的需要，很多文字替换，若是没有正则表达式，就干脆没法干……
 
 我是如何完全掌握正则表达式的呢？就是因为写这本书。既然是写书，当然害怕自己在不经意中出错，此为其一。更为重要的是，必须先完整掌握之后才能有诸如 “为读者提供更好一点的理解起点”，“理解起来相对更简单直接的组织结构”，以及 “挖掘必须习得它的真正原因以便鼓励读者” 之类的畅销书卖点 —— 对作者来说，有什么比销量更重要的呢？
 
@@ -179,7 +179,7 @@
 -----
 **脚注**
 
-<a name='fn1'>[1]</a>：一点八卦：Dive into Python 的作者是 [Mark Pilgrim](https://en.wikipedia.org/wiki/Mark_Pilgrim)；他是互联网上最著名的自绝于信息世界（[infosuicide](https://www.urbandictionary.com/define.php?term=infosuicide)）的三人之一。另外两位分别是比特币的作者 [Satoshi Nakamoto](https://en.wikipedia.org/wiki/Satoshi_Nakamoto)，和 [Why the lucky stiff](https://whytheluckystiff.net/) 的作者 [Jonathan Gillette](https://en.wikipedia.org/wiki/Why_the_lucky_stiff)。
+<a name='fn1'>[1]</a>：You Don't Know JS 的作者是 [Kyle Simpson](https://github.com/getify)。另外值得一提的是：开放且高质量的免费教程，本身就是 “多读几本” 这件事成本极低的最好证明 —— 你完全可以从 [Eloquent JavaScript](https://eloquentjavascript.net/)、[JavaScript.info](https://javascript.info/)、[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript) 同时入手，互为补充。
 
 <a href='#fn1b'><small>↑Back to Content↑</small></a>
 
@@ -191,4 +191,5 @@
 
 <a href='#fn3b'><small>↑Back to Content↑</small></a>
 
-<a href="./Part.3.F.social-selfteaching.ipynb" ><small>Next Page</small></a>
+<a href="./Part.3.F.social-selfteaching.md" ><small>Next Page</small></a>
+

@@ -1,4 +1,3 @@
-
 # 为什么从函数开始？
 
 读完第一部分之后，你多多少少已经 “写” 了一些程序，虽然我们总是说，“这就是让你脱盲”；也就是说，从此之后，你多多少少能够读懂程序，这就已经很好了。
@@ -17,84 +16,27 @@
 
 在第二部分启动之前，有时间有耐心的读者可以多做一件事情。
 
-Python 的代码是开源的，它的代码仓库在 Github 上：
+Javascript 的主流运行时大多是开源的。以 Node.js 为例，它的代码仓库在 Github 上：
 
-> https://github.com/python/
+> https://github.com/nodejs/node
 
-在这个代码仓库中，有一个目录下，保存着若干 Python Demo 程序，这里有个 fork 的仓库链接🔗：
+另外，MDN 维护了大量可直接阅读的 Javascript 指南与示例：
 
-> https://github.com/NonceGeek/old-demos
+> https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide
 
-这个目录下的 README 中有说明：
+在入门阶段，也很容易在 Github 上找到一批经典的 Javascript Demo 小程序（算法演示、小游戏、小工具都有）。最起码把以下几类经典题目的 Javascript 实现都精读一下，看看你自己的理解能力：
 
-> This directory contains a collection of demonstration scripts for
-> various aspects of Python programming.
->
-> * `beer.py`        Well-known programming example: Bottles of beer.
-> * `eiffel.py`      Python advanced magic: A metaclass for Eiffel post/preconditions.
-> * `hanoi.py`       Well-known programming example: Towers of Hanoi.
-> * `life.py`        Curses programming: Simple game-of-life.
-> * `markov.py`      Algorithms: Markov chain simulation.
-> * `mcast.py`       Network programming: Send and receive UDP multicast packets.
-> * `queens.py`      Well-known programming example: N-Queens problem.
-> * `redemo.py`      Regular Expressions: GUI script to test regexes.
-> * `rpython.py`     Network programming: Small client for remote code execution.
-> * `rpythond.py`    Network programming: Small server for remote code execution.
-> * `sortvisu.py`    GUI programming: Visualization of different sort algorithms.
-> * `ss1.py`         GUI/Application programming: A simple spreadsheet application.
-> * `vector.py`      Python basics: A vector class with demonstrating special methods.
+> * Bottles of beer —— 经典入门例子：墙上的啤酒瓶
+> * Towers of Hanoi —— 经典入门例子：汉诺塔
+> * N-Queens —— 经典入门例子：N 皇后问题
+> * Game of Life —— 生命游戏（Conway's Game of Life）
+> * Markov chain —— 算法：马尔可夫链模拟
+> * Regular Expressions —— 正则表达式的小测试脚本
+> * Sorting visualization —— 不同排序算法的可视化
 
-最起码把这其中的以下几个程序都精读一下，看看自己的理解能力：
-
-> * [beer.py](https://github.com/python/cpython/blob/master/Tools/demo/beer.py)        Well-known programming example: Bottles of beer.
-> * [eiffel.py](https://github.com/python/cpython/blob/master/Tools/demo/eiffel.py)      Python advanced magic: A metaclass for Eiffel post/preconditions.
-> * [hanoi.py](https://github.com/python/cpython/blob/master/Tools/demo/hanoi.py)       Well-known programming example: Towers of Hanoi.
-> * [life.py](https://github.com/python/cpython/blob/master/Tools/demo/life.py)        Curses programming: Simple game-of-life.
-> * [markov.py](https://github.com/python/cpython/blob/master/Tools/demo/markov.py)      Algorithms: Markov chain simulation.
-> * [queens.py](https://github.com/python/cpython/blob/master/Tools/demo/queens.py)      Well-known programming example: N-Queens problem.
+这些题目的 Javascript 源码在 Github 上很容易搜到；也可以先自己写一版，或用 AI 生成一版，再去对照别人的实现阅读。
 
 就算读不懂也没关系，把读不懂的部分标记下来，接下来就可以 “带着问题学习”……
-
-然后，在 AI 的辅助下，我们还可以自行「创造」 Javascript 的版本，例如给 GPT 提供如下 Prompt：
-
-```python
-#!/usr/bin/env python3
-
-"""
-A Python version of the classic "bottles of beer on the wall" programming
-example.
-
-By Guido van Rossum, demystified after a version by Fredrik Lundh.
-"""
-
-import sys
-
-n = 100
-if sys.argv[1:]:
-    n = int(sys.argv[1])
-
-def bottle(n):
-    if n == 0: return "no more bottles of beer"
-    if n == 1: return "one bottle of beer"
-    return str(n) + " bottles of beer"
-
-for i in range(n, 0, -1):
-    print(bottle(i), "on the wall,")
-    print(bottle(i) + ".")
-    print("Take one down, pass it around,")
-    print(bottle(i-1), "on the wall.")
-
-Here is the python code, give me the javascript version of it.
-```
-
-<img src="/Users/liaohua/Documents/image-20250809103240550.png" alt="image-20250809103240550" style="zoom:50%;" />
-
-回复：
-<img src="/Users/liaohua/Documents/image-20250809103315820.png" alt="image-20250809103315820" style="zoom:50%;" />
-
-同理，我们在学习其他任意编程语言的时候，也可以用同样的方法快速生成一套「实战教材」。
-
-
 
 在未来的时间里，一个好的习惯就是，有空了去读读别人写的代码 —— 理解能力的提高，就靠这个了。你会发现这事跟其他领域的学习没什么区别。你学英语也一样，读多了，自然就读得快了，理解得快了，并且在那过程中自然而然地习得了很多 “句式”，甚至很多 “说理的方法”、“讲故事的策略”…… 然后就自然而然地会写了，从能写一点开始，慢慢到 “很能写”！
 
@@ -119,8 +61,10 @@ Here is the python code, give me the javascript version of it.
 
 这些都是你未来写自己的工程时所必须仰仗的基础，马虎不得，疏漏不得。
 
-另外，这一部分与第一部分有一个刻意不同的编排，这一部分的每一章之后，**没有写总结** —— 那个总结需要读者自己动手完成。你需要做的不仅仅是每一个章节的总结，整个第二部分读完之后，还要做针对整个 “深入了解函数”（甚至应该包括第一部分已经读过的关于函数的内容）的总结…… 并且，关于函数，这一章并未完全讲完呢，第三部分还有生成器、迭代器、以及装饰器要补充 —— 因为它们多多少少都涉及到下一部分才能深入的内容，所以，在这一部分就暂时没有涉及。
+另外，这一部分与第一部分有一个刻意不同的编排，这一部分的每一章之后，**没有写总结** —— 那个总结需要读者自己动手完成。你需要做的不仅仅是每一个章节的总结，整个第二部分读完之后，还要做针对整个 “深入了解函数”（甚至应该包括第一部分已经读过的关于函数的内容）的总结…… 并且，关于函数，这一章并未完全讲完呢，第三部分还有生成器（Generator）、迭代器（Iterator）、以及装饰器（Decorator）/高阶函数封装要补充 —— 因为它们多多少少都涉及到下一部分才能深入的内容，所以，在这一部分就暂时没有涉及。
 
 你要习惯，归纳、总结、整理的工作，从来都不是一次就能完成的，都需要反复多次之后才能彻底完成。必须习惯这种流程 —— 而不是像那些从未自学过的人一样，对这种东西想当然地全不了解。
 
 另外，从现代编程方法论来看，“写作” 部分一上来就从函数入手也的确是 “更正确” 的，因为结构化编程的核心就是拆分任务，把任务拆分到不能再拆分为止 —— 什么时候不能再拆分了呢？就是当一个函数只完成一个功能的时候……
+
+<a href="./Part.2.D.1-args.ipynb" ><small>Next Page</small></a>

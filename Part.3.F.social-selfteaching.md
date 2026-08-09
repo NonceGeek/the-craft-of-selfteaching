@@ -37,14 +37,16 @@
 自学这门手艺，很简单，就是不断地学：
 
 
-```python
-def teach_yourself(anything):
-    while not create():
-        learn()
-        practice()
-    return teach_yourself(another)
+```javascript
+function teachYourself(anything) {
+  while (!create()) {
+    learn();
+    practice();
+  }
+  return teachYourself(another);
+}
 
-teach_yourself(coding)
+teachYourself(coding);
 ```
 
 学上几个，自然就很精湛。而其它的用自学这门手艺习得的手艺，基本上都可以用 “是否做出了像样的作品” 作为检验自己的那门手艺是否达到了精湛的衡量指标。
@@ -82,7 +84,7 @@ Github 能成为地球上最大的有效社交网络，没毛病，因为**用�
 > * 做就做得**完整**。
 
 
-无论多小的作品，都会让创作者感受到 “单一技能的必然无效性” —— 你试试就知道了。哪怕你想做个静态网站，你都会发现，仅仅学会 html/css 是不够的，因为部署到远端服务器上的时候，你无论如何都得学学 Linux 基本操作…… 而已然具备了自学者基本素养的你，自然会想办法 “全面掌握”，而不是糊弄一下而已。
+无论多小的作品，都会让创作者感受到 “单一技能的必然无效性” —— 你试试就知道了。哪怕你想做个静态网站，你都会发现，仅仅学会 HTML/CSS 是不够的，往往还得写点 Javascript；部署到远端服务器上的时候，你无论如何都得学学 Linux 基本操作，搞不好还要碰碰 Node.js 或 Deno…… 而已然具备了自学者基本素养的你，自然会想办法 “全面掌握”，而不是糊弄一下而已。
 
 更为重要的是，一旦你开始创作作品，你更大的 “发现” 就是，你肯定需要很多 “之前看起来并不相干的知识与技能”，而非 “只靠专业就够了”……
 
@@ -130,4 +132,4 @@ Hedy Lamarr 是好莱坞最知名的演员之一，并且，她也是自学高�
 
 <a href='#fn1b'><small>↑Back to Content↑</small></a>
 
-<a href="./Part.3.G.the-golden-age-and-google.ipynb" ><small>Next Page</small></a>
+<a href="./Part.3.G.the-golden-age-and-google.md" ><small>Next Page</small></a>

@@ -19,6 +19,8 @@ Git 是一个分布式版本控制软件 —— 听起来也许跟你没关系�
 
 并且，[Github](https://github.com) 很可能是地球上第一个给人们提供 “[用作品社交](Part.3.F.social-selfteaching.md)” 方式的平台，你若是不能参与其中，实在是太可惜了！
 
+学 Javascript 的人更有理由用 Git：绝大多数前端 / Node 开源库都在 Github 上；你读别人的代码、提 Issue、发 Pull Request，本身就是最高效的自学社交。
+
 ## 从逻辑上理顺 Git 基本命令
 
 Git 的作用，基本上可以被划分为三部分：
@@ -74,6 +76,8 @@ Git 的作用，基本上可以被划分为三部分：
 
 时不时，你可能会把一些处理完的文件 “加入缓存区”；等一个阶段的工作完成之后，你可能会把那些已经放入缓存区的文件**提交**到（commit）本地仓库；而后继续工作…… 根据情况，你也会将本地仓库的文件**推到**（push）云端，即，远端仓库。如果，你正在与他人协作，你也可能经常需要从云端**下拉**（pull）最新版本到本地。
 
+> 💡 Javascript 项目里常见的 `node_modules/` 千万不要提交进仓库 —— 在项目根目录放好 `.gitignore`（可用 `npx gitignore node` 之类方式生成）。
+
 ## Git 的安装
 
 ### Mac
@@ -88,15 +92,9 @@ which git
 也可以通过 Homebrew 安装最新版本的 Git：
 
 ``` bash
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew doctor
 brew install git
-```
-
-还可以通过 Conda 安装：
-
-``` bash
-conda install -c anaconda git
 ```
 
 ### Windows

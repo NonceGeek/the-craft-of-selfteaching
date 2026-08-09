@@ -1,4 +1,3 @@
-
 # 自学者的社交
 
 很多人有莫名其妙的误解，以为 “自学”（self-teaching）就一定是 “自己独自学”（solo-learning），殊不知，自学也需要社交。也有另外一些人，因为 “专心” 到一定程度，觉得社交很累，所以开始抵触一切社交。这些都不是全面的看法。
@@ -37,17 +36,22 @@
 
 自学这门手艺，很简单，就是不断地学：
 
-```python
-def teach_yourself(anything):
-    while not create():
-        learn()
-        practice()
-    return teach_yourself(another)
 
-teach_yourself(coding)
+```javascript
+function teachYourself(anything) {
+  while (!create()) {
+    learn();
+    practice();
+  }
+  return teachYourself(another);
+}
+
+teachYourself(coding);
 ```
 
 学上几个，自然就很精湛。而其它的用自学这门手艺习得的手艺，基本上都可以用 “是否做出了像样的作品” 作为检验自己的那门手艺是否达到了精湛的衡量指标。
+
+
 
 硅谷有一家著名的孵化器，叫 Y-Combinator，现在的掌门人是个很年轻的人，Samuel H. Altman。他在那篇著名的文章《[Advice for ambitious 19 year olds](https://blog.samaltman.com/advice-for-ambitious-19-year-olds)》中有一个精彩的建议：
 
@@ -79,7 +83,8 @@ Github 能成为地球上最大的有效社交网络，没毛病，因为**用�
 > * 学就学得**全面**；
 > * 做就做得**完整**。
 
-无论多小的作品，都会让创作者感受到 “单一技能的必然无效性” —— 你试试就知道了。哪怕你想做个静态网站，你都会发现，仅仅学会 html/css 是不够的，因为部署到远端服务器上的时候，你无论如何都得学学 Linux 基本操作…… 而已然具备了自学者基本素养的你，自然会想办法 “全面掌握”，而不是糊弄一下而已。
+
+无论多小的作品，都会让创作者感受到 “单一技能的必然无效性” —— 你试试就知道了。哪怕你想做个静态网站，你都会发现，仅仅学会 HTML/CSS 是不够的，往往还得写点 Javascript；部署到远端服务器上的时候，你无论如何都得学学 Linux 基本操作，搞不好还要碰碰 Node.js 或 Deno…… 而已然具备了自学者基本素养的你，自然会想办法 “全面掌握”，而不是糊弄一下而已。
 
 更为重要的是，一旦你开始创作作品，你更大的 “发现” 就是，你肯定需要很多 “之前看起来并不相干的知识与技能”，而非 “只靠专业就够了”……
 
@@ -115,14 +120,16 @@ Github 能成为地球上最大的有效社交网络，没毛病，因为**用�
 
 <a name='fn1'>[1]</a>：NPR：[Most Beautiful Woman' By Day, Inventor By Night](https://www.npr.org/2011/11/27/142664182/most-beautiful-woman-by-day-inventor-by-night)
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/Lamarr_patent.png?raw=true)
+![](../images/Lamarr_patent.png)
 
 上图是保存在美国专利局的一个存档文件（US Patent 2,292,387, Aug 11, 1942）截图。这项专利的发明者是 [Hedy Lamarr](https://en.wikipedia.org/wiki/Hedy_Lamarr)，人家长得是这样的：
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/hedy-lamarr-hero-getty.jpg?raw=true)
+![](../images/hedy-lamarr-hero-getty.jpg)
 
 Hedy Lamarr 是好莱坞最知名的演员之一，并且，她也是自学高手：
 
 > Although Lamarr had no formal training and was primarily self-taught, she worked in her spare time on various hobbies and inventions, which included an improved traffic stoplight and a tablet that would dissolve in water to create a carbonated drink. The beverage was unsuccessful; Lamarr herself said it tasted like Alka-Seltzer.
 
 <a href='#fn1b'><small>↑Back to Content↑</small></a>
+
+<a href="./Part.3.G.the-golden-age-and-google.md" ><small>Next Page</small></a>

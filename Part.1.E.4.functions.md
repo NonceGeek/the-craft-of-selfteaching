@@ -199,7 +199,7 @@ function findMax() {
 }
 ```
 
-![image-20250502161041406](/Users/liaohua/Documents/image-20250502161041406.png)
+![image-20250502161041406](images/image-20250502161041406.png)
 
 
     500

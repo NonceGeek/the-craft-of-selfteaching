@@ -17,7 +17,7 @@
 - [Part.1.E.6 数据容器](Part.1.E.6.containers.md)
 - [Part.1.E.7 文件](Part.1.E.7.files.md)
 - [Part.1.F 如何从容应对含有过多 “过早引用” 的知识？](Part.1.F.deal-with-forward-references.md)
-- [Part.1.G 官方教程：The Python Tutorial](Part.1.G.The-Python-Tutorial-local.md)
+- [Part.1.G 官方教程：Javascript@MDN](Part.1.G.The-Javascript-Tutorial-local.md)
 
 ## PART 2
 
@@ -31,14 +31,14 @@
 - [Part.2.D.5 函数的文档](Part.2.D.5-docstrings.md)
 - [Part.2.D.6 保存到文件的函数](Part.2.D.6-modules.md)
 - [Part.2.D.7 测试驱动的开发](Part.2.D.7-tdd.md)
-- [Part.2.D.8 可执行的 Python 文件](Part.2.D.8-main.md)
+- [Part.2.D.8 可执行的 Javascript 文件](Part.2.D.8-main.md)
 - [Part.2.E 刻意思考](Part.2.E.deliberate-thinking.md)
 
 ## PART 3
 
 - [Part.3.A 战胜难点](Part.3.A.conquering-difficulties.md)
 - [Part.3.B.1 类 —— 面向对象编程](Part.3.B.1.classes-1.md)
-- [Part.3.B.2 类 —— Python 的实现](Part.3.B.2.classes-2.md)
+- [Part.3.B.2 类 —— Javascript 的实现](Part.3.B.2.classes-2.md)
 - [Part.3.B.3 函数工具](Part.3.B.3.decorator-iterator-generator.md)
 - [Part.3.B.4 正则表达式](Part.3.B.4.regex.md)
 - [Part.3.B.5 BNF 以及 EBNF](Part.3.B.5.bnf-ebnf-pebnf.md)
@@ -51,7 +51,7 @@
 
 ## 附章
 
-- [Q 如何成为优秀沟通者](Q.good-communiation.md)
+- [Q 如何成为优秀沟通者](Q.good-communication.md)
 - [R 自学者的终点](R.finale.md)
 - [S 下一步干什么？](S.whats-next.md)
 
@@ -59,5 +59,5 @@
 
 - [Appendix A: Visual Studio Code 的安装与配置](T-appendix.editor.vscode.md)
 - [Appendix B: Git 简介](T-appendix.git-introduction.md)
-- [Appendix C: Jupyterlab 的安装与配置](T-appendix.jupyter-installation-and-setup.md)
+- [Appendix C: Node.js（与 Deno）的安装与配置](T-appendix.jupyter-installation-and-setup.md)
 - [Appendix D: 这些符号都代表什么？](T-appendix.symbols.md)

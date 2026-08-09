@@ -1,4 +1,3 @@
-
 # 全面 —— 自学的境界
 
 之前提到过那些 “貌似一出手就已然是高手” 的人，也为此做过一番解释：
@@ -31,7 +30,7 @@
 
 > 我会那么做，我就会误以为所有人都会那么做……
 
-我猜，那些 “貌似一出手就已然是高手” 的人，也一样，他们从未觉得这是什么 “秘密”，他就是那么做的，他们很久以来就是那么做的，他们误以为所有人都是那么做的。
+我猜，那些 “貌似一出手就已然是高手” 的人，也一样，他们从未觉得这是什么 “秘密”，他们就是那么做的，他们很久以来就是那么做的，他们误以为所有人都是那么做的。
 
 从另外一方面，外人更希望他们拥有的是个 “秘密”。于是，因为自己并不知道那个 “秘密”，所以，自己做不到他们那样 —— 这样看起来就合理了，自己的心里也够舒服了，毕竟看起来理所应当了么。
 
@@ -81,9 +80,9 @@
 
 比如，我这本就跟别人写的很不一样。我的出发点是把编程当作一个自学的例子，重点在于学会如何自学，并且通过实践真的习得一个起初你觉得不是刚需，学会之后发现干脆离不开的、不可或缺的技能。这本书的内容组织方式也不一样 —— 反正你现在已经知道了。
 
-另外，这本书的目标里有更重要的另外一个：“让你有能力靠自己能够理解所有的官方文档” —— 书里不用讲官方标准库里的每个模块、每个函数究竟如何使用，因为那些在官方文档里定义得非常清楚……
+另外，这本书的目标里有更重要的另外一个：“让你有能力靠自己能够理解所有的官方文档” —— 书里不用讲 Node / 浏览器环境里每个 API、每个函数究竟如何使用，因为那些在 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript) 与各运行时官方文档里定义得非常清楚……
 
-而其他人写的呢？比如 [Think Python](http://greenteapress.com/wp/think-python-2e/)，比如 [A Bite of Python](https://python.swaroopch.com/)，再比如 [Dive into Python](https://linux.die.net/diveintopython/html/)<a href='#fn1' name='fn1b'><sup>[1]</sup></a>，以及网上很多很多免费的 Python 教程都写得很好呢！
+而其他人写的呢？比如 [Eloquent JavaScript](https://eloquentjavascript.net/)，比如 [JavaScript.info](https://javascript.info/)，再比如 [You Don't Know JS (book series)](https://github.com/getify/You-Dont-Know-JS)<a href='#fn1' name='fn1b'><sup>[1]</sup></a>，以及网上很多很多免费的 Javascript 教程都写得很好呢！
 
 没有经验的人不懂而已。当你搞明白了一本书，后面再多读哪怕很多本的时间精力成本都是很低的，但每多读一本，都能让你在这个话题中变得**更为完整**。
 
@@ -180,7 +179,7 @@
 -----
 **脚注**
 
-<a name='fn1'>[1]</a>：一点八卦：Dive into Python 的作者是 [Mark Pilgrim](https://en.wikipedia.org/wiki/Mark_Pilgrim)；他是互联网上最著名的自绝于信息世界（[infosuicide](https://www.urbandictionary.com/define.php?term=infosuicide)）的三人之一。另外两位分别是比特币的作者 [Satoshi Nakamoto](https://en.wikipedia.org/wiki/Satoshi_Nakamoto)，和 [Why the lucky stiff](https://whytheluckystiff.net/) 的作者 [Jonathan Gillette](https://en.wikipedia.org/wiki/Why_the_lucky_stiff)。
+<a name='fn1'>[1]</a>：You Don't Know JS 的作者是 [Kyle Simpson](https://github.com/getify)。另外值得一提的是：开放且高质量的免费教程，本身就是 “多读几本” 这件事成本极低的最好证明 —— 你完全可以从 [Eloquent JavaScript](https://eloquentjavascript.net/)、[JavaScript.info](https://javascript.info/)、[MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript) 同时入手，互为补充。
 
 <a href='#fn1b'><small>↑Back to Content↑</small></a>
 
@@ -191,3 +190,6 @@
 <a name='fn3'>[3]</a>：写完这一段，给霍炬看，他当场嘲笑我，“哈！当年我就说，你应该学学 Vim，是不是到现在你都没学？” 我无言以对，因为真的就没学…… 然后，我想了想，回复他说，“好吧，我决定写一个 Vim 教程出来，嗯。”
 
 <a href='#fn3b'><small>↑Back to Content↑</small></a>
+
+<a href="./Part.3.F.social-selfteaching.md" ><small>Next Page</small></a>
+

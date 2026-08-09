@@ -34,22 +34,21 @@ Wikipedia 上对正则表达式的说明如下：
 
 理解起来相当顺畅。
 
-以下的 Python 代码中，[`\wo\w`](https://regexper.com#%5Cwo%5Cw) 就是一个*规则表达式*（或称为*规则*）；
+以下的 Javascript 代码中，[`\wo\w`](https://regexper.com#%5Cwo%5Cw) 就是一个*规则表达式*（或称为*规则*）；
 
-而 `re.findall(pttn, str)` 的作用就是，在 `str` 里找到所有与这个**规则**（Pattern，模式）**一致**（Match，匹配）的字符串：
+而 `text.match(/.../g)` 的作用就是，在 `text` 里找到所有与这个**规则**（Pattern，模式）**一致**（Match，匹配）的字符串：
 
 
-```python
-import re
-str = 'The quick brown fox jumps over the lazy dog'
-pttn = re.compile(r'\wo\w')
-re.findall(pttn, str)
+```javascript
+const text = 'The quick brown fox jumps over the lazy dog';
+const pttn = /\wo\w/g;
+console.log(text.match(pttn));
 ```
 
 
 
 
-    ['row', 'fox', 'dog']
+    [ 'row', 'fox', 'dog' ]
 
 
 
@@ -73,48 +72,46 @@ re.findall(pttn, str)
 
 ![](images/regex-test.gif)
 
-Python 的项目代码仓库里有一个很简短的 Demo 程序，叫 [`redemo.py`](https://github.com/python/cpython/blob/master/Tools/demo/redemo.py)，它使用 [Tcl/Tk](https://docs.python.org/3/library/tkinter.html) 作为图形界面，也可以用来测试正则表达式。
+Javascript 本身没有像老式 Python `redemo.py` 那样的官方小 GUI Demo，但你可以随时用这些方式试手：
 
-它的代码地址是：
+* 在浏览器控制台（Chrome / Firefox DevTools）里直接敲 `/pattern/g` 和 `'text'.match(...)`；
+* 在 Node REPL 里同样试验（终端运行 `node`）；
+* 目前（2019 起）网上最方便的 Regex 测试器，是 [regex101.com](https://regex101.com) —— 把 Flavor 选成 ECMAScript / Javascript 即可。
 
-> https://raw.githubusercontent.com/python/cpython/master/Tools/demo/redemo.py
-
-它运行起来长成这样：
-
-![](images/redemo.png)
-
-目前（2019）网上最方便的 Regex 测试器，是 [regex101.com](https://regex101.com)：
-
-以下，就是在一段文本中，找出所有首写字母大写的词汇的*过程*，并将其先全部替换成小写，再将其全部替换为大写的过程；使用的正则表达式是 `([A-Z]\w+)`，替换表达式分别是 `\L$1` 和 `\U$1`：
+以下，就是在一段文本中，找出所有首写字母大写的词汇的*过程*，并将其先全部替换成小写，再将其全部替换为大写的过程；使用的正则表达式是 `([A-Z]\w+)`，替换表达式分别是 `\L$1` 和 `\U$1`（这是部分编辑器 / 引擎支持的大小写转换写法；标准 Javascript 的 `String.prototype.replace` 本身并不内建 `\L` / `\U`，需要你自己用回调函数做大小写转换）：
 
 ![](images/regex101.gif)
 
 这个网站太好了，所以，平日里我是用 [Nativefier](https://github.com/jiahaog/nativefier) 工具将这个网站打包为一个 Mac Desktop App 使用。不过，它也有局限，就是被搜索文件略微大点就报错，说 `timeout`……
+
+另外贴一张历史上 Python 自带 `redemo` 的界面图，仅供对照观感 —— 你现在用 regex101 或编辑器自带的 Regex 面板就够了：
+
+![](images/redemo.png)
 
 ## 准备工作
 
 
 我们需要个文本文件，用来当作练习使用正则表达式去搜索替换的目标。这个文件保存在当前的根目录，文件名称是：`regex-target-text-sample.txt`。
 
-以下代码中，`pttn = r'beg[iau]ns?'` 这一句中的 [`beg[iau]ns?`](https://regexper.com#beg[iau]ns?) 就是 Regex 的 Pattern。
+以下代码中，`const pttn = /beg[iau]ns?/g` 这一句中的 [`beg[iau]ns?`](https://regexper.com#beg[iau]ns?) 就是 Regex 的 Pattern。
 
-**注意**：在 Python 代码中，写 Pattern 的时候，之所以要在字符串 `'...'` 之前加上 `r`，写成 `r'...'`，是因为如果不用 raw string 的话，那么，每个转义符号都要写成 `\\`；如果用 raw string，转义符号就可以直接使用 `\` 本身了…… 当然，如果你想搜索 `\` 这个符号本身的话，那么还是得写 `\\`。
+**注意**：在 Javascript 代码中，写 Pattern 时优先使用**正则字面量** `/.../`（而不是普通字符串）。Python 里常见的 raw string `r'...'` 是为了少写反斜杠；在 Javascript 的正则字面量里，多数转义可以直接写 `\`，但若你用 `new RegExp('...')` 从**字符串**构造正则，则每个 `\` 往往要写成 `\\`。另外，若要匹配 `\` 本身，字面量里仍需写成 `\\`。还要注意：正则字面量里的 `/` 本身若出现在 pattern 中，需要写成 `\/`。
 
-而 `re.findall(pttn, str)` 的意思是说，把 `str` 中所有与 `pttn` 这个规则一致的字符串都找出来：
+而 `text.match(pttn)`（带 `g` 标志）的意思是说，把 `text` 中所有与该规则一致的字符串都找出来：
 
 
-```python
-import re
-with open('regex-target-text-sample.txt', 'r') as f:
-    str = f.read()
-pttn = r'beg[iau]ns?'
-re.findall(pttn, str)
+```javascript
+import fs from 'node:fs';
+
+const text = fs.readFileSync('regex-target-text-sample.txt', 'utf8');
+const pttn = /beg[iau]ns?/g;
+console.log(text.match(pttn));
 ```
 
 
 
 
-    ['begin', 'began', 'begun', 'begin']
+    [ 'begin', 'began', 'begun', 'begin' ]
 
 
 
@@ -149,7 +146,9 @@ a$4Bh9XE&E
 <p>Keep it simple, simple, simple!</p>
 ```
 
-在以下的示例中，有时直接设定了 str 的值，而不是使用以上整个文本文件 —— 因为读者在阅读的时候，最好能直接看到被搜索的字符串。另外，如果使用整个文件，所得到的 Match 太多，也确实影响阅读。
+在以下的示例中，有时直接设定了 `text` 的值，而不是使用以上整个文本文件 —— 因为读者在阅读的时候，最好能直接看到被搜索的字符串。另外，如果使用整个文件，所得到的 Match 太多，也确实影响阅读。
+
+**再提醒一点**：Javascript 里若匹配失败，`String.prototype.match` 在带 `g` 时可能返回 `null` 而不是空数组；教学示例里为了省事有时直接 `console.log(text.match(pttn))`，自己写工具函数时可以写成 `text.match(pttn) ?? []`。
 
 ## 优先级
 
@@ -170,7 +169,7 @@ Regex 也一样，它本身就是个迷你语言（Mini Language）。在 Regex 
 | 5 | 或（Alternation）| <code>a&#124;b&#124;c</code>                   |
 | 6 | 原子 (Atoms)                 | `a` `[^abc]` `\t` `\r` `\n` `\d` `\D` `\s` `\S` `\w` `\W` `.` |
 
-当然，你若是在之前，没有自学过、理解过 Python（或者任何其它编程语言）表达式中的操作符优先级，那么一上来就看上面的表格不仅对你没有帮助，只能让你更迷惑。
+当然，你若是在之前，没有自学过、理解过 Javascript（或者任何其它编程语言）表达式中的操作符优先级，那么一上来就看上面的表格不仅对你没有帮助，只能让你更迷惑。
 
 —— 这就是理解能力逐步积累逐步加强的过程。
 
@@ -184,29 +183,27 @@ Regex 也一样，它本身就是个迷你语言（Mini Language）。在 Regex 
 
 本义字符包括从 `a` 到 `z`，`A` 到 `Z`，`0` 到 `9`，还有 `_` —— 它们所代表的就是它们的字面值。
 
-即，相当于，`string.ascii_letters` 和 `string.digits` 以及 `_`。
+即，相当于下面这两个字符表，再加上 `_`：
 
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-
-import string
-string.ascii_letters
-string.digits
+```javascript
+const asciiLetters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const digits = '0123456789';
+console.log(asciiLetters);
+console.log(digits);
 ```
 
 
 
 
-    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 
 
 
 
 
 
-    '0123456789'
+    0123456789
 
 
 
@@ -227,18 +224,16 @@ string.digits
 比如，[`beg[iau]n`](https://regexper.com#beg[iau]n) 能够代表 `begin`、`began`，以及 `begun`。
 
 
-```python
-import re
-
-str = 'begin began begun bigins begining'
-pttn = r'beg[iau]n'
-re.findall(pttn, str)
+```javascript
+const text = 'begin began begun bigins begining';
+const pttn = /beg[iau]n/g;
+console.log(text.match(pttn));
 ```
 
 
 
 
-    ['begin', 'began', 'begun', 'begin']
+    [ 'begin', 'began', 'begun', 'begin' ]
 
 
 
@@ -257,7 +252,7 @@ re.findall(pttn, str)
 
 `\D` 任意非数字；等价于 `[^0-9]`
 
-`\w` 任意本义字符；等价于 `[a-zA-Z0-9_]`
+`\w` 任意本义字符；等价于 `[a-zA-Z0-9_]`（加 `u` 标志时行为会更 “Unicode 化”，见后文控制标记）
 
 `\W` 任意非本义字符；等价于 `[^a-zA-Z0-9_]`
 
@@ -265,7 +260,7 @@ re.findall(pttn, str)
 
 `\S` 任意非空白；相当于 `[^ \f\n\r\t\v]`（注意，紧随 `^` 之后的是一个空格符号）
 
-`.` 除 `\r` `\n` 之外的任意字符；相当于 `[^\r\n]`
+`.` 除换行符之外的任意字符；在 Javascript 默认情况下大致相当于 `[^\n]`（具体还受 `s`/`dotAll` 标志影响）
 
 类别原子挺好记忆的，如果你知道各个字母是哪个词的首字母的话：
 
@@ -282,18 +277,16 @@ re.findall(pttn, str)
 > * `v` 是 vertical tab
 
 
-```python
-import re
-
-str = '<dl>(843) 542-4256</dl> <dl>(431) 270-9664</dl>'
-pttn = r'\d\d\d\-'
-re.findall(pttn, str)
+```javascript
+const text = '<dl>(843) 542-4256</dl> <dl>(431) 270-9664</dl>';
+const pttn = /\d\d\d\-/g;
+console.log(text.match(pttn));
 ```
 
 
 
 
-    ['542-', '270-']
+    [ '542-', '270-' ]
 
 
 
@@ -301,40 +294,37 @@ re.findall(pttn, str)
 
 我们可以用边界原子指定边界。也可以称作 “定位操作符”。
 
-`^` 匹配被搜索字符串的开始位置；
+`^` 匹配被搜索字符串的开始位置（若使用 `m` 标志，则还匹配每一行的行首）；
 
-`$` 匹配被搜索字符串的结束位置；
+`$` 匹配被搜索字符串的结束位置（若使用 `m` 标志，则还匹配每一行的行尾）；
 
 `\b` 匹配单词的边界；[`er\b`](https://regexper.com#er%5Cb)，能匹配 `coder` 中的 `er`，却不能匹配 `error` 中的 `er`；
 
 `\B` 匹配非单词边界；[`er\B`](https://regexper.com#er%5CB)，能匹配 `error` 中的 `er`，却不能匹配 `coder` 中的 `er`。
 
 
-```python
-import re
-
-str = 'never ever verb however everest'
-pttn = r'er\b'
-re.findall(pttn, str)
-pttn = r'er\B'
-re.findall(pttn, str)
+```javascript
+const text = 'never ever verb however everest';
+console.log(text.match(/er\b/g));
+console.log(text.match(/er\B/g));
 ```
 
 
 
 
-    ['er', 'er', 'er']
+    [ 'er', 'er', 'er' ]
 
 
 
 
 
 
-    ['er', 'er']
+
+    [ 'er', 'er' ]
 
 
 
-**注意**：`^` 和 `$` 在 Python 语言中被 `\A` 和 `\Z` 替代。
+**注意**：Javascript **没有**标准的 `\A` / `\Z`（那是 Python `re` 等引擎里 “整个字符串起止” 的锚点）。在 Javascript 里请用 `^` / `$`；需要按行锚定时加上 `m` 标志。
 
 事实上，每种语言或多或少都对 Regex 有自己的定制。不过，本章讨论的绝大多数细节，都是通用的。
 
@@ -379,52 +369,45 @@ re.findall(pttn, str)
 > 例如，[`go{2,5}gle`](https://regexper.com#go%7B2,5%7Dgle)，能匹配 `google` `gooogle` `goooogle` 或 `gooooogle`，但不能匹配 `gogle` 和 `gooooooogle`
 
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
+```javascript
+import fs from 'node:fs';
 
-import re
-with open('regex-target-text-sample.txt', 'r') as f:
-    str = f.read()
+const text = fs.readFileSync('regex-target-text-sample.txt', 'utf8');
 
-pttn = r'go+gle'
-re.findall(pttn, str)
-
-pttn = r'go{2,5}gle'
-re.findall(pttn, str)
-
-pttn = r'colou?red'
-re.findall(pttn, str)
-
-pttn = r'520*'
-re.findall(pttn, str)
+console.log(text.match(/go+gle/g));
+console.log(text.match(/go{2,5}gle/g));
+console.log(text.match(/colou?red/g));
+console.log(text.match(/520*/g));
 ```
 
 
 
 
-    ['google', 'gooogle', 'goooogle', 'goooooogle']
+    [ 'google', 'gooogle', 'goooogle', 'goooooogle' ]
 
 
 
 
 
 
-    ['google', 'gooogle', 'goooogle']
+
+    [ 'google', 'gooogle', 'goooogle' ]
 
 
 
 
 
 
-    ['coloured', 'colored']
+
+    [ 'coloured', 'colored' ]
 
 
 
 
 
 
-    ['520', '52000', '5200000', '520000000', '520000000000']
+
+    [ '520', '52000', '5200000', '520000000', '520000000000' ]
 
 
 
@@ -437,84 +420,69 @@ re.findall(pttn, str)
 > * `(er)` 是一个原子，`'er'`
 
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
+```javascript
+const text = 'error wonderer severeness';
 
-import re
-
-str = 'error wonderer severeness'
-
-pttn = r'er'
-re.findall(pttn, str)
-
-pttn = r'[er]'
-re.findall(pttn, str)
-
-pttn = r'(er)'
-re.findall(pttn, str)
+console.log(text.match(/er/g));
+console.log(text.match(/[er]/g));
+console.log([...text.matchAll(/(er)/g)].map((m) => m[1]));
 ```
 
 
 
 
-    ['er', 'er', 'er', 'er']
+    [ 'er', 'er', 'er', 'er' ]
 
 
 
 
 
 
-    ['e', 'r', 'r', 'r', 'e', 'r', 'e', 'r', 'e', 'e', 'r', 'e', 'e']
+
+    [ 'e', 'r', 'r', 'r', 'e', 'r', 'e', 'r', 'e', 'e', 'r', 'e', 'e' ]
 
 
 
 
 
 
-    ['er', 'er', 'er', 'er']
+
+    [ 'er', 'er', 'er', 'er' ]
 
 
 
 在以上的例子中，看不出 `er` 和 `(er)` 的区别，但是，加上数量操作符就不一样了 —— 因为*数量操作符只对它之前的那一个原子进行操作*：
 
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
+```javascript
+const text = 'error wonderer severeness';
 
-import re
-
-str = 'error wonderer severeness'
-
-pttn = r'er+'
-re.findall(pttn, str)
-
-pttn = r'[er]+'
-re.findall(pttn, str)
-
-pttn = r'(er)+'
-re.findall(pttn, str)
+console.log(text.match(/er+/g));
+console.log(text.match(/[er]+/g));
+// 带捕获组时，用 matchAll 才能稳定拿到每一组；m[1] 是该次匹配里组 1 的值
+console.log([...text.matchAll(/(er)+/g)].map((m) => m[1]));
 ```
 
 
 
 
-    ['err', 'er', 'er', 'er']
+    [ 'err', 'er', 'er', 'er' ]
 
 
 
 
 
 
-    ['err', 'r', 'erer', 'e', 'ere', 'e']
+
+    [ 'err', 'r', 'erer', 'e', 'ere', 'e' ]
 
 
 
 
 
 
-    ['er', 'er', 'er']
+
+    [ 'er', 'er', 'er' ]
 
 
 
@@ -525,18 +493,16 @@ re.findall(pttn, str)
 于是，[`begin|began|begun`](https://regexper.com#begin%7Cbegan%7Cbegun) 能够匹配 `begin` 或 `began` 或 `begun`。
 
 
-```python
-import re
-
-str = 'begin began begun begins beginn'
-pttn = r'begin|began|begun'
-re.findall(pttn, str)
+```javascript
+const text = 'begin began begun begins beginn';
+const pttn = /begin|began|begun/g;
+console.log(text.match(pttn));
 ```
 
 
 
 
-    ['begin', 'began', 'begun', 'begin', 'begin']
+    [ 'begin', 'began', 'begun', 'begin', 'begin' ]
 
 
 
@@ -546,33 +512,20 @@ re.findall(pttn, str)
 
 
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
+```javascript
+const text = 'achroiocythaemia achroiocythemia a|e';
 
-import re
-
-str = 'achroiocythaemia achroiocythemia a|e'
-pttn = r'[a|ae]'
-re.findall(pttn, str)
-
-pttn = r'[a|e]'
-re.findall(pttn, str)
-
-pttn = r'[ae]'
-re.findall(pttn, str)
-
-pttn = r'[(ae)]'
-re.findall(pttn, str)
-
-pttn = r'[a|ae|(ae)]'
-re.findall(pttn, str)
+console.log(text.match(/[a|ae]/g));
+console.log(text.match(/[a|e]/g));
+console.log(text.match(/[ae]/g));
+console.log(text.match(/[(ae)]/g));
+console.log(text.match(/[a|ae|(ae)]/g));
 ```
 
 
 
 
-    ['a', 'a', 'e', 'a', 'a', 'e', 'a', 'a', '|', 'e']
+    [ 'a', 'a', 'e', 'a', 'a', 'e', 'a', 'a', '|', 'e' ]
 
 
 
@@ -580,41 +533,38 @@ re.findall(pttn, str)
 
 捕获（Capture），使用的是圆括号 `()`。使用圆括号得到的匹配的值被暂存成一个带有索引的列表，第一个是 `$1`，第二个是 `$2`…… 以此类推。随后，我们可以在替换的过程中使用 `$1` `$2` 中所保存的值。
 
-**注意**：在 Python 语言中调用 `re` 模块之后，在 `re.sub()` 中调用被匹配的值，用的索引方法是 `\1`、`\2`…… 以此类推。
+**注意**：在 Javascript 的 `String.prototype.replace` 里，引用捕获组请写 `$1`、`$2`……（不是 Python `re.sub` 里常见的 `\1`、`\2`）。若要用编程方式拿到每一次匹配的各组，请用 `String.prototype.matchAll`（记得给正则加上 `g` 标志）：
 
 
-```python
-import re
-str = 'The white dog wears a black hat.'
-pttn = r'The (white|black) dog wears a (white|black) hat.'
-re.findall(pttn, str)
+```javascript
+const text = 'The white dog wears a black hat.';
+const pttn = /The (white|black) dog wears a (white|black) hat./g;
 
-repl = r'The \2 dog wears a \1 hat.'
-re.sub(pttn, repl, str)
+console.log([...text.matchAll(pttn)].map((m) => [m[1], m[2]]));
 
-repl = r'The \1 dog wears a \1 hat.'
-re.sub(pttn, repl, str)
-
+console.log(text.replace(pttn, 'The $2 dog wears a $1 hat.'));
+console.log(text.replace(/The (white|black) dog wears a (white|black) hat./, 'The $1 dog wears a $1 hat.'));
 ```
 
 
 
 
-    [('white', 'black')]
+    [ [ 'white', 'black' ] ]
 
 
 
 
 
 
-    'The black dog wears a white hat.'
+
+    The black dog wears a white hat.
 
 
 
 
 
 
-    'The white dog wears a white hat.'
+    The white dog wears a white hat.
 
 
 
@@ -623,34 +573,38 @@ re.sub(pttn, repl, str)
 有时，你并不想捕获圆括号中的内容，在那个地方你使用括号的目的只是分组，而非捕获，那么，你就在圆括号内最开头加上 `?:` —— `(?:...)`：
 
 
-```python
-import re
-str = 'The white dog wears a black hat.'
-pttn = r'The (?:white|black) dog wears a (white|black) hat.'
-re.findall(pttn, str)                   # 只捕获了一处，也就是说只有一个值将来可以被引用
+```javascript
+const text = 'The white dog wears a black hat.';
+const pttn = /The (?:white|black) dog wears a (white|black) hat./g;
 
-repl = r'The \1 dog wears a \1 hat.'    # 之前的一处捕获，在替换时可被多次引用
-re.sub(pttn, repl, str)
+// 只捕获了一处，也就是说只有一个值将来可以被引用
+console.log([...text.matchAll(pttn)].map((m) => m[1]));
 
+// 之前的一处捕获，在替换时可被多次引用
+console.log(text.replace(pttn, 'The $1 dog wears a $1 hat.'));
 ```
 
 
 
 
-    ['black']
+    [ 'black' ]
 
 
 
 
 
 
-    'The black dog wears a black hat.'
+
+    The black dog wears a black hat.
 
 
 
-在 Python 代码中使用正则表达式，匹配和捕获以及随后的替换，有更灵活的方式，因为可以对那些值直接编程。`re.sub()` 中，`repl` 参数甚至可以接收另外一个函数作为参数 —— 以后你肯定会自行认真阅读以下页面中的所有内容：
+在 Javascript 代码中使用正则表达式，匹配和捕获以及随后的替换，有更灵活的方式，因为可以对那些值直接编程。`String.prototype.replace` 的第二个参数甚至可以接收另外一个函数作为参数 —— 以后你肯定会自行认真阅读以下页面中的所有内容：
 
-> https://docs.python.org/3/library/re.html
+> * https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp
+> * https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/match
+> * https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll
+> * https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace
 
 非捕获匹配，还有若干个操作符：
 
@@ -664,7 +618,7 @@ re.sub(pttn, repl, str)
 
 `(?<=pattern)`
 >反向（look behind）肯定预查，与正向肯定预查类似，只是方向相反。例如，[`(?<=95|98|NT|2000)Windows`](https://regexper.com#(?%3C=95%7C98%7CNT%7C2000)Windows)
-能匹配 `2000Windows` 中的 `Windows`，但不能匹配 `3.1Windows` 中的 `Windows`。
+能匹配 `2000Windows` 中的 `Windows`，但不能匹配 `3.1Windows` 中的 `Windows`。**现代 Javascript 引擎（ES2018 起）已支持 lookbehind**；极老的环境可能没有，那时只能换写法。
 
  `(?<!pattern)`
  >反向否定预查，与正向否定预查类似，只是方向相反。例如 `(?<!95|98|NT|2000)Windows`
@@ -674,46 +628,35 @@ re.sub(pttn, repl, str)
 
 ## 控制标记
 
-有几个全局控制标记（Flag）需要了解，其中最常默认指定的有 `G` 和 `M`：
+有几个全局控制标记（Flag）需要了解。在 Javascript 里，它们写在正则字面量末尾，例如 `/pattern/gi`，或作为 `new RegExp(pattern, 'gi')` 的第二个参数：
  
-`A`/`ASCII`，默认为 `False`
+`g`（global）
 
-> * `\d`, `\D`, `\w`, `\W`, `\s`, `\S`, `\b`, 和 `\B` 等只限于 ASCII 字符
-> * 行内写法：`(?a)`
-> * Python re 模块中的常量：`re.A` `re.ASCII`
- 
-`I`/`IGNORECASE`，默认为 `False`
+> * 全局匹配：找到第一个 match 之后继续找下去；`String.prototype.match` 在带 `g` 时返回所有完整匹配组成的数组（**不含**捕获组细节），要同时拿捕获组请用 `matchAll`
+> * 没有 `g` 时，`match` 通常只返回第一次匹配（数组形式里会带上各组）
+> * 这和某些语言 “默认全局” 的习惯不同 —— **Javascript 默认不是 global**，需要你自己加 `g`
+
+`i`（ignoreCase）
 
 > * 忽略字母大小写
-> * 行内写法：`(?i)`
-> * Python re 模块中的常量：`re.I` `re.IGNORECASE`
+> * 等价于许多引擎里的 `(?i)` 思路；Javascript 字面量写作 `/pattern/i`
 
-`G`/`GLOBAL`，默认为 `True`
-> * 找到第一个 match 之后不返回
-> * 行内写法：`(?g)`
-> * Python re 模块中这个标记不能更改，默认为 TRUE
- 
-`L`/`LOCALE`，默认为 `False`
+`m`（multiline）
 
-> * 由本地语言设置决定 `\d`, `\D`, `\w`, `\W`, `\s`, `\S`, `\b`, 和 `\B` 等等的内容
-> * 行内写法：`(?L)`
-> * Python re 模块中的常量：`re.L` `re.LOCALE`
- 
-`M`/`MULTILINE`，默认为 `True`
+> * 使用本标志后，`^` 和 `$` 除了匹配整个字符串的首尾，还会匹配换行符之后 / 之前的行首行尾
 
-> * 使用本标志后，`^` 和 `$` 匹配行首和行尾时，会增加换行符之前和之后的位置。
-> * 行内写法：`(?m)`
-> * Python re 模块中的常量：`re.M` `re.MULTILINE`
- 
-`S`/`DOTALL`，默认为 `False`
-> * 使 `.` 完全匹配任何字符，包括换行；没有这个标志，`.` 匹配除了 `n` `r` 之外的任何字符。
-> * 行内写法：`(?s)`
-> * Python re 模块中的常量：`re.S` `re.DOTALL`
- 
-`X`/`VERBOSE`，默认为 `False`
-> * 当该标志被指定时，Pattern 中的的空白符会被忽略，除非该空白符在圆括号或方括号中，或在反斜杠 `\ ` 之后。这样做的结果是允许将注释写入 Pattern，这些注释会被 Regex 解析引擎忽略。注释用 `#` 号来标识，不过该符号不能在字符串或反斜杠之后。
-> * 行内写法：`(?x)`
-> * Python re 模块中的常量：`re.X` `re.VERBOSE`
+`s`（dotAll）
+
+> * 使 `.` 匹配包括换行在内的任意字符；没有这个标志时，`.` 通常不匹配换行符
+
+`u`（unicode）
+
+> * 按 Unicode 码点正确处理 surrogate pair 等；也会影响 `\w`、`\d`、`.` 等在 Unicode 场景下的行为
+> * 处理非 BMP 字符、emoji 时尤其有用
+
+另外还有 `y`（sticky）、`d`（hasIndices）等较进阶的标志，用到时再查 [MDN — RegExp](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp) 即可。
+
+Javascript **没有** Python `re.VERBOSE`（`x`）那种 “正则里写注释、忽略空白” 的标准标志；复杂 pattern 请拆变量或用普通代码注释说明。
 
 
 ## 几个最常用的 Regex
@@ -838,11 +781,12 @@ r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\]
 ?:\r\n)?[ \t])*))*)?;\s*)
 ```
 
+
 ## 趣事一则
 
 [ELIZA](https://en.wikipedia.org/wiki/ELIZA) 是人类史上第一个 “聊天机器人” 程序，上个世纪六十年代，1966 年实现的。核心就是使用正则表达式匹配对方语句中的关键词汇，再经过替换，形成看似有意义的 “回应” —— 事实上，ELIZA 完全不知道自己在说什么……
 
-几年后，就是七十年代初，1972 年，另外一个聊天机器人 [Parry](https://en.wikipedia.org/wiki/PARRY) <a href='#fn5' name='fn5b'><sup>[5]</sup></a>被写了出来…… 随后第二年，这两个聊天机器人在 ARPANET “碰面” 好好地聊了一下<a href='#fn6' name='fn6b'><sup>[6]</sup></a>：
+几年后，就是七十年代初，1972 年，另外一个聊天机器人 [Parry](https://en.wikipedia.org/wiki/PARRY) <a href='#fn5' name='fn5b'><sup>[5]</sup></a>被写了出来…… 随后第二年，这两个聊天机器人在 ARPANET “碰面” 好地聊了一下<a href='#fn6' name='fn6b'><sup>[6]</sup></a>：
 
 > ELIZA: Good Evening. Tell me your problems. Please terminate input with a period or a question mark.
 >
@@ -870,325 +814,360 @@ r\\]|\\.)*\](?:(?:\r\n)?[ \t])*)(?:\.(?:(?:\r\n)?[ \t])*(?:[^()<>@,;:\\".\[\]
 >
 > ......
 
-以下是后人用 Python 重新实现的 ELIZA 的程序代码，你可以直接执行它，尝试一下与 ELIZA 聊聊天：
+以下是后人用 Python 写过、这里改写成 Javascript 的 ELIZA 程序代码。你可以在 Node.js 里运行它（需要交互时用 `readline`），尝试一下与 ELIZA 聊聊天：
 
 
-```python
-# %load https://raw.githubusercontent.com/jezhiggins/eliza.py/master/eliza.py
-#----------------------------------------------------------------------
-#  eliza.py
-#
-#  a cheezy little Eliza knock-off by Joe Strout
-#  with some updates by Jeff Epler
-#  hacked into a module and updated by Jez Higgins
-#----------------------------------------------------------------------
+```javascript
+// eliza.js
+//----------------------------------------------------------------------
+//  a cheezy little Eliza knock-off by Joe Strout
+//  with some updates by Jeff Epler
+//  hacked into a module and updated by Jez Higgins
+//  ported to Javascript for this chapter
+//----------------------------------------------------------------------
 
-import string
-import re
-import random
+import * as readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
 
-class eliza:
-  def __init__(self):
-    self.keys = list(map(lambda x:re.compile(x[0], re.IGNORECASE),gPats))
-    self.values = list(map(lambda x:x[1],gPats))
+class Eliza {
+  constructor() {
+    // Python 的 re.match 从字符串开头匹配；这里在编译时加上 ^
+    this.keys = gPats.map(([pattern]) => new RegExp('^' + pattern, 'i'));
+    this.values = gPats.map(([, responses]) => responses);
+  }
 
-  #----------------------------------------------------------------------
-  # translate: take a string, replace any words found in dict.keys()
-  #  with the corresponding dict.values()
-  #----------------------------------------------------------------------
-  def translate(self,str,dict):
-    words = str.lower().split()
-    keys = dict.keys();
-    for i in range(0,len(words)):
-      if words[i] in keys:
-        words[i] = dict[words[i]]
-    return ' '.join(words)
+  //----------------------------------------------------------------------
+  // translate: take a string, replace any words found in dict keys
+  //  with the corresponding dict values
+  //----------------------------------------------------------------------
+  translate(text, dict) {
+    const words = text.toLowerCase().split(/\s+/);
+    for (let i = 0; i < words.length; i++) {
+      if (Object.hasOwn(dict, words[i])) {
+        words[i] = dict[words[i]];
+      }
+    }
+    return words.join(' ');
+  }
 
-  #----------------------------------------------------------------------
-  #  respond: take a string, a set of regexps, and a corresponding
-  #    set of response lists; find a match, and return a randomly
-  #    chosen response from the corresponding list.
-  #----------------------------------------------------------------------
-  def respond(self,str):
-    # find a match among keys
-    for i in range(0, len(self.keys)):
-      match = self.keys[i].match(str)
-      if match:
-        # found a match ... stuff with corresponding value
-        # chosen randomly from among the available options
-        resp = random.choice(self.values[i])
-        # we've got a response... stuff in reflected text where indicated
-        pos = resp.find('%')
-        while pos > -1:
-          num = int(resp[pos+1:pos+2])
-          resp = resp[:pos] + \
-            self.translate(match.group(num),gReflections) + \
-            resp[pos+2:]
-          pos = resp.find('%')
-        # fix munged punctuation at the end
-        if resp[-2:] == '?.': resp = resp[:-2] + '.'
-        if resp[-2:] == '??': resp = resp[:-2] + '?'
-        return resp
-
-#----------------------------------------------------------------------
-# gReflections, a translation table used to convert things you say
-#    into things the computer says back, e.g. "I am" --> "you are"
-#----------------------------------------------------------------------
-gReflections = {
-  "am"   : "are",
-  "was"  : "were",
-  "i"    : "you",
-  "i'd"  : "you would",
-  "i've"  : "you have",
-  "i'll"  : "you will",
-  "my"  : "your",
-  "are"  : "am",
-  "you've": "I have",
-  "you'll": "I will",
-  "your"  : "my",
-  "yours"  : "mine",
-  "you"  : "me",
-  "me"  : "you"
+  //----------------------------------------------------------------------
+  //  respond: take a string, a set of regexps, and a corresponding
+  //    set of response lists; find a match, and return a randomly
+  //    chosen response from the corresponding list.
+  //----------------------------------------------------------------------
+  respond(text) {
+    for (let i = 0; i < this.keys.length; i++) {
+      const match = text.match(this.keys[i]);
+      if (match) {
+        let resp = this.values[i][Math.floor(Math.random() * this.values[i].length)];
+        let pos = resp.indexOf('%');
+        while (pos > -1) {
+          const num = Number(resp[pos + 1]);
+          resp =
+            resp.slice(0, pos) +
+            this.translate(match[num] ?? '', gReflections) +
+            resp.slice(pos + 2);
+          pos = resp.indexOf('%');
+        }
+        if (resp.endsWith('?.')) resp = resp.slice(0, -2) + '.';
+        if (resp.endsWith('??')) resp = resp.slice(0, -2) + '?';
+        return resp;
+      }
+    }
+    return '';
+  }
 }
 
-#----------------------------------------------------------------------
-# gPats, the main response table.  Each element of the list is a
-#  two-element list; the first is a regexp, and the second is a
-#  list of possible responses, with group-macros labelled as
-#  %1, %2, etc.
-#----------------------------------------------------------------------
-gPats = [
-  [r'I need (.*)',
-  [  "Why do you need %1?",
-    "Would it really help you to get %1?",
-    "Are you sure you need %1?"]],
+//----------------------------------------------------------------------
+// gReflections, a translation table used to convert things you say
+//    into things the computer says back, e.g. "I am" --> "you are"
+//----------------------------------------------------------------------
+const gReflections = {
+  am: 'are',
+  was: 'were',
+  i: 'you',
+  "i'd": 'you would',
+  "i've": 'you have',
+  "i'll": 'you will',
+  my: 'your',
+  are: 'am',
+  "you've": 'I have',
+  "you'll": 'I will',
+  your: 'my',
+  yours: 'mine',
+  you: 'me',
+  me: 'you',
+};
 
-  [r'Why don\'?t you ([^\?]*)\??',
-  [  "Do you really think I don't %1?",
-    "Perhaps eventually I will %1.",
-    "Do you really want me to %1?"]],
+//----------------------------------------------------------------------
+// gPats, the main response table.  Each element of the list is a
+//  two-element list; the first is a regexp source string, and the second
+//  is a list of possible responses, with group-macros labelled as
+//  %1, %2, etc.
+//----------------------------------------------------------------------
+const gPats = [
+  ['I need (.*)',
+  ['Why do you need %1?',
+    'Would it really help you to get %1?',
+    'Are you sure you need %1?']],
 
-  [r'Why can\'?t I ([^\?]*)\??',
-  [  "Do you think you should be able to %1?",
-    "If you could %1, what would you do?",
-    "I don't know -- why can't you %1?",
-    "Have you really tried?"]],
+  ["Why don\\'?t you ([^\\?]*)\\??",
+  ['Do you really think I don\'t %1?',
+    'Perhaps eventually I will %1.',
+    'Do you really want me to %1?']],
 
-  [r'I can\'?t (.*)',
-  [  "How do you know you can't %1?",
-    "Perhaps you could %1 if you tried.",
-    "What would it take for you to %1?"]],
+  ["Why can\\'?t I ([^\\?]*)\\??",
+  ['Do you think you should be able to %1?',
+    'If you could %1, what would you do?',
+    'I don\'t know -- why can\'t you %1?',
+    'Have you really tried?']],
 
-  [r'I am (.*)',
-  [  "Did you come to me because you are %1?",
-    "How long have you been %1?",
-    "How do you feel about being %1?"]],
+  ["I can\\'?t (.*)",
+  ['How do you know you can\'t %1?',
+    'Perhaps you could %1 if you tried.',
+    'What would it take for you to %1?']],
 
-  [r'I\'?m (.*)',
-  [  "How does being %1 make you feel?",
-    "Do you enjoy being %1?",
-    "Why do you tell me you're %1?",
-    "Why do you think you're %1?"]],
+  ['I am (.*)',
+  ['Did you come to me because you are %1?',
+    'How long have you been %1?',
+    'How do you feel about being %1?']],
 
-  [r'Are you ([^\?]*)\??',
-  [  "Why does it matter whether I am %1?",
-    "Would you prefer it if I were not %1?",
-    "Perhaps you believe I am %1.",
-    "I may be %1 -- what do you think?"]],
+  ["I\\'?m (.*)",
+  ['How does being %1 make you feel?',
+    'Do you enjoy being %1?',
+    'Why do you tell me you\'re %1?',
+    'Why do you think you\'re %1?']],
 
-  [r'What (.*)',
-  [  "Why do you ask?",
-    "How would an answer to that help you?",
-    "What do you think?"]],
+  ['Are you ([^\\?]*)\\??',
+  ['Why does it matter whether I am %1?',
+    'Would you prefer it if I were not %1?',
+    'Perhaps you believe I am %1.',
+    'I may be %1 -- what do you think?']],
 
-  [r'How (.*)',
-  [  "How do you suppose?",
-    "Perhaps you can answer your own question.",
-    "What is it you're really asking?"]],
+  ['What (.*)',
+  ['Why do you ask?',
+    'How would an answer to that help you?',
+    'What do you think?']],
 
-  [r'Because (.*)',
-  [  "Is that the real reason?",
-    "What other reasons come to mind?",
-    "Does that reason apply to anything else?",
-    "If %1, what else must be true?"]],
+  ['How (.*)',
+  ['How do you suppose?',
+    'Perhaps you can answer your own question.',
+    'What is it you\'re really asking?']],
 
-  [r'(.*) sorry (.*)',
-  [  "There are many times when no apology is needed.",
-    "What feelings do you have when you apologize?"]],
+  ['Because (.*)',
+  ['Is that the real reason?',
+    'What other reasons come to mind?',
+    'Does that reason apply to anything else?',
+    'If %1, what else must be true?']],
 
-  [r'Hello(.*)',
-  [  "Hello... I'm glad you could drop by today.",
-    "Hi there... how are you today?",
-    "Hello, how are you feeling today?"]],
+  ['(.*) sorry (.*)',
+  ['There are many times when no apology is needed.',
+    'What feelings do you have when you apologize?']],
 
-  [r'I think (.*)',
-  [  "Do you doubt %1?",
-    "Do you really think so?",
-    "But you're not sure %1?"]],
+  ['Hello(.*)',
+  ['Hello... I\'m glad you could drop by today.',
+    'Hi there... how are you today?',
+    'Hello, how are you feeling today?']],
 
-  [r'(.*) friend (.*)',
-  [  "Tell me more about your friends.",
-    "When you think of a friend, what comes to mind?",
-    "Why don't you tell me about a childhood friend?"]],
+  ['I think (.*)',
+  ['Do you doubt %1?',
+    'Do you really think so?',
+    'But you\'re not sure %1?']],
 
-  [r'Yes',
-  [  "You seem quite sure.",
-    "OK, but can you elaborate a bit?"]],
+  ['(.*) friend (.*)',
+  ['Tell me more about your friends.',
+    'When you think of a friend, what comes to mind?',
+    'Why don\'t you tell me about a childhood friend?']],
 
-  [r'(.*) computer(.*)',
-  [  "Are you really talking about me?",
-    "Does it seem strange to talk to a computer?",
-    "How do computers make you feel?",
-    "Do you feel threatened by computers?"]],
+  ['Yes',
+  ['You seem quite sure.',
+    'OK, but can you elaborate a bit?']],
 
-  [r'Is it (.*)',
-  [  "Do you think it is %1?",
-    "Perhaps it's %1 -- what do you think?",
-    "If it were %1, what would you do?",
-    "It could well be that %1."]],
+  ['(.*) computer(.*)',
+  ['Are you really talking about me?',
+    'Does it seem strange to talk to a computer?',
+    'How do computers make you feel?',
+    'Do you feel threatened by computers?']],
 
-  [r'It is (.*)',
-  [  "You seem very certain.",
-    "If I told you that it probably isn't %1, what would you feel?"]],
+  ['Is it (.*)',
+  ['Do you think it is %1?',
+    'Perhaps it\'s %1 -- what do you think?',
+    'If it were %1, what would you do?',
+    'It could well be that %1.']],
 
-  [r'Can you ([^\?]*)\??',
-  [  "What makes you think I can't %1?",
-    "If I could %1, then what?",
-    "Why do you ask if I can %1?"]],
+  ['It is (.*)',
+  ['You seem very certain.',
+    'If I told you that it probably isn\'t %1, what would you feel?']],
 
-  [r'Can I ([^\?]*)\??',
-  [  "Perhaps you don't want to %1.",
-    "Do you want to be able to %1?",
-    "If you could %1, would you?"]],
+  ['Can you ([^\\?]*)\\??',
+  ['What makes you think I can\'t %1?',
+    'If I could %1, then what?',
+    'Why do you ask if I can %1?']],
 
-  [r'You are (.*)',
-  [  "Why do you think I am %1?",
-    "Does it please you to think that I'm %1?",
-    "Perhaps you would like me to be %1.",
-    "Perhaps you're really talking about yourself?"]],
+  ['Can I ([^\\?]*)\\??',
+  ['Perhaps you don\'t want to %1.',
+    'Do you want to be able to %1?',
+    'If you could %1, would you?']],
 
-  [r'You\'?re (.*)',
-  [  "Why do you say I am %1?",
-    "Why do you think I am %1?",
-    "Are we talking about you, or me?"]],
+  ['You are (.*)',
+  ['Why do you think I am %1?',
+    'Does it please you to think that I\'m %1?',
+    'Perhaps you would like me to be %1.',
+    'Perhaps you\'re really talking about yourself?']],
 
-  [r'I don\'?t (.*)',
-  [  "Don't you really %1?",
-    "Why don't you %1?",
-    "Do you want to %1?"]],
+  ["You\\'?re (.*)",
+  ['Why do you say I am %1?',
+    'Why do you think I am %1?',
+    'Are we talking about you, or me?']],
 
-  [r'I feel (.*)',
-  [  "Good, tell me more about these feelings.",
-    "Do you often feel %1?",
-    "When do you usually feel %1?",
-    "When you feel %1, what do you do?"]],
+  ["I don\\'?t (.*)",
+  ['Don\'t you really %1?',
+    'Why don\'t you %1?',
+    'Do you want to %1?']],
 
-  [r'I have (.*)',
-  [  "Why do you tell me that you've %1?",
-    "Have you really %1?",
-    "Now that you have %1, what will you do next?"]],
+  ['I feel (.*)',
+  ['Good, tell me more about these feelings.',
+    'Do you often feel %1?',
+    'When do you usually feel %1?',
+    'When you feel %1, what do you do?']],
 
-  [r'I would (.*)',
-  [  "Could you explain why you would %1?",
-    "Why would you %1?",
-    "Who else knows that you would %1?"]],
+  ['I have (.*)',
+  ['Why do you tell me that you\'ve %1?',
+    'Have you really %1?',
+    'Now that you have %1, what will you do next?']],
 
-  [r'Is there (.*)',
-  [  "Do you think there is %1?",
-    "It's likely that there is %1.",
-    "Would you like there to be %1?"]],
+  ['I would (.*)',
+  ['Could you explain why you would %1?',
+    'Why would you %1?',
+    'Who else knows that you would %1?']],
 
-  [r'My (.*)',
-  [  "I see, your %1.",
-    "Why do you say that your %1?",
-    "When your %1, how do you feel?"]],
+  ['Is there (.*)',
+  ['Do you think there is %1?',
+    'It\'s likely that there is %1.',
+    'Would you like there to be %1?']],
 
-  [r'You (.*)',
-  [  "We should be discussing you, not me.",
-    "Why do you say that about me?",
-    "Why do you care whether I %1?"]],
+  ['My (.*)',
+  ['I see, your %1.',
+    'Why do you say that your %1?',
+    'When your %1, how do you feel?']],
 
-  [r'Why (.*)',
-  [  "Why don't you tell me the reason why %1?",
-    "Why do you think %1?" ]],
+  ['You (.*)',
+  ['We should be discussing you, not me.',
+    'Why do you say that about me?',
+    'Why do you care whether I %1?']],
 
-  [r'I want (.*)',
-  [  "What would it mean to you if you got %1?",
-    "Why do you want %1?",
-    "What would you do if you got %1?",
-    "If you got %1, then what would you do?"]],
+  ['Why (.*)',
+  ['Why don\'t you tell me the reason why %1?',
+    'Why do you think %1?']],
 
-  [r'(.*) mother(.*)',
-  [  "Tell me more about your mother.",
-    "What was your relationship with your mother like?",
-    "How do you feel about your mother?",
-    "How does this relate to your feelings today?",
-    "Good family relations are important."]],
+  ['I want (.*)',
+  ['What would it mean to you if you got %1?',
+    'Why do you want %1?',
+    'What would you do if you got %1?',
+    'If you got %1, then what would you do?']],
 
-  [r'(.*) father(.*)',
-  [  "Tell me more about your father.",
-    "How did your father make you feel?",
-    "How do you feel about your father?",
-    "Does your relationship with your father relate to your feelings today?",
-    "Do you have trouble showing affection with your family?"]],
+  ['(.*) mother(.*)',
+  ['Tell me more about your mother.',
+    'What was your relationship with your mother like?',
+    'How do you feel about your mother?',
+    'How does this relate to your feelings today?',
+    'Good family relations are important.']],
 
-  [r'(.*) child(.*)',
-  [  "Did you have close friends as a child?",
-    "What is your favorite childhood memory?",
-    "Do you remember any dreams or nightmares from childhood?",
-    "Did the other children sometimes tease you?",
-    "How do you think your childhood experiences relate to your feelings today?"]],
+  ['(.*) father(.*)',
+  ['Tell me more about your father.',
+    'How did your father make you feel?',
+    'How do you feel about your father?',
+    'Does your relationship with your father relate to your feelings today?',
+    'Do you have trouble showing affection with your family?']],
 
-  [r'(.*)\?',
-  [  "Why do you ask that?",
-    "Please consider whether you can answer your own question.",
-    "Perhaps the answer lies within yourself?",
-    "Why don't you tell me?"]],
+  ['(.*) child(.*)',
+  ['Did you have close friends as a child?',
+    'What is your favorite childhood memory?',
+    'Do you remember any dreams or nightmares from childhood?',
+    'Did the other children sometimes tease you?',
+    'How do you think your childhood experiences relate to your feelings today?']],
 
-  [r'quit',
-  [  "Thank you for talking with me.",
-    "Good-bye.",
-    "Thank you, that will be $150.  Have a good day!"]],
+  ['(.*)\\?',
+  ['Why do you ask that?',
+    'Please consider whether you can answer your own question.',
+    'Perhaps the answer lies within yourself?',
+    'Why don\'t you tell me?']],
 
-  [r'(.*)',
-  [  "Please tell me more.",
-    "Let's change focus a bit... Tell me about your family.",
-    "Can you elaborate on that?",
-    "Why do you say that %1?",
-    "I see.",
-    "Very interesting.",
-    "%1.",
-    "I see.  And what does that tell you?",
-    "How does that make you feel?",
-    "How do you feel when you say that?"]]
-  ]
+  ['quit',
+  ['Thank you for talking with me.',
+    'Good-bye.',
+    'Thank you, that will be $150.  Have a good day!']],
 
-#----------------------------------------------------------------------
-#  command_interface
-#----------------------------------------------------------------------
-def command_interface():
-  print('Therapist\n---------')
-  print('Talk to the program by typing in plain English, using normal upper-')
-  print('and lower-case letters and punctuation.  Enter "quit" when done.')
-  print('='*72)
-  print('Hello.  How are you feeling today?')
+  ['(.*)',
+  ['Please tell me more.',
+    'Let\'s change focus a bit... Tell me about your family.',
+    'Can you elaborate on that?',
+    'Why do you say that %1?',
+    'I see.',
+    'Very interesting.',
+    '%1.',
+    'I see.  And what does that tell you?',
+    'How does that make you feel?',
+    'How do you feel when you say that?']],
+];
 
-  s = ''
-  therapist = eliza();
-  while s != 'quit':
-    try:
-      s = input('> ')
-    except EOFError:
-      s = 'quit'
-    print(s)
-    while s[-1] in '!.':
-      s = s[:-1]
-    print(therapist.respond(s))
+//----------------------------------------------------------------------
+//  command_interface — Node.js readline 版
+//----------------------------------------------------------------------
+async function commandInterface() {
+  console.log('Therapist\n---------');
+  console.log('Talk to the program by typing in plain English, using normal upper-');
+  console.log('and lower-case letters and punctuation.  Enter "quit" when done.');
+  console.log('='.repeat(72));
+  console.log('Hello.  How are you feeling today?');
 
+  const rl = readline.createInterface({ input, output });
+  const therapist = new Eliza();
+  let s = '';
 
-if __name__ == "__main__":
-  command_interface()
+  while (s !== 'quit') {
+    try {
+      s = await rl.question('> ');
+    } catch {
+      s = 'quit';
+    }
+    console.log(s);
+    while (s.length && '!.'.includes(s[s.length - 1])) {
+      s = s.slice(0, -1);
+    }
+    console.log(therapist.respond(s));
+  }
 
+  rl.close();
+}
+
+// 非交互演示：直接喂几句，方便你在文档里先看效果
+function demoSketch() {
+  const therapist = new Eliza();
+  const lines = [
+    'I need a vacation',
+    'I am sad',
+    'My mother never understood me',
+    'quit',
+  ];
+  console.log('Therapist\n---------');
+  console.log('Hello.  How are you feeling today?');
+  for (let s of lines) {
+    console.log('> ' + s);
+    while (s.length && '!.'.includes(s[s.length - 1])) {
+      s = s.slice(0, -1);
+    }
+    console.log(therapist.respond(s));
+  }
+}
+
+if (import.meta.main) {
+  // 终端交互：node eliza.js
+  // 若只想看非交互演示，可改成：demoSketch();
+  await commandInterface();
+}
+
+export { Eliza, gPats, gReflections, commandInterface, demoSketch };
 ```
 
     Therapist
@@ -1198,6 +1177,8 @@ if __name__ == "__main__":
     ========================================================================
     Hello.  How are you feeling today?
 
+
+补充一句：Javascript 的正则迭代**不会**抛出类似 Python 的 `StopIteration`；`match` / `matchAll` 耗尽后就是 `null` 或迭代结束（`done: true`）。写循环时按返回值判断即可。
 
 -----
 **脚注**
@@ -1227,4 +1208,4 @@ if __name__ == "__main__":
 <a href='#fn6b'><small>↑Back to Content↑</small></a>
     
 
-<a href="./Part.3.B.5.bnf-ebnf-pebnf.ipynb" ><small>Next Page</small></a>
+<a href="./Part.3.B.5.bnf-ebnf-pebnf.md" ><small>Next Page</small></a>

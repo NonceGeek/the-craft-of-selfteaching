@@ -6,7 +6,7 @@
 
 > https://dash.deno.com/
 
-![image-20250325104857590](/Users/liaohua/Documents/image-20250325104857590.png)
+![image-20250325104857590](images/image-20250325104857590.png)
 
 点击`New Playground`创建新的 `Javascript` 环境：
 

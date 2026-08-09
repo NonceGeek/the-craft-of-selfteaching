@@ -1,4 +1,3 @@
-
 # 这是自学者的黄金时代
 
 历史上，自学者从未像今天这样幸福。
@@ -21,7 +20,7 @@
 
 经过多年的发展，Google 的使用体验越来越好，2019 年的今天，你搜索以上语句返回的页面里，Google 甚至在众多搜索结果中选了一条它 “认为” 是 “最佳” 的搜索结果：
 
-![google-how-effectively](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/google-how-effectively.png?raw=true)
+![google-how-effectively](../images/google-how-effectively.png)
 
 [lifehack.com 上的这篇文章](https://www.lifehack.org/articles/technology/20-tips-use-google-search-efficiently.html)也的的确确值得细读 —— 读过且真正理解之后，不夸张地讲，你的 “搜索技能” 已经足够灭掉整个人类当前活跃群体中的 99% 了…… 这个说法真的完全没有夸张，绝大多数人就是不会在搜索的过程中使用那些符号的，比如 `-` `*` `~` `@` `#` `:` `"` `..` —— 还有很多其它技巧…… 话说，你在 Google 上用过 `Time *place*` 吗？
 
@@ -43,17 +42,17 @@ Google 还有更为强大的工具给你使用，叫做 Google Custom Search，�
 
 对编程工作来说，Google 当然格外地更为重要 —— 互联网上积累的最多最专业的信息，当然是计算机相关信息。所以，当你遇到什么错误提示的时候，不仅要问 Google，还要优先问问 [Stackoverflow](https://stackoverflow.com) —— 连 Google 自己都这么干。在 [colab.research.google.com](https://colab.research.google.com)（Google 为它的 TensorFlow 服务搭建的 Jupyterlab 环境）上，如果你运行什么代码出错了的话，那么，出错信息下面会出现一个按钮，上面写着：`SEARCH STACK OVERFLOW`，点击它就直接给你 [Stackoverflow](https://stackoverflow.com) 上的搜索结果…… 真够意思！
 
-![google-stackoverflow](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/google-stackoverflow.png?raw=true)
+![google-stackoverflow](../images/google-stackoverflow.png)
 
 [Google](https://google.com)、[Stackoverflow](https://stackoverflow.com)、[Wikipedia](https://en.wikipedia.org)、[Youtube](https://youtube.com)，这些都是你经常要去搜索的好地方。
 
 二十年前，Google 刚出现的时候，谁能想象它今天这个样子呢？以下是 1998 年 11 月 11 日 http://google.com 这个网址的截图：
 
-![google-homepage-1998](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/google-homepage-1998.png?raw=true)
+![google-homepage-1998](../images/google-homepage-1998.png)
 
 当时，网站还没有正式上线，第一个链接是一个原型设计，用一个二级域名发布在斯坦福的网站上：http://google.stanford.edu/：
 
-![google-prototype-1998](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/google-prototype-1998.png?raw=true)
+![google-prototype-1998](../images/google-prototype-1998.png)
 
 那个时候，Google 还要向外人强调一下，他们已经有 2500 万页面可供检索！
 
@@ -78,3 +77,5 @@ Google 还有更为强大的工具给你使用，叫做 Google Custom Search，�
 这是大神 Eric S. Raymond 和 Rick Moen 于 2001 年在网上发布的文章，被人们奉为经典；迄今为止经历了很多次的修订，最后一次是在 2014 年，`Revision 3.10` —— 前后被翻译成了许多种语言。
 
 **不认真使用 Google，你就错过了整个人类历史上自学者最黄金的时代。**
+
+<a href="./Part.3.H.prevent-focus-drifting.ipynb" ><small>Next Page</small></a>

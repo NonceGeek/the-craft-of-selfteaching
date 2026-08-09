@@ -1,4 +1,3 @@
-
 # 下一步干什么？
 
 理论上，下一步你的选择很多。自学是门手艺，你可以用它去学任何你想要掌握的其它手艺。如果，你有意在编程这个领域继续深入，那么，以下就是一些不错的线索。
@@ -64,28 +63,30 @@ Github 上的 “居民” 现在已经养成了一个惯例，无论什么好�
 > https://github.com/kamranahmedse/developer-roadmap
 >
 > Below you find a set of charts demonstrating the paths that you can take and the technologies that you would want to adopt in order to become a frontend, backend or a devops. I made these charts for an old professor of mine who wanted something to share with his college students to give them a perspective; sharing them here to help the community.
->
+> 
 > Check out my blog and say "hi" on Twitter.
->
+> 
 > **Disclaimer**
 >
 > The purpose of these roadmaps is to give you an idea about the landscape and to guide you if you are confused about what to learn next and not to encourage you to pick what is hip and trendy. You should grow some understanding of why one tool would better suited for some cases than the other and remember hip and trendy never means best suited for the job
 
 ## Introduction
 
-![Web Developer Roadmap Introduction](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/intro.png?raw=true)
+![Web Developer Roadmap Introduction](../images/intro.png)
+
 
 ## Frontend Roadmap
 
-![Frontend Roadmap](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/frontend.png?raw=true)
+![Frontend Roadmap](../images/frontend.png)
 
 ## Back-end Roadmap
 
-![Back-end Roadmap](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/backend.png?raw=true)
+![Back-end Roadmap](../images/backend.png)
 
 ## DevOps Roadmap
 
-![DevOps Roadmap](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/devops.png?raw=true)
+![DevOps Roadmap](../images/devops.png)
+
 
 路漫漫其修远兮……
 

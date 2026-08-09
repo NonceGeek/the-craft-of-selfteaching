@@ -1,258 +1,206 @@
-
 # 保存到文件的函数
 
 写好的函数，当然最好保存起来，以便将来随时调用。
 
 ## 模块
 
-我们可以将以下内容保存到一个名为 `mycode.py` 的文件中 —— 这样可以被外部调用的 `.py` 文件，有个专门的称呼，**模块**（Module）—— 于是，它（任何一个 `.py` 文件）也可以被称为*模块*：
+我们可以将以下内容保存到一个名为 `mycode.js` 的文件中 —— 这样可以被外部调用的 `.js` 文件，有个专门的称呼，**模块**（Module）—— 于是，它（任何一个按模块方式组织的 `.js` 文件）也可以被称为*模块*：
 
-```python
-# %load mycode.py
-# 当前这个 Code Cell 中的代码，保存在当前文件夹中的 mycode.py 文件中
-# 以下的代码，是使用 Jupyter 命令 %load mycode.py 导入到当前 Code Cell 中的：
+```javascript
+// mycode.js
+// 把下面的代码保存到当前文件夹中的 mycode.js
 
-def is_prime(n):
-    """
-    Return a boolean value based upon
-    whether the argument n is a prime number.
-    """
-    if n < 2:
-        return False
-    if n == 2:
-        return True
-    for m in range(2, int(n**0.5)+1):
-        if (n % m) == 0:
-            return False
-    else:
-        return True
+/**
+ * Return a boolean value based upon
+ * whether the argument n is a prime number.
+ * @param {number} n
+ * @returns {boolean}
+ */
+export function isPrime(n) {
+  if (n < 2) {
+    return false;
+  }
+  if (n === 2) {
+    return true;
+  }
+  for (let m = 2; m <= Math.floor(Math.sqrt(n)); m++) {
+    if (n % m === 0) {
+      return false;
+    }
+  }
+  return true;
+}
 
-def say_hi(*names, greeting='Hello', capitalized=False):
-    """
-    Print a string, with a greeting to everyone.
-    :param *names: tuple of names to be greeted.
-    :param greeting: 'Hello' as default.
-    :param capitalized: Whether name should be converted to capitalized before print. False as default.
-    :returns: None
-    """
-    for name in names:
-        if capitalized:
-            name = name.capitalize()
-        print(f'{greeting}, {name}!')
+/**
+ * Print a string, with a greeting to everyone.
+ * @param {...string} names - names to be greeted
+ * @param {{greeting?: string, capitalized?: boolean}} [options]
+ */
+export function sayHi(...args) {
+  let greeting = 'Hello';
+  let capitalized = false;
+  let names = args;
+
+  const last = args[args.length - 1];
+  if (last && typeof last === 'object' && !Array.isArray(last)) {
+    ({ greeting = 'Hello', capitalized = false } = last);
+    names = args.slice(0, -1);
+  }
+
+  for (let name of names) {
+    if (capitalized) {
+      name = name.charAt(0).toUpperCase() + name.slice(1);
+    }
+    console.log(`${greeting}, ${name}!`);
+  }
+}
 ```
 
-而后，我们就可以在其它地方这样使用（以上代码现在已经保存在当前工作目录中的 `mycode.py`）：
+而后，我们就可以在其它地方这样使用（以上代码现在已经保存在当前工作目录中的 `mycode.js`）：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
+```javascript
+import * as mycode from './mycode.js';
 
-import mycode
+console.log(mycode.isPrime);
+console.log(mycode.sayHi);
 
-help(mycode.is_prime)
-help(mycode.say_hi)
-
-mycode.__name__
-mycode.is_prime(3)
-mycode.say_hi('mike', 'zoe')
+console.log(import.meta.url); // 当前模块的 URL / 路径信息
+console.log(mycode.isPrime(3));
+mycode.sayHi('mike', 'zoe');
 ```
 
-    Help on function is_prime in module mycode:
-    
-    is_prime(n)
-        Return a boolean value based upon
-        whether the argument n is a prime number.
-    
-    Help on function say_hi in module mycode:
-    
-    say_hi(*names, greeting='Hello', capitalized=False)
-        Print a string, with a greeting to everyone.
-        :param *names: tuple of names to be greeted.
-        :param greeting: 'Hello' as default.
-        :param capitalized: Whether name should be converted to capitalzed before print. False as default.
-        :returns: None
-    
-    'mycode'
-    
-    True
-    
+    [Function: isPrime]
+    [Function: sayHi]
+    true
     Hello, mike!
     Hello, zoe!
 
-以上这个**模块**（[Module](https://docs.python.org/3/tutorial/modules.html)）的名称，就是 `mycode`。
+以上这个**模块**（[Module](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Modules)）的名称，在文件层面就是 `mycode.js`；你用 `import * as mycode` 时，是把该模块的导出收进一个命名空间对象里。
+
+> 💡 在 Node.js 里使用上面的 `import` / `export`（ES Module）语法，通常需要满足其一：
+>
+> * 项目 `package.json` 里设置 `"type": "module"`；或
+> * 把文件改成 `.mjs` 后缀。
+>
+> 另外还有一套更老、但仍很常见的写法叫 CommonJS：`module.exports` / `require('./mycode')`。本章以 ES Module 为主。
 
 ## 模块文件系统目录检索顺序
 
-当你向 Python 说 `import ...` 的时候，它要去寻找你所指定的文件，那个文件应该是 `import` 语句后面引用的名称，再加上 `.py` 构成的名字的文件。Python 会按照以下顺序去寻找：
+当你向 Node.js 说 `import ...` / `require(...)` 的时候，它要去寻找你所指定的文件。检索规则比“只加个后缀”更细一点，但入门可以先抓住这几条：
 
-> * 先去看看内建模块里有没有你所指定的名称；
-> * 如果没有，那么就按照 `sys.path` 所返回的目录列表顺序去找。
+> * 先看是不是 **内建模块**（如 `fs`、`path`、`http`）；
+> * 若以 `./`、`../` 或 `/` 开头，就按**相对/绝对路径**去找对应文件；
+> * 否则，会去各层目录的 `node_modules` 里找（第三方包）。
 
-你可以通过以下代码查看你自己当前机器的 `sys.path`：
+本地自己写的模块，推荐总是写成相对路径，例如：
 
-```python
-import sys
-sys.path
+```javascript
+import * as mycode from './mycode.js';
 ```
 
-在 `sys.path` 所返回的目录列表中，你当前的工作目录排在第一位。
+你可以大致这样查看 Node 会去哪些地方找包（CommonJS 语境下更直观）：
 
-有时，你需要指定检索目录，因为你知道你要用的模块文件在什么位置，那么可以用 `sys.path.append()` 添加一个搜索位置：
+```javascript
+console.log(module.paths); // 在 CommonJS 文件里
+```
 
-```python
-import sys
-sys.path.append("/My/Path/To/Module/Directory")
-import my_module
+有时，你需要指定额外的检索目录，因为你知道要用的模块文件在什么位置。常见做法包括：
+
+```javascript
+// 1) 直接写清楚相对/绝对路径（最推荐、最清楚）
+import { something } from '../lib/something.js';
+
+// 2) 通过环境变量 NODE_PATH 增加搜索路径（了解即可，不推荐依赖）
+// NODE_PATH=/My/Path/To/Module/Directory node app.js
 ```
 
 ## 系统内建的模块
 
-你可以用以下代码获取系统内建模块的列表：
+Node.js 自带一批**内建模块**（Built-in modules），例如 `fs`、`path`、`http`、`url`、`crypto` 等。你可以用下面的方式查看：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-import sys
+```javascript
+import { builtinModules } from 'module';
 
-sys.builtin_module_names
-"_sre" in sys.builtin_module_names # True
-"math" in sys.builtin_module_names # False （根据自己电脑库的安装情况，结果会有不同）
+console.log(builtinModules);
+console.log(builtinModules.includes('fs'));   // true
+console.log(builtinModules.includes('math')); // false —— JS 没有 Python 那种标准库 math 模块名
 ```
 
-    ('_abc',
-     '_ast',
-     '_codecs',
-     '_collections',
-     '_functools',
-     '_imp',
-     '_io',
-     '_locale',
-     '_operator',
-     '_signal',
-     '_sre',
-     '_stat',
-     '_string',
-     '_symtable',
-     '_thread',
-     '_tracemalloc',
-     '_warnings',
-     '_weakref',
-     'atexit',
-     'builtins',
-     'errno',
-     'faulthandler',
-     'gc',
-     'itertools',
-     'marshal',
-     'posix',
-     'pwd',
-     'sys',
-     'time',
-     'xxsubtype',
-     'zipimport')
-    True
-    False
+跟变量名、函数名不能乱撞关键字一样，你的模块文件名也最好别与常见内建模块、热门包名完全重合，以免自己把自己绕晕。
 
-跟变量名、函数名，不能与关键字重名一样，你的模块名称也最好别与系统内建模块名称重合。
+> 官方列表可查：[Node.js — Built-in Modules](https://nodejs.org/api/modules.html#built-in-modules)
 
 ## 引入指定模块中的特定函数
 
-当你使用 `import mycode` 的时候，你向当前工作空间引入了 `mycode` 文件中定义的所有函数，相当于：
+当你使用 `import * as mycode from './mycode.js'` 的时候，你向当前工作空间引入了 `mycode` 文件中**导出**的名称，收在 `mycode` 这个对象上。
 
-```python
-from mycode import *
+你其实可以只引入当前需要的函数，比如，只引入 `isPrime()`：
+
+```javascript
+import { isPrime } from './mycode.js';
 ```
 
-你其实可以只引入当前需要的函数，比如，只引入 `is_prime()`：
+这种情况下，你就不必使用 `mycode.isPrime()` 了；而是就好像这个函数就写在当前工作空间一样，直接写 `isPrime()`：
 
-```python
-from mycode import is_prime
+```javascript
+import { isPrime } from './mycode.js';
+
+console.log(isPrime(3));
 ```
 
-这种情况下，你就不必使用 `mycode.is_prime()` 了；而是就好像这个函数就写在当前工作空间一样，直接写 `is_prime()`：
+    true
 
-```python
-from mycode import is_prime
-is_prime(3)
+注意：若写成 `import { isPrime } from 'mycode'`（没有 `./`），Node 会把它当成**包名**去 `node_modules` 里找，而不是当前目录的 `mycode.js`。
+
+如果我们想要导入 `foo` 这个目录中的 `bar.js` 这个模块文件，那么，可以这么写：
+
+```javascript
+import * as bar from './foo/bar.js';
 ```
 
-    True
+或者（若 `foo/bar.js` 有对应导出）：
 
-注意，如果当前目录中并没有 `mycode.py` 这个文件，那么，`mycode` 会被当作目录名再被尝试一次 —— 如果当前目录内，有个叫做 `mycode` 的目录（或称文件夹）且该目录下同时要存在一个 [`__init__.py`](https://docs.python.org/3/reference/import.html#regular-packages) 文件（通常为空文件，用于标识本目录形成一个包含多个模块的 **包**（[packages](https://docs.python.org/3/reference/import.html#regular-packages)），它们处在一个独立的 **命名空间**（[namespace](https://docs.python.org/3/glossary.html#term-namespace-package)）），那么，`from mycode import *` 的作用就是把 `mycode` 这个文件夹中的所有 `.py` 文件全部导入……
-
-如果我们想要导入 `foo` 这个目录中的 `bar.py` 这个模块文件，那么，可以这么写：
-
-```python
-import foo.bar
+```javascript
+import { something } from './foo/bar.js';
 ```
-或者
-```python
-from foo import bar
-```
+
+若 `foo` 是一个包目录，通常还会有 `package.json`，并指定入口（如 `"main"` / `"exports"`），或提供一个 `index.js`。这和 Python 里用目录 + `__init__.py` 组成 **包**（package）是同一类需求：把多个模块收进一个独立的命名空间。
 
 ## 引入并使用化名
 
 有的时候，或者为了避免混淆，或者为了避免输入太多字符，我们可以为引入的函数设定 **化名**（alias），而后使用化名调用函数。比如：
 
-```python
-from mycode import is_prime as isp
-isp(3)
+```javascript
+import { isPrime as isp } from './mycode.js';
+
+console.log(isp(3));
 ```
 
-    True
+    true
 
 甚至干脆给整个模块取个化名：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
+```javascript
+import * as m from './mycode.js';
 
-import mycode as m
-
-m.is_prime(3)
-m.say_hi('mike', 'zoe')
+console.log(m.isPrime(3));
+m.sayHi('mike', 'zoe');
 ```
 
-    True
+    true
     Hello, mike!
     Hello, zoe!
 
 ## 模块中不一定只有函数
 
-一个模块文件中，不一定只包含函数；它也可以包含函数之外的可执行代码。只不过，在 `import` 语句执行的时候，模块中的非函数部分的可执行代码，只执行一次。
+一个模块文件中，不一定只包含函数；它也可以包含函数之外的可执行代码。只不过，在 `import` 语句执行的时候，模块中的顶层可执行代码会运行；并且对同一个模块，在一次程序运行里通常只初始化一次（模块缓存）。
 
-有一个 Python 的彩蛋，恰好是可以用在此处的最佳例子 —— 这个模块是 `this`，它的文件名是 [`this.py`](https://github.com/python/cpython/blob/master/Lib/this.py)：
+Python 有个著名彩蛋 `import this`（Zen of Python）。Javascript / Node 没有完全对等的官方彩蛋，但我们完全可以自己做个同类模块，用来理解“导入时执行顶层代码”。把下面内容存成 `this.js`：
 
-```python
-import this
-```
+```javascript
+// this.js
+export const s = `Gur Mra bs Clguba, ol Gvz Crgref
 
-    The Zen of Python, by Tim Peters
-    
-    Beautiful is better than ugly.
-    Explicit is better than implicit.
-    Simple is better than complex.
-    Complex is better than complicated.
-    Flat is better than nested.
-    Sparse is better than dense.
-    Readability counts.
-    Special cases aren't special enough to break the rules.
-    Although practicality beats purity.
-    Errors should never pass silently.
-    Unless explicitly silenced.
-    In the face of ambiguity, refuse the temptation to guess.
-    There should be one-- and preferably only one --obvious way to do it.
-    Although that way may not be obvious at first unless you're Dutch.
-    Now is better than never.
-    Although never is often better than *right* now.
-    If the implementation is hard to explain, it's a bad idea.
-    If the implementation is easy to explain, it may be a good idea.
-    Namespaces are one honking great idea -- let's do more of those!
-
-这个 `this` 模块中的代码如下：
-
-```python
-s = """Gur Mra bs Clguba, ol Gvz Crgref
 Ornhgvshy vf orggre guna htyl.
 Rkcyvpvg vf orggre guna vzcyvpvg.
 Fvzcyr vf orggre guna pbzcyrk.
@@ -271,105 +219,57 @@ Abj vf orggre guna arire.
 Nygubhtu arire vf bsgra orggre guna *evtug* abj.
 Vs gur vzcyrzragngvba vf uneq gb rkcynva, vg'f n onq vqrn.
 Vs gur vzcyrzragngvba vf rnfl gb rkcynva, vg znl or n tbbq vqrn.
-Anzrfcnprf ner bar ubaxvat terng vqrn -- yrg'f qb zber bs gubfr!"""
+Anzrfcnprf ner bar ubaxvat terng vqrn -- yrg'f qb zber bs gubfr!`;
 
-d = {}
-for c in (65, 97):
-    for i in range(26):
-        d[chr(i+c)] = chr((i+13) % 26 + c)
+export const d = {};
+for (const c of [65, 97]) {
+  for (let i = 0; i < 26; i++) {
+    d[String.fromCharCode(i + c)] = String.fromCharCode((i + 13) % 26 + c);
+  }
+}
 
-print("".join([d.get(c, c) for c in s]))
+console.log(
+  [...s].map((ch) => (Object.hasOwn(d, ch) ? d[ch] : ch)).join('')
+);
 ```
 
-这个 `this.py` 文件中也没有什么函数，但这个文件里所定义的变量，我们都可以在 `import this` 之后触达：
+然后：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-
-import this
-this.d
-this.s
+```javascript
+import * as zen from './this.js';
 ```
 
-    {'A': 'N',
-     'B': 'O',
-     'C': 'P',
-     'D': 'Q',
-     'E': 'R',
-     'F': 'S',
-     'G': 'T',
-     'H': 'U',
-     'I': 'V',
-     'J': 'W',
-     'K': 'X',
-     'L': 'Y',
-     'M': 'Z',
-     'N': 'A',
-     'O': 'B',
-     'P': 'C',
-     'Q': 'D',
-     'R': 'E',
-     'S': 'F',
-     'T': 'G',
-     'U': 'H',
-     'V': 'I',
-     'W': 'J',
-     'X': 'K',
-     'Y': 'L',
-     'Z': 'M',
-     'a': 'n',
-     'b': 'o',
-     'c': 'p',
-     'd': 'q',
-     'e': 'r',
-     'f': 's',
-     'g': 't',
-     'h': 'u',
-     'i': 'v',
-     'j': 'w',
-     'k': 'x',
-     'l': 'y',
-     'm': 'z',
-     'n': 'a',
-     'o': 'b',
-     'p': 'c',
-     'q': 'd',
-     'r': 'e',
-     's': 'f',
-     't': 'g',
-     'u': 'h',
-     'v': 'i',
-     'w': 'j',
-     'x': 'k',
-     'y': 'l',
-     'z': 'm'}
-    
-    "Gur Mra bs Clguba, ol Gvz Crgref\n\nOrnhgvshy vf orggre guna htyl.\nRkcyvpvg vf orggre guna vzcyvpvg.\nFvzcyr vf orggre guna pbzcyrk.\nPbzcyrk vf orggre guna pbzcyvpngrq.\nSyng vf orggre guna arfgrq.\nFcnefr vf orggre guna qrafr.\nErnqnovyvgl pbhagf.\nFcrpvny pnfrf nera'g fcrpvny rabhtu gb oernx gur ehyrf.\nNygubhtu cenpgvpnyvgl orngf chevgl.\nReebef fubhyq arire cnff fvyragyl.\nHayrff rkcyvpvgyl fvyraprq.\nVa gur snpr bs nzovthvgl, ershfr gur grzcgngvba gb thrff.\nGurer fubhyq or bar-- naq cersrenoyl bayl bar --boivbhf jnl gb qb vg.\nNygubhtu gung jnl znl abg or boivbhf ng svefg hayrff lbh'er Qhgpu.\nAbj vf orggre guna arire.\nNygubhtu arire vf bsgra orggre guna *evtug* abj.\nVs gur vzcyrzragngvba vf uneq gb rkcynva, vg'f n onq vqrn.\nVs gur vzcyrzragngvba vf rnfl gb rkcynva, vg znl or n tbbq vqrn.\nAnzrfcnprf ner bar ubaxvat terng vqrn -- yrg'f qb zber bs gubfr!"
+你会看到解密后的英文被打印出来（那段其实就是 The Zen of Python 的 ROT13 密文）。
+
+这个 `this.js` 文件中的顶层 `console.log(...)` 会在导入时执行；同时它导出的变量，我们都可以在导入之后触达：
+
+```javascript
+import * as zen from './this.js';
+
+console.log(zen.d);
+console.log(zen.s);
+```
 
 试试吧，试试能否独立读懂这个文件里的代码 —— 对初学者来说，还是挺练脑子的呢！
 
-它先是通过一个规则生成了一个密码表，保存在 `d` 这个字典中；而后，将 `s` 这个变量中保存的 “密文” 翻译成了英文……
+它先是通过一个规则生成了一个密码表，保存在 `d` 这个对象中；而后，将 `s` 这个变量中保存的 “密文” 翻译成了英文……
 
 或许，你可以试试，看看怎样能写个函数出来，给你一段英文，你可以把它加密成跟它一样的 “密文”？
 
-## dir() 函数
+## 查看模块导出了什么
 
-你的函数，保存在模块里之后，这个函数的用户（当然也包括你），可以用 `dir()` 函数查看模块中可触达的变量名称和函数名称：
+你的函数，保存在模块里之后，这个函数的用户（当然也包括你），可以查看模块中可触达的导出名称：
 
-```python
-import mycode
-dir(mycode)
+```javascript
+import * as mycode from './mycode.js';
+
+console.log(Object.keys(mycode));
+console.log(mycode);
 ```
 
-    ['__builtins__',
-     '__cached__',
-     '__doc__',
-     '__file__',
-     '__loader__',
-     '__name__',
-     '__package__',
-     '__spec__',
-     'is_prime',
-     'say_hi']
+    [ 'isPrime', 'sayHi' ]
+    { isPrime: [Function: isPrime], sayHi: [Function: sayHi] }
 
+> 💡 Python 里常用 `dir(module)`。在 Javascript 里，对 `import * as mycode` 得到的命名空间对象，用 `Object.keys(mycode)` 通常就够了。
+
+<a href="./Part.2.D.7-tdd.md" ><small>Next Page</small></a>

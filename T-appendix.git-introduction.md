@@ -1,8 +1,9 @@
+
 # Git 简介
 
 --- You should've learned Git yesterday.
 
-![](images/git-time-machine-cover.png)
+![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/git-time-machine-cover.png?raw=true)
 
 ## 内容目标
 
@@ -16,7 +17,9 @@
 
 Git 是一个分布式版本控制软件 —— 听起来也许跟你没关系，但**无论是谁**，都会因为能够使用 Git 而节约时间、提高效率。进而，如果你居然没有一个活跃的 [Github](https://github.com) 账户，那么你正在错过人类史上前所未有的共同协作时代 —— 半点都没有夸张。同样提供 Git 工具云服务的还有 [Gitlab](https://gitlab.com), [Bitbucket](https://bitbucket.org) 等等。
 
-并且，[Github](https://github.com) 很可能是地球上第一个给人们提供 “[用作品社交](Part.3.F.social-selfteaching.ipynb)” 方式的平台，你若是不能参与其中，实在是太可惜了！
+并且，[Github](https://github.com) 很可能是地球上第一个给人们提供 “[用作品社交](Part.3.F.social-selfteaching.md)” 方式的平台，你若是不能参与其中，实在是太可惜了！
+
+学 Javascript 的人更有理由用 Git：绝大多数前端 / Node 开源库都在 Github 上；你读别人的代码、提 Issue、发 Pull Request，本身就是最高效的自学社交。
 
 ## 从逻辑上理顺 Git 基本命令
 
@@ -67,11 +70,13 @@ Git 的作用，基本上可以被划分为三部分：
 
 以下示意图中仅包含最基本的 Git 命令 —— 并且基本上都是独自使用 Git 时的常用命令。
 
-![](images/git-command-relationships.png)
+![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/git-command-relationships.png?raw=true)
 
 在工作区 `working directory` 这个抽象层中，你完成各种日常工作，创建、编辑、删除…… 你可能需要用某个编辑器去修改文件，你也可能频繁使用各种 Bash 命令，如，`rm` `mkdir` `cp` `mv` 等等。
 
 时不时，你可能会把一些处理完的文件 “加入缓存区”；等一个阶段的工作完成之后，你可能会把那些已经放入缓存区的文件**提交**到（commit）本地仓库；而后继续工作…… 根据情况，你也会将本地仓库的文件**推到**（push）云端，即，远端仓库。如果，你正在与他人协作，你也可能经常需要从云端**下拉**（pull）最新版本到本地。
+
+> 💡 Javascript 项目里常见的 `node_modules/` 千万不要提交进仓库 —— 在项目根目录放好 `.gitignore`（可用 `npx gitignore node` 之类方式生成）。
 
 ## Git 的安装
 
@@ -87,15 +92,9 @@ which git
 也可以通过 Homebrew 安装最新版本的 Git：
 
 ``` bash
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew doctor
 brew install git
-```
-
-还可以通过 Conda 安装：
-
-``` bash
-conda install -c anaconda git
 ```
 
 ### Windows
@@ -138,7 +137,7 @@ git config --global user.email <your_email_address>
 
 Git 的图形化版本客户端，有很多种选择，以下几个跨平台的客户端最受欢迎：
 
-> * [Github Desktop](https://desktop.github.com) 
+> * [Github Desktop](https://desktop.github.com)
 > * [GitAhead](https://gitahead.github.io/gitahead.com/)
 > * [Fork](https://git-fork.com)
 > * [GitKraken](https://www.gitkraken.com)
@@ -176,7 +175,6 @@ Git 的图形化版本客户端，有很多种选择，以下几个跨平台的�
 | `+x`   | 将文件设置为可执行  |
 
 在使用 `man` 命令时，系统会使用 vim 文本编辑工具以只读模式打开帮助文件，常用键盘命令如下：
-
 
 | 键盘命令  | 简要说明                                            |
 | ----- | --------------------------------------------------- |

@@ -1,148 +1,157 @@
-
 # 函数工具
 
-这一章要讲的是迭代器、生成器和装饰器，这些都是函数工具。有人把它们称为 **DIG**（Decorator，Iterator，Generator）—— 它们都是真正掌握 Python 的关键。
+这一章要讲的是迭代器、生成器和装饰器（更高阶一点说：用函数包装函数），这些都是函数工具。有人把它们称为 **DIG**（Decorator，Iterator，Generator）—— 在 Python 里它们是真正掌握语言的关键；在 Javascript 里，同样一组概念也极度重要，只是语法细节不同。
 
 ## 迭代器（Iterator）
 
-我们已经见过 Python 中的所有容器，都是可迭代的 —— 准确地讲，是可以通过迭代遍历每一个元素：
+我们已经见过 Javascript 中的许多容器，都是可迭代的 —— 准确地讲，是可以通过迭代遍历每一个元素：
 
-```python
-string = "this is a string."
-list = ['item 1', 'item 2', 3, 5]
-set = (1, 2, 3, 4, 5)
-for c in string:
-    print(c, end=', ')
-print()
-for L in list:
-    print(L, end=', ')
-print()
-for s in set:
-    print(s, end=', ')
-print()
+```javascript
+const string = 'this is a string.';
+const list = ['item 1', 'item 2', 3, 5];
+const set = new Set([1, 2, 3, 4, 5]);
+
+for (const c of string) {
+  process.stdout.write(c + ', ');
+}
+console.log();
+for (const L of list) {
+  process.stdout.write(L + ', ');
+}
+console.log();
+for (const s of set) {
+  process.stdout.write(s + ', ');
+}
+console.log();
 ```
 
-    t, h, i, s,  , i, s,  , a,  , s, t, r, i, n, g, .,
-    item 1, item 2, 3, 5,
-    1, 2, 3, 4, 5,
+    t, h, i, s,  , i, s,  , a,  , s, t, r, i, n, g, ., 
+    item 1, item 2, 3, 5, 
+    1, 2, 3, 4, 5, 
 
-有个内建函数，就是用来把一个 “可迭代对象”（Iterable）转换成 “迭代器”（Iterator）的 —— `iter()`。
+在协议层面，一个对象若实现了 `[Symbol.iterator]()`，就是 **Iterable**（可迭代对象）；该函数返回的对象若有 `next()` 方法，就是 **Iterator**（迭代器）。
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
+你可以用手动方式拿到迭代器：
 
-i = iter("Python")
-type(i)
-s = iter((1, 2, 3, 4, 5))
-type(s)
-L = iter(['item 1', 'item 2', 3, 5])
-type(L)
+```javascript
+const i = 'Javascript'[Symbol.iterator]();
+console.log(i);
+console.log(typeof i.next);
+
+const s = [1, 2, 3, 4, 5][Symbol.iterator]();
+console.log(s);
 ```
 
-    str_iterator
-    
-    tuple_iterator
-    
-    list_iterator
+    Object [String Iterator] {}
+    function
+    Object [Array Iterator] {}
 
-迭代器如何使用呢？有个 `next()` 函数：
+迭代器如何使用呢？调用它的 `next()`：
 
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-
-i = iter("Python")
-next(i)
-next(i)
-next(i)
-next(i)
-next(i)
-next(i)
-# next(i) 前面已经到 'n' 了，再调用就会有 StopIteration 错误提示。
+```javascript
+const i = 'Python'[Symbol.iterator]();
+console.log(i.next());
+console.log(i.next());
+console.log(i.next());
+console.log(i.next());
+console.log(i.next());
+console.log(i.next());
+console.log(i.next()); // 已经耗尽
 ```
 
-    'P'
-    'y'
-    't'
-    'h'
-    'o'
-    'n'
+    { value: 'P', done: false }
+    { value: 'y', done: false }
+    { value: 't', done: false }
+    { value: 'h', done: false }
+    { value: 'o', done: false }
+    { value: 'n', done: false }
+    { value: undefined, done: true }
 
-在 `i` 这个迭代器里一共有 6 个元素，所以，`next(i)` 在被调用 6 次之后，就不能再被调用了，一旦再被调用，就会触发 StopIteration 错误。
+在 `i` 这个迭代器里一共有 6 个元素，所以，`next()` 在被调用 6 次之后再调用，就会得到 `done: true`（Javascript 通常**不会**因此抛错，这一点和 Python 的 `StopIteration` 不同）。
 
 那我们怎么自己写一个迭代器呢？
 
-迭代器是个 Object，所以，写迭代器的时候写的是 Class，比如，我们写一个数数的迭代器，Counter：
+迭代器是个 Object，所以，写迭代器的时候常常写的是 Class，比如，我们写一个数数的迭代器，`Counter`：
 
-```python
-class Counter(object):
-    def __init__(self, start, stop):
-        self.current = start
-        self.stop = stop
-    def __iter__(self):
-        return self
-    def __next__(self):
-        if self.current > self.stop:
-            raise StopIteration
-        else:
-            c = self.current
-            self.current += 1
-        return c
+```javascript
+class Counter {
+  constructor(start, stop) {
+    this.current = start;
+    this.stop = stop;
+  }
 
-c = Counter(11, 20)
-next(c)
-next(c)
-next(c)
-for c in Counter(101, 105):
-    print(c, end=', ')
-type(Counter)
+  [Symbol.iterator]() {
+    return this;
+  }
+
+  next() {
+    if (this.current > this.stop) {
+      return { value: undefined, done: true };
+    }
+    const c = this.current;
+    this.current += 1;
+    return { value: c, done: false };
+  }
+}
+
+const c = new Counter(11, 20);
+console.log(c.next());
+console.log(c.next());
+console.log(c.next());
+for (const n of new Counter(101, 105)) {
+  process.stdout.write(n + ', ');
+}
+console.log();
+console.log(typeof Counter);
 ```
 
-    11
-    12
-    13
-    101
-    102
-    103
-    104
-    105
-    
-    type
+    { value: 11, done: false }
+    { value: 12, done: false }
+    { value: 13, done: false }
+    101, 102, 103, 104, 105, 
+    function
 
-这里的重点在于两个函数的存在，`__iter__(self)` 和 `__next__(self)`。
+这里的重点在于两个成员的存在：`[Symbol.iterator]()` 和 `next()`。
 
-```python
-def __iter__(self):
-    return self
+```javascript
+[Symbol.iterator]() {
+  return this;
+}
 ```
 
-这两句是约定俗成的写法，写上它们，`Counter` 这个类就被会被识别为 Iterator 类型。而后再有 `__next__(self)` 的话，它就是个完整的迭代器了。除了可以用 `for loop` 之外，也可以用 `while loop` 去遍历迭代器中的所有元素：
+这两句是约定俗成的写法：让 `Counter` 自己既是 Iterable，又是 Iterator。有了完整的 `next()`，除了可以用 `for...of`，也可以用 `while` 去遍历：
 
-```python
-class Counter(object):
-    def __init__(self, start, stop):
-        self.current = start
-        self.stop = stop
-    def __iter__(self):
-        return self
-    def __next__(self):
-        if self.current > self.stop:
-            raise StopIteration
-        else:
-            c = self.current
-            self.current += 1
-        return c
+```javascript
+class Counter {
+  constructor(start, stop) {
+    this.current = start;
+    this.stop = stop;
+  }
 
-for c in Counter(101, 103):
-    print(c, sep=', ')
+  [Symbol.iterator]() {
+    return this;
+  }
 
-c = Counter(201, 203)
-while True:
-    try:
-        print(next(c), sep=', ')
-    except StopIteration:
-        break
+  next() {
+    if (this.current > this.stop) {
+      return { value: undefined, done: true };
+    }
+    const c = this.current;
+    this.current += 1;
+    return { value: c, done: false };
+  }
+}
+
+for (const n of new Counter(101, 103)) {
+  console.log(n);
+}
+
+const c = new Counter(201, 203);
+while (true) {
+  const { value, done } = c.next();
+  if (done) break;
+  console.log(value);
+}
 ```
 
     101
@@ -156,13 +165,17 @@ while True:
 
 那用函数（而不是 Class）能不能写一个 Counter 呢？答案是能，用生成器（Generator）就行。
 
-```python
-def counter(start, stop):
-    while start <= stop:
-        yield start
-        start += 1
-for i in counter(101, 105):
-    print(i)
+```javascript
+function* counter(start, stop) {
+  while (start <= stop) {
+    yield start;
+    start += 1;
+  }
+}
+
+for (const i of counter(101, 105)) {
+  console.log(i);
+}
 ```
 
     101
@@ -175,141 +188,151 @@ for i in counter(101, 105):
 
 不过，是否简洁并不是问题，这次看起来用生成器更简单，无非是因为当前的例子更适合用生成器而已。在不同的情况下，用迭代器和用生成器各有各的优势。
 
-这里的关键在于 `yield` 这个语句。它和 `return` 最明显的不同在于，在它之后的语句依然会被执行 —— 而 `return` 之后的语句就被忽略了。
+这里的关键在于 `function*` 和 `yield`。`yield` 和 `return` 最明显的不同在于，在它之后的语句依然可能在下一次 `.next()` 时被执行 —— 而普通 `return` 会结束整个生成器。
 
-但正因为这个不同，在写生成器的时候，只能用 `yield`，而没办法使用 `return` —— 你现在可以回去把上面代码中的 `yield` 改成 `return` 看看，然后体会一下它们之间的不同。
+生成器函数被 `.next()` 调用后，执行到 `yield` 生成一个值返回；下次再被 `.next()` 调用的时候，从上次 `yield` 处继续执行…… 如果感觉费解，就多读几遍 —— 而后再想想若是生成器中有多个 `yield` 语句会是什么情况？
 
-生成器函数被 `next()` 调用后，执行到 `yield` 生成一个值返回（然后继续执行 `next()` 外部剩余的语句）；下次再被 `next()` 调用的时候，从上次生成返回值的 `yield` 语句处继续执行…… 如果感觉费解，就多读几遍 —— 而后再想想若是生成器中有多个 `yield` 语句会是什么情况？
+还有一种东西，在 Python 里叫生成器表达式；Javascript **没有**完全同款语法，但可以用生成器函数，或先得到数组再过滤：
 
-还有一种东西，叫做生成器表达式。先看个例子：
+```javascript
+function* evenNumbers(n) {
+  for (let e = 0; e < n; e++) {
+    if (e % 2 === 0) yield e;
+  }
+}
 
-```python
-even = (e for e in range(10) if not e % 2)
-# odd = (o for o in range(10) if o % 2)
-print(even)
-for e in even:
-    print(e)
+const even = evenNumbers(10);
+console.log(even);
+for (const e of even) {
+  console.log(e);
+}
 ```
 
-    <generator object <genexpr> at 0x107cc0048>
+    Object [Generator] {}
     0
     2
     4
     6
     8
 
-其实，这种表达式我们早就在 List Comprehension 里见过 —— 那就是通过生成器表达式完成的。
+若你要的是“立刻得到一个数组”，用数组方法更常见：
 
-**注意**
-
-仔细看 `even = (e for e in range(10) if not e % 2)` 中最外面那层括号，用了圆括号，`even` 就是用生成器创造的迭代器（Iterator），若是用了方括号，那就是用生成器创造的列表（List）—— 当然用花括号 `{}` 生成的就是集合（Set）……
-
-```python
-# even = (e for e in range(10) if not e % 2)
-odd = [o for o in range(10) if o % 2]
-print(odd)
-for o in odd:
-    print(o)
+```javascript
+const odd = [...Array(10).keys()].filter((o) => o % 2);
+console.log(odd);
+for (const o of odd) {
+  console.log(o);
+}
 ```
 
-    [1, 3, 5, 7, 9]
+    [ 1, 3, 5, 7, 9 ]
     1
     3
     5
     7
     9
 
-```python
-# even = (e for e in range(10) if not e % 2)
-odd = {o for o in range(10) if o % 2}
-print(odd)
-for o in odd:
-    print(o)
+集合也可以：
+
+```javascript
+const oddSet = new Set([...Array(10).keys()].filter((o) => o % 2));
+console.log(oddSet);
 ```
 
-    {1, 3, 5, 7, 9}
-    1
-    3
-    5
-    7
-    9
+    Set(5) { 1, 3, 5, 7, 9 }
 
-**生成器表达式必须在括号内使用**（参见官方 [HOWTOS](https://docs.python.org/3/howto/functional.html#generator-expressions-and-list-comprehensions)），包括函数的参数括号，比如：
+求和时，既可以用生成器，也可以用数组：
 
-```python
-sum_of_even = sum(e for e in range(10) if not e % 2)
-print(sum_of_even)
+```javascript
+let sumOfEven = 0;
+for (const e of evenNumbers(10)) {
+  sumOfEven += e;
+}
+console.log(sumOfEven);
+
+// 或
+console.log(
+  [...Array(10).keys()].filter((e) => e % 2 === 0).reduce((a, b) => a + b, 0)
+);
 ```
 
+    20
     20
 
 函数内部当然可以包含其它的函数，以下就是一个函数中包含着其它函数的结构示例：
 
-```python
-def a_func():
-    def b_func():
-        pass
-    def c_func():
-        pass
-        def d_func():
-            pass
-        b_func()
-    return True
+```javascript
+function aFunc() {
+  function bFunc() {}
+  function cFunc() {
+    function dFunc() {}
+    bFunc();
+  }
+  return true;
+}
 ```
 
 想象一下，如果，我们让一个函数返回的是另外一个函数呢？我们一步一步来：
 
-```python
-def a_func():
-    def b_func():
-        print("Hi, I'm b_func!")
-    print("Hi, I'm a_func!")
-a_func()
+```javascript
+function aFunc() {
+  function bFunc() {
+    console.log("Hi, I'm bFunc!");
+  }
+  console.log("Hi, I'm aFunc!");
+}
+aFunc();
 ```
 
-    Hi, I'm a_func!
+    Hi, I'm aFunc!
 
-```python
-def a_func():
-    def b_func():
-        print("Hi, I'm b_func!")
-    print("Hi, I'm a_func!")
-    b_func()
-a_func()
+```javascript
+function aFunc() {
+  function bFunc() {
+    console.log("Hi, I'm bFunc!");
+  }
+  console.log("Hi, I'm aFunc!");
+  bFunc();
+}
+aFunc();
 ```
 
-    Hi, I'm a_func!
-    Hi, I'm b_func!
+    Hi, I'm aFunc!
+    Hi, I'm bFunc!
 
-上一个代码，我们可以写成这样 —— 让 `a_func()` 将它内部的 `b_func()` 作为它的返回值：
+上一个代码，我们可以写成这样 —— 让 `aFunc()` 将它内部的 `bFunc()` 作为它的返回值：
 
-```python
-def a_func():
-    def b_func():
-       print("Hi, I'm b_func!")
-    print("Hi, I'm a_func!")
-    return b_func()
-a_func()
+```javascript
+function aFunc() {
+  function bFunc() {
+    console.log("Hi, I'm bFunc!");
+  }
+  console.log("Hi, I'm aFunc!");
+  return bFunc();
+}
+aFunc();
 ```
 
-    Hi, I'm a_func!
-    Hi, I'm b_func!
+    Hi, I'm aFunc!
+    Hi, I'm bFunc!
 
 如果我们在 `return` 语句里只写函数名呢？好像这样：
 
-```python
-def a_func():
-    def b_func():
-        print("Hi, I'm b_func!")
-    print("Hi, I'm a_func!")
-    return b_func
-a_func()
+```javascript
+function aFunc() {
+  function bFunc() {
+    console.log("Hi, I'm bFunc!");
+  }
+  console.log("Hi, I'm aFunc!");
+  return bFunc;
+}
+console.log(aFunc());
 ```
 
-    Hi, I'm a_func!
-    <function __main__.a_func.<locals>.b_func()>
+    Hi, I'm aFunc!
+    [Function: bFunc]
 
-这次返回的不是调用 `b_func()` 这个函数的执行结果，返回的是 `b_func` 这个*函数本身*。
+这次返回的不是调用 `bFunc()` 这个函数的执行结果，返回的是 `bFunc` 这个*函数本身*。
 
 ## 装饰器（Decorator）
 
@@ -317,226 +340,249 @@ a_func()
 
 这是关键：
 
-> 函数本身也是对象（即，Python 定义的某个 Class 的一个 Instance）。
+> 函数本身也是值（first-class），可以像其它数据一样，作为其它函数的参数或者返回值。
 
-于是，函数本身其实可以与其它的数据类型一样，作为其它函数的参数或者返回值。
+于是，我们完全可以写一个“接收函数、返回函数”的包装器 —— 这就是装饰器思想在 Javascript 里最常用的形态（高阶函数）。
 
-让我们分步走 —— 注意，在以下代码中，`a_decorator` 返回的一个函数的调用 `wrapper()` 而不是 `wrapper` 这个函数本身：
+> 💡 语言层面的 `@decorator` 语法在 Javascript 里主要面向 **class / class 成员**（TC39 Decorators）；给普通函数做包装，日常仍以“返回新函数”为主。下面先把核心思想讲清楚。
 
-```python
-def a_decorator(func):
-    def wrapper():
-        print('We can do sth. before a func is called...')
-        func()
-        print('... and we can do sth. after it is called...')
-    return wrapper()
+让我们分步走 —— 注意，在以下代码中，`aDecorator` 返回的是一个函数的调用 `wrapper()`，而不是 `wrapper` 这个函数本身：
 
-def a_func():
-    print("Hi, I'm a_func!")
+```javascript
+function aDecorator(func) {
+  function wrapper() {
+    console.log('We can do sth. before a func is called...');
+    func();
+    console.log('... and we can do sth. after it is called...');
+  }
+  return wrapper();
+}
 
-a_func()
-a_decorator(a_func)
+function aFunc() {
+  console.log("Hi, I'm aFunc!");
+}
+
+aFunc();
+aDecorator(aFunc);
 ```
 
-    Hi, I'm a_func!
+    Hi, I'm aFunc!
     We can do sth. before a func is called...
-    Hi, I'm a_func!
+    Hi, I'm aFunc!
     ... and we can do sth. after it is called...
 
 如果返回的是函数本身，`wrapper`，输出结果跟你想的并不一样：
 
-```python
-def a_decorator(func):
-    def wrapper():
-        print('We can do sth. before a func is called...')
-        func()
-        print('... and we can do sth. after it is called...')
-    return wrapper  #
+```javascript
+function aDecorator(func) {
+  function wrapper() {
+    console.log('We can do sth. before a func is called...');
+    func();
+    console.log('... and we can do sth. after it is called...');
+  }
+  return wrapper;
+}
 
-def a_func():
-    print("Hi, I'm a_func!")
+function aFunc() {
+  console.log("Hi, I'm aFunc!");
+}
 
-a_func()
-a_decorator(a_func)
+aFunc();
+console.log(aDecorator(aFunc));
 ```
 
-    Hi, I'm a_func!
-    <function __main__.a_decorator.<locals>.wrapper()>
+    Hi, I'm aFunc!
+    [Function: wrapper]
 
-### 装饰器操作符
+### 用包装结果替换原函数
 
-不过，Python 提供了一个针对函数的操作符 `@`，它的作用是…… 很难一下子说清楚，先看看以下代码：
+Javascript 给普通函数没有像 Python `@` 那么统一的语法糖（至少不是同一套用法）。等价操作就是：**用装饰器的返回值，盖掉原来的函数名**。
 
-```python
-def a_decorator(func):
-    def wrapper():
-        print('We can do sth. before calling a_func...')
-        func()
-        print('... and we can do sth. after it was called...')
-    return wrapper
+```javascript
+function aDecorator(func) {
+  function wrapper() {
+    console.log('We can do sth. before calling aFunc...');
+    func();
+    console.log('... and we can do sth. after it was called...');
+  }
+  return wrapper;
+}
 
-@a_decorator
-def a_func():
-    print("Hi, I'm a_func!")
+function aFunc() {
+  console.log("Hi, I'm aFunc!");
+}
 
-a_func()
+aFunc = aDecorator(aFunc);
+aFunc();
 ```
 
-    We can do sth. before calling a_func...
-    Hi, I'm a_func!
+    We can do sth. before calling aFunc...
+    Hi, I'm aFunc!
     ... and we can do sth. after it was called...
 
-注意：以上的代码中，`a_decorator(func)` 返回的是 `wrapper` 这个函数本身。
+也就是：
 
-在我们定义 `a_func()` 的时候，在它之前，加上了一句 `@a_decorator`；这么做的结果是：
-
-> 每次 `a_func()` 在被调用的时候，因为它之前有一句 `@a_decorator`，所以它会先被当作参数传递到 `a_decorator(func)` 这个函数中…… 而后，真正的执行，是在 `a_decorator()` 里被完成的。
-
-—— 被 `@` 调用的函数，叫做 “装饰器”（Decorator），比如，以上代码中的 `a_decorator(func)`。
-
-现在可以很简单直接地说清楚装饰器的作用了：
-
-```python
-@a_decorator
-def a_func():
-    ...
+```javascript
+function aFunc() {
+  // ...
+}
+aFunc = aDecorator(aFunc);
 ```
 
-等价于
+就是用 `aDecorator` 的调用结果替换掉原来的函数。`aDecorator` 返回值是什么，以后调用 `aFunc` 时就是在调用这个返回值，而 `aDecorator` 本身此时已经执行完毕了。
 
-```python
-def a_func():
-    ...
-a_func = a_decorator(a_func)
+若你写的是 class 方法，才更常看到接近 Python `@` 的装饰器写法（具体以你使用的语言版本 / 转译器为准）：
+
+```javascript
+// 示意：class 装饰器（细节随提案与工具链变化，先混个眼熟）
+// class C {
+//   @someDecorator
+//   method() {}
+// }
 ```
-
-就是用 `a_decorator` 的调用结果替换掉原来的函数。`a_decorator` 返回值是什么，以后调用 `a_func` 时就是在调用这个返回值，而 `a_decorator` 本身此时已经执行完毕了。
 
 ### 装饰器的用途
 
 Decorator 最常用的场景是什么呢？最常用的场景就是用来改变其它函数的行为。
 
-```python
-def an_output():
-    return 'The quick brown fox jumps over the lazy dog.'
-print(an_output())
+```javascript
+function anOutput() {
+  return 'The quick brown fox jumps over the lazy dog.';
+}
+console.log(anOutput());
 ```
 
     The quick brown fox jumps over the lazy dog.
 
-```python
-def uppercase(func):
-    def wrapper():
-        original_result = func()
-        modified_restult = original_result.upper()
-        return modified_restult
-    return wrapper
+```javascript
+function uppercase(func) {
+  function wrapper() {
+    const originalResult = func();
+    const modifiedResult = originalResult.toUpperCase();
+    return modifiedResult;
+  }
+  return wrapper;
+}
 
-@uppercase
-def an_output():
-    return 'The quick brown fox jumps over the lazy dog.'
-print(an_output())
+let anOutput = function () {
+  return 'The quick brown fox jumps over the lazy dog.';
+};
+anOutput = uppercase(anOutput);
+console.log(anOutput());
 ```
 
     THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.
 
 你还可以给一个函数加上一个以上的装饰器：
 
-```python
-def uppercase(func):
-    def wrapper():
-        original_result = func()
-        modified_restult = original_result.upper()
-        return modified_restult
-    return wrapper
-def strong(func):
-    def wrapper():
-        original_result = func()
-        modified_restult = '<strong>'+original_result+'</strong>'
-        return modified_restult
-    return wrapper
+```javascript
+function uppercase(func) {
+  function wrapper() {
+    return func().toUpperCase();
+  }
+  return wrapper;
+}
 
-@strong
-@uppercase
-def an_output():
-    return 'The quick brown fox jumps over the lazy dog.'
-print(an_output())
+function strong(func) {
+  function wrapper() {
+    return '<strong>' + func() + '</strong>';
+  }
+  return wrapper;
+}
+
+let anOutput = function () {
+  return 'The quick brown fox jumps over the lazy dog.';
+};
+
+// 先 uppercase，再 strong —— 注意组合顺序
+anOutput = strong(uppercase(anOutput));
+console.log(anOutput());
 ```
 
     <strong>THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.</strong>
 
 你把两个装饰器的顺序调换一下写成下面这样试试：
 
-```python
-@uppercase
-@strong
-def an_output():
-...
+```javascript
+anOutput = uppercase(strong(anOutput));
 ```
-装饰器的执行顺序是 “自下而上” —— 其实是 “由里到外” 更为准确。体会一下。
+
+装饰器的执行顺序是 “由里到外”：先作用到更靠近原函数的那一层，再往外层包。
 
 ### 装饰带有参数的函数
 
-到现在我们见到的使用装饰器的函数都是没有参数的：`an_output` 以及之前的 `a_func`。
+到现在我们见到的被装饰函数都是没有参数的：`anOutput` 以及之前的 `aFunc`。
 
 如果被装饰的函数有参数怎么办？装饰器自身内部又应该怎么写？
 
-这时候，Python 的 `*args` and `**kwargs` 的威力就显现出来了 —— 之前怕麻烦没有通过仔细反复阅读搞定这 “一个星号、两个星号、直接晕倒” 的知识点的人，现在恐怕要吃亏了……
+这时候，Rest Parameters（`...args`）的威力就显现出来了 —— 之前若没把 `...args` 吃透，现在恐怕要吃亏了……
 
-装饰器函数本身这么写：
+装饰器函数本身可以这么写：
 
-```python
-def a_decorator(func):
-    def wrapper(*args, **kwargs):
-        return original_result
-    # ...
-    return wrapper
+```javascript
+function aDecorator(func) {
+  function wrapper(...args) {
+    // ...
+    return func(...args);
+  }
+  return wrapper;
+}
 ```
 
-在这里，`(*args, **kwargs)` 非常强大，它可以匹配所有函数传进来的所有参数…… 准确地讲，`*args` 接收并处理所有传递进来的位置参数，`**kwargs` 接收并处理所有传递进来的关键字参数。
+在这里，`...args` 非常强大，它可以接住传进来的位置参数，再原样（或加工后）转交给原函数。
 
 假设我们有这么个函数：
 
-```python
-def say_hi(greeting, name=None):
-    return greeting + '! ' + name + '.'
+```javascript
+function sayHi(greeting, name = null) {
+  return greeting + '! ' + name + '.';
+}
 
-print(say_hi('Hello', 'Jack'))
+console.log(sayHi('Hello', 'Jack'));
 ```
 
     Hello! Jack.
 
-如果我们想在装饰器里对函数名、参数，都做些事情 —— 比如，我们写个 `@trace` 用来告诉用户调用一个函数的时候都发生了什么……
+如果我们想在装饰器里对函数名、参数，都做些事情 —— 比如，我们写个 `trace` 用来告诉用户调用一个函数的时候都发生了什么……
 
-```python
-def trace(func):
-    def wrapper(*args, **kwargs):
-        print(f"Trace: You've called a function: {func.__name__}(),",
-              f"with args: {args}; kwargs: {kwargs}")
+```javascript
+function trace(func) {
+  function wrapper(...args) {
+    console.log(
+      `Trace: You've called a function: ${func.name}(),`,
+      `with args:`,
+      args
+    );
 
-        original_result = func(*args, **kwargs)
-        print(f"Trace: {func.__name__}{args} returned: {original_result}")
-        return original_result
-    return wrapper
+    const originalResult = func(...args);
+    console.log(`Trace: ${func.name}() returned:`, originalResult);
+    return originalResult;
+  }
+  return wrapper;
+}
 
-@trace
-def say_hi(greeting, name=None):
-    return greeting + '! ' + name + '.'
+let sayHi = function (greeting, name = null) {
+  return greeting + '! ' + name + '.';
+};
+sayHi = trace(sayHi);
 
-print(say_hi('Hello', name = 'Jack'))
+console.log(sayHi('Hello', 'Jack'));
 ```
 
-    Trace: You've called a function: say_hi(), with args: ('Hello',); kwargs: {'name': 'Jack'}
-    Trace: say_hi('Hello',) returned: Hello! Jack.
+    Trace: You've called a function: sayHi(), with args: [ 'Hello', 'Jack' ]
+    Trace: sayHi() returned: Hello! Jack.
     Hello! Jack.
 
-有了以上的基础知识之后，再去阅读 Python Decorator Library 的 Wiki 页面就会轻松许多：
+有了以上的基础知识之后，再去阅读下面这些页面就会轻松许多：
 
-> https://wiki.python.org/moin/PythonDecoratorLibrary
+> * [MDN — 迭代协议](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols)
+> * [MDN — function*](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/function*)
+> * [MDN — 装饰器（概览）](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Decorators)（class 向）
+> * 以及任意一本讲 “高阶函数 / middleware / 函数组合” 的 Javascript 资料
 
 ### 学会装饰器究竟有多重要？
 
-装饰器一定要学会 —— 因为很多人就是不会。
+装饰器（以及更一般的“函数包装”）一定要学会 —— 因为很多人就是不会。
 
 Oreilly.com 上有篇文章，《5 reasons you need to learn to write Python decorators》中，其中的第五条竟然是：**Boosting your career**!
 
@@ -544,4 +590,8 @@ Oreilly.com 上有篇文章，《5 reasons you need to learn to write Python dec
 >
 > As I've traveled far and wide, training hundreds of working software engineers to use Python more effectively, teams have consistently reported writing decorators to be one of the most valuable and important tools they've learned in my advanced Python programming workshops.
 
-为什么有那么多人就是学不会呢？—— 只不过是因为在此之前，遇到 `*args` `**kwargs` 的时候，“一个星号、两个星号、直接晕倒”…… 而后并未再多挣扎一下。
+这段话说的是 Python，但换成 Javascript 一样成立：Express / Koa 的 middleware、各种 `withX(fn)`、测试里的 mock/spy、日志与权限包装…… 骨子里都是同一类技巧。
+
+为什么有那么多人就是学不会呢？—— 只不过是因为在此之前，遇到 `...args`、闭包、返回函数的时候，觉得绕，而后并未再多挣扎一下。
+
+<a href="./Part.3.B.4.regex.md" ><small>Next Page</small></a>

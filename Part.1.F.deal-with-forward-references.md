@@ -12,12 +12,12 @@ console.log(an_undefined_variable)
 
     Uncaught ReferenceError: a is not defined
 
-![image-20250606160029779](/Users/liaohua/Documents/image-20250606160029779.png)
+![image-20250606160029779](images/image-20250606160029779.png)
 
 
 充满过早引用的知识结构，在大脑中会构成类似 M.C. Escher 善画的那种 “不可能图形” 那样的 “结构”。
 
-![](/Users/liaohua/Documents/four-cones.png)
+![](images/four-cones.png)
 
 在上图中，前三个椎形一般不会造成视觉困惑 —— 尤其是第一个。
 

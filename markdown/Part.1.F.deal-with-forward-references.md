@@ -1,26 +1,23 @@
-
 # 如何从容应对含有过多 “过早引用” 的知识？
 
 “过早引用”（[Forward References](https://en.wikipedia.org/wiki/Forward_declaration#id=Forward_reference)，另译为 “前置引用”），原本是计算机领域的术语。
 
-在几乎所有的编程语言中，对于变量的使用，都有 “先声明再使用” 的要求。直接使用未声明的变量是被禁止的。Python 中，同样如此。如果在从未给 `an_undefined_variable` 赋值的情况下，直接调用这个变量，比如，`print(an_undefined_variable)`，那就会报错：`NameError: name 'an_undefined_variable' is not defined`。
+在几乎所有的编程语言中，对于变量的使用，都有 “先声明再使用” 的要求。直接使用未声明的变量是被禁止的。Javascript 中，同样如此。如果在从未给 `an_undefined_variable` 赋值的情况下，直接调用这个变量，比如，`console.log(a)`，那就会报错：`Uncaught ReferenceError: a is not defined`。
+
 
 ```python
-print(an_undefined_variable)
+console.log(an_undefined_variable)
 ```
 
-    ---------------------------------------------------------------------------
-    
-    NameError                                 Traceback (most recent call last)
-    
-    <ipython-input-1-7e0e1cc14e37> in <module>
-    ----> 1 print(an_undefined_variable)
-    
-    NameError: name 'an_undefined_variable' is not defined
+
+    Uncaught ReferenceError: a is not defined
+
+![image-20250606160029779](../images/image-20250606160029779.png)
+
 
 充满过早引用的知识结构，在大脑中会构成类似 M.C. Escher 善画的那种 “不可能图形” 那样的 “结构”。
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/four-cones.png?raw=true)
+![](../images/four-cones.png)
 
 在上图中，前三个椎形一般不会造成视觉困惑 —— 尤其是第一个。
 
@@ -30,7 +27,7 @@ print(an_undefined_variable)
 
 对一个点的位置困惑，连带着它与其它三个点之间的关系。可若那不是锥体，而是立方体呢？每个点的位置困惑会造成对它与更多点之间的更多联系的困惑…… 若是更多面体呢？
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/2_necker_cubes.png?raw=true)
+![](../images/2_necker_cubes.png)
 
 把这些令人困惑的点，比喻成 “过早引用”，你就明白为什么 “很多过早引用” 的知识结构会那么令人困惑，处理起来那么令人疲惫了吧？
 
@@ -179,7 +176,7 @@ Python 官方网站上的 [The Python Tutorial](https://docs.python.org/3/tutori
 
 我在第一次粗略读过整个 [Python Official Tutorial](https://docs.python.org/3/tutorial/datastructures.html) 中的第五章之后，顺手整理了一下 Containers 的概念表格：
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/python-containers.png?raw=true)
+![](../images/python-containers.png)
 
 **可这张图错了！**
 
@@ -187,7 +184,7 @@ Python 官方网站上的 [The Python Tutorial](https://docs.python.org/3/tutori
 
 于是肯定需要再次整理，若干次改进之后，那张图就变成了下面这个样子：
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/python-containers-final.png?raw=true)
+![](../images/python-containers-final.png)
 
 > 另外，从 Python 3.7 开始，Dictionary 是 insertion ordered 了：<br />
 https://docs.python.org/3/library/collections.html#ordereddict-objects
@@ -204,7 +201,7 @@ https://docs.python.org/3/library/collections.html#ordereddict-objects
 
 人家随手做个图，都舍不得不精致：
 
-![](https://raw.githubusercontent.com/selfteaching/the-craft-of-selfteaching/master/images/iter-relationships.gif?raw=true)
+![](../images/iter-relationships.gif)
 
 自学能力强的人有个特点，就是**不怕麻烦**。小时候经常听到母亲念叨，“怕麻烦！那还活着干嘛啊？活着多麻烦啊！” —— 深刻。
 
@@ -268,9 +265,18 @@ Python 中有一个概念叫 PEP，Python Enhancement Proposals，必须找时�
 
 到最后，你会体会到，这不只是编程的事，这种东西背后的思考与体量，对整个人生都有巨大帮助。
 
+> 💡现在对于各个编程生态来说，Proposal 几乎已经成为了「标配」。例如：
+> Javascript: https://github.com/tc39/proposals
+>
+> Bitcoin: https://github.com/bitcoin/bips
+>
+> Ethereum: https://github.com/ethereum/EIPs
+
 -----
 **脚注**
 
 <a name='fn1'>[1]</a>：也可能真的会死…… 请看一篇 2018 年 9 月份的一则新闻，发生在旧金山的事情：[Developer goes rogue, shoots four colleagues at ERP code maker](https://www.theregister.co.uk/2018/09/20/developer_work_shooting/)
 
 <a href='#fn1b'><small>↑Back to Content↑</small></a>
+
+<a href="./Part.1.G.The-Javascript-Tutorial-local.ipynb" ><small>Next Page</small></a>

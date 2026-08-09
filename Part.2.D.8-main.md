@@ -1,60 +1,153 @@
-# 可执行的 Python 文件
+# 可执行的 Javascript 文件
 
 理论上来讲，你最终可以把任何一个程序，无论大小，都封装（或者囊括）到仅仅一个函数之中。按照惯例（Convention），这个函数的名称叫做 `main()`：
 
+```javascript
+function routine1() {
+  console.log('Routine 1 done.');
+}
 
-```python
-def routine_1():
-    print('Routine 1 done.')
+function routine2() {
+  subRoutine1();
+  subRoutine2();
+  console.log('Routine 2 done.');
+}
 
-def routine_2():
-    sub_routine_1()
-    sub_routine_2()
-    print('Routine 2 done.')
-    
-def sub_routine_1():
-    print('Sub-routine 1 done.')
+function subRoutine1() {
+  console.log('Sub-routine 1 done.');
+}
 
-def sub_routine_2():
-    print('Sub-routine 2 done.')
+function subRoutine2() {
+  console.log('Sub-routine 2 done.');
+}
 
-def main():
-    routine_1()
-    routine_2()
-    print('This is the end of the program.')
-    
-if __name__ == '__main__':
-    main()
+function main() {
+  routine1();
+  routine2();
+  console.log('This is the end of the program.');
+}
+
+main();
 ```
 
-    Routine 1 done.
-    Sub-routine 1 done.
-    Sub-routine 2 done.
-    Routine 2 done.
-    This is the end of the program.
-
-
-当一个模块（其实就是存有 Python 代码的 `.py` 文件，例如：`mycode.py`）被 `import` 语句导入的时候，这个模块的 `__name__` 就是模块名（例如：`'mycode'`）。
-
-而当一个模块被命令行运行的时候，这个模块的 `__name__` 就被 Python 解释器设定为 `'__main__'`。
-
-把一个程序整个封装到 `main()` 之中，而后在模块代码里加上：
-
-```python
-if __name__ == '__main__':
-    main()
+```
+Routine 1 done.
+Sub-routine 1 done.
+Sub-routine 2 done.
+Routine 2 done.
+This is the end of the program.
 ```
 
-这么做的结果是：
+但若这个文件既可能被**直接运行**，又可能被别的模块 **import**，你通常不希望“一被导入就自动跑完整个程序”。于是需要一个开关：
 
-> 1. 当 Python 文件被当作模块，被 `import` 语句导入时，`if` 判断失败，`main()` 函数不被执行；
-> 2. 当 Python 文件被 `python -m` 运行的时候，`if` 判断成功，`main()` 函数才被执行。
+> 只有当这个文件是程序入口时，才调用 `main()`。
 
-还记得那个 Python 的彩蛋吧？`this.py` 的代码如下：
+Python 里经典写法是 `if __name__ == '__main__':`。Javascript 没有完全同名的内建变量，但可以用入口判断把 `main()` 包起来。
+
+## 如何判断“我是不是入口文件”
+
+把程序保存为 `app.js`。业务逻辑 Node / Deno 可以写成一样；真正不同的，往往只是**怎么启动**，以及（在较旧的 Node 上）入口判断写法。
+
+较新的 Node（20.11+）和 Deno 都支持 `[import.meta.main](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta#main)`：
+
+```javascript
+// app.js
+function routine1() {
+  console.log('Routine 1 done.');
+}
+
+function routine2() {
+  subRoutine1();
+  subRoutine2();
+  console.log('Routine 2 done.');
+}
+
+function subRoutine1() {
+  console.log('Sub-routine 1 done.');
+}
+
+function subRoutine2() {
+  console.log('Sub-routine 2 done.');
+}
+
+export function main() {
+  routine1();
+  routine2();
+  console.log('This is the end of the program.');
+}
+
+if (import.meta.main) {
+  main();
+}
+```
+
+含义是：
+
+> 1. 当该文件被其它模块 `import` 时，`import.meta.main` 为假，`main()` 不执行；
+> 2. 当该文件被当作程序入口运行时，`import.meta.main` 为真，`main()` 才执行。
+
+分别这样执行：
+
+```bash
+# Node（项目需 "type": "module"，或把文件改成 .mjs）
+node app.js
+
+# Deno
+deno run app.js
+```
+
+若你的 Node 较旧、还没有 `import.meta.main`，把最后的判断换成：
+
+```javascript
+import { pathToFileURL } from 'node:url';
+
+const isMain =
+  process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+
+if (isMain) {
+  main();
+}
+```
+
+若你用的是 CommonJS（仅 Node），则是：
+
+```javascript
+// app.cjs
+function main() {
+  console.log('This is the end of the program.');
+}
+
+if (require.main === module) {
+  main();
+}
+
+module.exports = { main };
+```
+
+```bash
+node app.cjs
+```
+
+对比一下：
 
 
-```python
-s = """Gur Mra bs Clguba, ol Gvz Crgref
+| 运行时                  | “我是入口吗？”                                                  |
+| -------------------- | --------------------------------------------------------- |
+| Deno / 较新 Node (ESM) | `import.meta.main`                                        |
+| 较旧 Node (ESM)        | `import.meta.url === pathToFileURL(process.argv[1]).href` |
+| Node (CJS)           | `require.main === module`                                 |
+
+
+
+
+## 把“导入即执行”改成“按需执行”
+
+还记得上一章那个 ROT13 彩蛋模块吗？如果顶层直接 `console.log(...)`，那么一 `import` 就会打印。我们可以把它封装进 `main()` —— Node / Deno 代码相同：
+
+```javascript
+// that.js
+export function main() {
+  const s = `Gur Mra bs Clguba, ol Gvz Crgref
 Ornhgvshy vf orggre guna htyl.
 Rkcyvpvg vf orggre guna vzcyvpvg.
 Fvzcyr vf orggre guna pbzcyrk.
@@ -73,241 +166,197 @@ Abj vf orggre guna arire.
 Nygubhtu arire vf bsgra orggre guna *evtug* abj.
 Vs gur vzcyrzragngvba vf uneq gb rkcynva, vg'f n onq vqrn.
 Vs gur vzcyrzragngvba vf rnfl gb rkcynva, vg znl or n tbbq vqrn.
-Anzrfcnprf ner bar ubaxvat terng vqrn -- yrg'f qb zber bs gubfr!"""
+Anzrfcnprf ner bar ubaxvat terng vqrn -- yrg'f qb zber bs gubfr!`;
 
-d = {}
-for c in (65, 97):
-    for i in range(26):
-        d[chr(i+c)] = chr((i+13) % 26 + c)
+  const d = {};
+  for (const c of [65, 97]) {
+    for (let i = 0; i < 26; i++) {
+      d[String.fromCharCode(i + c)] = String.fromCharCode((i + 13) % 26 + c);
+    }
+  }
 
-print("".join([d.get(c, c) for c in s]))
+  console.log(
+    [...s].map((ch) => (Object.hasOwn(d, ch) ? d[ch] : ch)).join('')
+  );
+}
+
+if (import.meta.main) {
+  main();
+}
 ```
 
-所以，只要 `import this`，`this.py` 中的代码就被执行：
+于是导入时不会自动打印：
 
-
-```python
-import this
+```javascript
+import * as that from './that.js';
+// 不会自动打印 Zen 文本
 ```
 
-我在当前目录下，保存了一个文件 `that.py`，它的内容如下 —— 其实就是把 `this.py` 之中的代码封装到 `main()` 函数中了：
-
-
-```python
-# %load that.py
-def main():
-
-    s = """Gur Mra bs Clguba, ol Gvz Crgref
-    Ornhgvshy vf orggre guna htyl.
-    Rkcyvpvg vf orggre guna vzcyvpvg.
-    Fvzcyr vf orggre guna pbzcyrk.
-    Pbzcyrk vf orggre guna pbzcyvpngrq.
-    Syng vf orggre guna arfgrq.
-    Fcnefr vf orggre guna qrafr.
-    Ernqnovyvgl pbhagf.
-    Fcrpvny pnfrf nera'g fcrpvny rabhtu gb oernx gur ehyrf.
-    Nygubhtu cenpgvpnyvgl orngf chevgl.
-    Reebef fubhyq arire cnff fvyragyl.
-    Hayrff rkcyvpvgyl fvyraprq.
-    Va gur snpr bs nzovthvgl, ershfr gur grzcgngvba gb thrff.
-    Gurer fubhyq or bar-- naq cersrenoyl bayl bar --boivbhf jnl gb qb vg.
-    Nygubhtu gung jnl znl abg or boivbhf ng svefg hayrff lbh'er Qhgpu.
-    Abj vf orggre guna arire.
-    Nygubhtu arire vf bsgra orggre guna *evtug* abj.
-    Vs gur vzcyrzragngvba vf uneq gb rkcynva, vg'f n onq vqrn.
-    Vs gur vzcyrzragngvba vf rnfl gb rkcynva, vg znl or n tbbq vqrn.
-    Anzrfcnprf ner bar ubaxvat terng vqrn -- yrg'f qb zber bs gubfr!"""
-
-    d = {}
-    for c in (65, 97):
-        for i in range(26):
-            d[chr(i+c)] = chr((i+13) % 26 + c)
-
-    print("".join([d.get(c, c) for c in s]))
-
-
-if __name__ == '__main__':
-    main()
-```
-
-于是，当你在其它地方导入它的时候，`import that`，`main()` 函数的内容不会被执行：
-
-
-```python
-import that
-```
-
-但是，你在命令行中，用 `python that.py`，或者 `python -m that` 将 `that.py` 当作可执行模块运行的时候，`main()` 就会被执行 —— 注意，不要写错，`python -m that.py` 会报错的 —— 有 `-m` 参数，就不要写文件尾缀 `.py`：
-
+直接运行才会执行 `main()`：
 
 ```bash
-%%bash
-python that.py
+node that.js # node 版
+deno run that.js # deno 版
 ```
 
+你也可以手动调用：
+
+```javascript
+import { main } from './that.js';
+main();
+```
+
+
+
+## 做成命令行可执行文件，并接收参数
+
+之前那个“从词表里挑出字母加起来等于 100 的词”的程序，也可以写成入口形式。
+
+这里 Node / Deno **不完全一致**：读文件 API、命令行参数、权限模型不同，所以分开写；相同的 `sumOfWord` 逻辑则只出现一次即可。
+
+先写共用的核心：
+
+```javascript
+function sumOfWord(word) {
+  let sum = 0;
+  for (const char of word) {
+    sum += char.charCodeAt(0) - 96;
+  }
+  return sum;
+}
+```
+
+
+
+### Node
+
+```javascript
+#!/usr/bin/env node
+import fs from 'node:fs';
+
+function sumOfWord(word) {
+  let sum = 0;
+  for (const char of word) {
+    sum += char.charCodeAt(0) - 96;
+  }
+  return sum;
+}
+
+export function main(wordlist, resultPath) {
+  const words = fs.readFileSync(wordlist, 'utf8').split(/\r?\n/);
+  const out = words.filter((word) => sumOfWord(word.trim()) === 100);
+  fs.writeFileSync(resultPath, out.join('\n') + '\n');
+}
+
+if (import.meta.main) {
+  const wordlist = process.argv[2] ?? 'words_alpha.txt';
+  const resultPath = process.argv[3] ?? 'results.txt';
+  main(wordlist, resultPath);
+}
+```
 
 ```bash
-%%bash
-python -m that
-```
-
-像 `that.py` 那样把整个程序放进 `main()` 函数之后，`import that` 不会自动执行 main 函数里的代码。不过，你可以调用 that.main()：
-
-
-```python
-import that
-that.main()
-```
-
-当然，`that.py` 之中没有任何 Docstring，所以 `help(that)` 的结果是这样的：
-
-
-```python
-import that
-help(that)
-```
-
-所以，之前那个从 37 万多个词汇中挑出 3700 多个字母加起来等于 100 的词汇的程序，也可以写成以下形式：
-
-
-```python
-#!/usr/bin/env python
-
-def sum_of_word(word):
-    sum = 0
-    for char in word:
-        sum += ord(char) - 96
-    return sum
-def main(wordlist, result):
-    with open(result, 'w') as result:
-        with open(wordlist, 'r') as file:
-            for word in file.readlines():
-                if sum_of_word(word.strip()) == 100:
-                    result.write(word)
-
-if __name__ == '__main__':
-    main('words_alpha.txt', 'results.txt')
-```
-
-至于以上代码中的第一行，`#!/usr/bin/env python` 是怎么回事，建议你自己动手解决一下，去 Google：
-
-> [`python3 script executable`](https://www.google.com/search?q=python3+script+executable)
-
-你会很快弄明白的……
-
-另外，再搜索一下：
-
-> [`python3 script executable parameters retrieving`](https://www.google.com/search?q=python3+script+executable+parameters+retrieving)
-
-你就可以把以上程序改成在命令行下能够接收指定参数的 Python 可执行文件……
-
-顺带说，`import this` 的彩蛋有更好玩的玩法：
-
-
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-
-import this
-love = this
-this is love                            # True
-love is True                            # False
-love is False                           # False
-love is not True or False               # True
-love is not True or False; love is love # True True
+node find100.js words_alpha.txt results.txt
+# 若已 chmod +x：
+./find100.js words_alpha.txt results.txt
 ```
 
 
 
+### Deno
 
-    True
+Deno 读文件需要权限；参数用 `Deno.args`：
 
+```javascript
+#!/usr/bin/env -S deno run --allow-read --allow-write
 
+function sumOfWord(word) {
+  let sum = 0;
+  for (const char of word) {
+    sum += char.charCodeAt(0) - 96;
+  }
+  return sum;
+}
 
+export async function main(wordlist, resultPath) {
+  const text = await Deno.readTextFile(wordlist);
+  const words = text.split(/\r?\n/);
+  const out = words.filter((word) => sumOfWord(word.trim()) === 100);
+  await Deno.writeTextFile(resultPath, out.join('\n') + '\n');
+}
 
-
-
-    False
-
-
-
-
-
-
-    False
-
-
-
-
-
-
-    True
-
-
-
-
-
-
-    True
-
-
-
-
-
-
-    True
-
-
-
-在 Terminal 里输入 `python ⏎` 而后在 Interactive Shell 里逐句输入试试。`love = this` 后面的每一句，都是布尔运算，想想看为什么是那样的结果？
-
-```python
-import this
-love = this
-
-this is love      
-# True, 试试看，id(this) 和 id(love) 是同一个值
-# 即，它们的内存地址相同
-
-love is True       
-# False, id(love) 和 id(True) 不是同一个值
-love is False      
-# 同上
-
-
-love is not True or False  
-# is not 的优先级比 or 高；所以相当于是：
-# (love is not True) or False，于是返回 True
-
-love is not True or False; love is love  
-# 重复一次上一句 —— `;` 是语句分隔符
-# 而后 love is love 当然是 True
+if (import.meta.main) {
+  const wordlist = Deno.args[0] ?? 'words_alpha.txt';
+  const resultPath = Deno.args[1] ?? 'results.txt';
+  await main(wordlist, resultPath);
+}
 ```
 
-注意以下代码中，`id()` 函数的输出结果：
+```bash
+deno run --allow-read --allow-write find100.js words_alpha.txt results.txt
+```
 
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
+至于文件开头的 shebang（`#!/usr/bin/env node` 或 `#!/usr/bin/env -S deno run ...`）是怎么回事，建议你自己动手解决一下，去搜索：
 
-import this
-love = this
-this is love
-love is True
-love is False
-love is not True or False
-love is not True or False; love is love
-id(love)
-id(this)
-id(True)
-id(False)
-love is not True
+> `[node script executable shebang](https://www.google.com/search?q=node+script+executable+shebang)`
 
-Python 的操作符优先级，完整表格在这里：
+以及：
 
-> [Operator precedence](https://docs.python.org/3/reference/expressions.html#operator-precedence)
+> `[deno script executable shebang](https://www.google.com/search?q=deno+script+executable+shebang)`
 
-Python 的更多彩蛋：
+再搜索：
 
-> [Python Easter Eggs](https://github.com/OrkoHunter/python-easter-eggs)
+> `[node process.argv](https://www.google.com/search?q=node+process.argv)`  
+> `[deno args](https://www.google.com/search?q=Deno.args)`
 
-<a href="./Part.2.E.deliberate-thinking.ipynb" ><small>Next Page</small></a>
+你就可以把程序改成在命令行下能够接收指定参数的可执行文件……
+
+## 彩蛋式布尔运算：`love = zen`
+
+Python 里有 `import this` 而后玩 `love = this` 的段子。Javascript 里 `this` 是关键字，不能当模块名那么玩；但我们可以用上一章的 `this.js`（导出对象）做同类演示 —— 下面把它导入为 `zen`：
+
+```javascript
+import * as zen from './this.js';
+
+const love = zen;
+
+console.log(love === zen);          // true —— 同一个对象
+console.log(love === true);         // false
+console.log(love === false);        // false
+console.log(love !== true || false); // true
+console.log(love !== true || false, love === love); // true true
+```
+
+在 REPL 里也可以自己构造一个对象来体会引用相等：
+
+```bash
+node #或 deno
+```
+
+```javascript
+const zen = { tip: 'Namespaces are one honking great idea' };
+const love = zen;
+
+love === zen;            // true，同一引用
+love === true;           // false
+love === false;          // false
+
+love !== true || false;
+// !== 优先于 ||；相当于 (love !== true) || false，结果为 true
+
+love !== true || false; love === love;
+// 上一句再算一遍；而后 love === love 当然是 true
+```
+
+注意：Javascript 用 `===` / `!==` 做同一判断，没有 Python 的 `is` / `is not`；但“是不是同一个对象”这件事，道理是一样的。
+
+Javascript 的操作符优先级，完整表格在这里：
+
+> [MDN — Operator precedence](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Operator_precedence)
+
+更多可读的小彩蛋 / 趣味项目（了解即可）：
+
+> - [Node.js / JS easter eggs 搜搜看](https://www.google.com/search?q=javascript+easter+eggs)
+> - [Deno 文档：Modules](https://docs.deno.com/runtime/manual/basics/modules/)
+
+[Next Page](./Part.2.E.deliberate-thinking.md)
