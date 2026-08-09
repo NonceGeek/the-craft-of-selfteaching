@@ -149,23 +149,7 @@
 这个方法着实简单，然而却非常有效。这有点像什么呢？这有点像人家弹个吉他是“蹦单音”，可你弹的却是“曲调与和弦”相辅相成的音乐…… 给你听一个 Youtube 上，《一生所爱》这首曲子的我最喜欢的指弹版本 —— 这种弹法，不仅有旋律，还有和弦，并且还有打击乐器效果“伴奏”：
 
 
-```python
-from IPython.display import IFrame
-
-IFrame('https://www.youtube.com/embed/AjWTop5O5jo?', width='800', height='450')
-```
-
-
-
-
-
-<iframe
-    width="800"
-    height="450"
-    src="https://www.youtube.com/embed/AjWTop5O5jo?"
-    frameborder="0"
-    allowfullscreen
-></iframe>
+> https://www.youtube.com/watch?v=AjWTop5O5jo
 
 
 
@@ -185,23 +169,7 @@ IFrame('https://www.youtube.com/embed/AjWTop5O5jo?', width='800', height='450')
 给你看一段视频，加州伯克利大学的 Brian Harvey 在课堂上告诉学生，“为什么不要作弊”的真正原因：
 
 
-```python
-from IPython.display import IFrame
-
-IFrame('https://www.youtube.com/embed/hMloyp6NI4E?', width='800', height='450')
-```
-
-
-
-
-
-<iframe
-    width="800"
-    height="450"
-    src="https://www.youtube.com/embed/hMloyp6NI4E?"
-    frameborder="0"
-    allowfullscreen
-></iframe>
+> https://www.youtube.com/watch?v=hMloyp6NI4E
 
 
 
@@ -229,23 +197,7 @@ IFrame('https://www.youtube.com/embed/hMloyp6NI4E?', width='800', height='450')
 现在大家已经熟悉了的吉他演奏中的“指弹”（Percussive Guitar），可这种玩法在没有 Youtube 的时代里并不多见 —— 在我长大的年代里，甚至“前所未闻”。不知道是谁，把打击乐器的手法融合到吉他演奏手法中去了，于是，在 Youtube 这样的视频工具出现之后，人们的“见识”成本降低了（过去也许要“去西天取经才行”），很快就有人模仿，很快就有人更为擅长……
 
 
-```python
-from IPython.display import IFrame
-
-IFrame('https://www.youtube.com/embed/nY7GnAq6Znw?', width='800', height='450')
-```
-
-
-
-
-
-<iframe
-    width="800"
-    height="450"
-    src="https://www.youtube.com/embed/nY7GnAq6Znw?"
-    frameborder="0"
-    allowfullscreen
-></iframe>
+> https://www.youtube.com/watch?v=nY7GnAq6Znw
 
 
 
@@ -272,23 +224,7 @@ IFrame('https://www.youtube.com/embed/nY7GnAq6Znw?', width='800', height='450')
 这么多年来，在互联网上我最喜爱的老师，是麻省理工大学的 Walter Lewin 教授。
 
 
-```python
-from IPython.display import IFrame
-
-IFrame('https://www.youtube.com/embed/sJG-rXBbmCc?', width='800', height='450')
-```
-
-
-
-
-
-<iframe
-    width="800"
-    height="450"
-    src="https://www.youtube.com/embed/sJG-rXBbmCc?"
-    frameborder="0"
-    allowfullscreen
-></iframe>
+> https://www.youtube.com/watch?v=sJG-rXBbmCc
 
 
 
