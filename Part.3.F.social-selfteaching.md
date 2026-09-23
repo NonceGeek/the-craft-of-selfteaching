@@ -36,7 +36,6 @@
 
 自学这门手艺，很简单，就是不断地学：
 
-
 ```javascript
 function teachYourself(anything) {
   while (!create()) {
@@ -51,11 +50,10 @@ teachYourself(coding);
 
 学上几个，自然就很精湛。而其它的用自学这门手艺习得的手艺，基本上都可以用 “是否做出了像样的作品” 作为检验自己的那门手艺是否达到了精湛的衡量指标。
 
-
-
 硅谷有一家著名的孵化器，叫 Y-Combinator，现在的掌门人是个很年轻的人，Samuel H. Altman。他在那篇著名的文章《[Advice for ambitious 19 year olds](https://blog.samaltman.com/advice-for-ambitious-19-year-olds)》中有一个精彩的建议：
 
-> No matter what you choose, build stuff and be around smart people. <br />
+> No matter what you choose, build stuff and be around smart people.   
+>
 > 无论你选择了什么，都要造出东西来，要与聪明人打交道。
 
 当然，对于 “聪明人” 这个概念，我和 Sam 的看法并不一致。在我看来，有好作品的人都很聪明，但还是那句话，那不是天分和智商，那分明是有效积累。
@@ -68,7 +66,7 @@ teachYourself(coding);
 
 我甚至经常建议我的合伙人们，在招人的时候，把这一点当作最靠谱的判断方式。少废话，少吹牛逼，给我看看你的作品。这个原则可以一下子过滤掉所有的不合格者。另外一个很自然的现象是，如果一个人能做出像样的东西来，那么他身边的聪明人密度无论如何都会比其他人的高出很多。
 
-地球上有效社交密度最高的地方，是 [Github](https://github.com)。有些程序员们常开玩笑，说 Github 是全球最大的同性社交网站，事实上，他们不知道，女性程序员的比例正在逐步提高，而且女性在科学上，从来就没有屈居二线过<a href='#fn1' name='fn1b'><sup>[1]</sup></a>。
+地球上有效社交密度最高的地方，是 [Github](https://github.com)。有些程序员们常开玩笑，说 Github 是全球最大的同性社交网站，事实上，他们不知道，女性程序员的比例正在逐步提高，而且女性在科学上，从来就没有屈居二线过[[1]](#fn1)。
 
 在 Github 上，找到自己感兴趣的项目，而后为那项目贡献一己之力，用自己的工作赢得社区的认同…… 这就是 Github 上的社交方式。若是自己做了有意义的项目，就会有更多人关注；若是那项目对很多人有用，那就不仅有很多人关注，更有很多人会像当初的你一样为这个项目做贡献…… 这就是程序员们的**有效社交**。
 
@@ -80,11 +78,10 @@ Github 能成为地球上最大的有效社交网络，没毛病，因为**用�
 
 与之前提到的另外一项加起来，就构成了自学者的最基本素养：
 
-> * 学就学得**全面**；
-> * 做就做得**完整**。
+> - 学就学得**全面**；
+> - 做就做得**完整**。
 
-
-无论多小的作品，都会让创作者感受到 “单一技能的必然无效性” —— 你试试就知道了。哪怕你想做个静态网站，你都会发现，仅仅学会 HTML/CSS 是不够的，往往还得写点 Javascript；部署到远端服务器上的时候，你无论如何都得学学 Linux 基本操作，搞不好还要碰碰 Node.js 或 Deno…… 而已然具备了自学者基本素养的你，自然会想办法 “全面掌握”，而不是糊弄一下而已。
+无论多小的作品，都会让创作者感受到 “单一技能的必然无效性” —— 你试试就知道了。哪怕你想做个静态网站，你都会发现，仅仅学会 html/css 是不够的，因为部署到远端服务器上的时候，你无论如何都得学学 Linux 基本操作…… 而已然具备了自学者基本素养的你，自然会想办法 “全面掌握”，而不是糊弄一下而已。
 
 更为重要的是，一旦你开始创作作品，你更大的 “发现” 就是，你肯定需要很多 “之前看起来并不相干的知识与技能”，而非 “只靠专业就够了”……
 
@@ -99,6 +96,7 @@ Github 能成为地球上最大的有效社交网络，没毛病，因为**用�
 有作品和没作品的人理解能力也不一样。做过作品的人，看到类似 MoSCoW Method 的做事原则，瞬间就能有所感悟，而没有作品的人，却不见得有一样的感受。
 
 > 顺带给你看个 Wikipedia 上的链接列表，在编程领域里，有无数可以借鉴到生活中的哲学、方法论：
+>
 > - [If it ain't broke, don't fix it](https://en.wikipedia.org/wiki/If_it_ain%27t_broke,_don%27t_fix_it)
 > - [KISS principle](https://en.wikipedia.org/wiki/KISS_principle)
 > - [Don't repeat yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
@@ -115,21 +113,22 @@ Github 能成为地球上最大的有效社交网络，没毛病，因为**用�
 
 只有这样，你才是个值得被交往的人。
 
------
+---
+
 **脚注**
 
-<a name='fn1'>[1]</a>：NPR：[Most Beautiful Woman' By Day, Inventor By Night](https://www.npr.org/2011/11/27/142664182/most-beautiful-woman-by-day-inventor-by-night)
+[1]：NPR：[Most Beautiful Woman' By Day, Inventor By Night](https://www.npr.org/2011/11/27/142664182/most-beautiful-woman-by-day-inventor-by-night)
 
-![](images/Lamarr_patent.png)
+
 
 上图是保存在美国专利局的一个存档文件（US Patent 2,292,387, Aug 11, 1942）截图。这项专利的发明者是 [Hedy Lamarr](https://en.wikipedia.org/wiki/Hedy_Lamarr)，人家长得是这样的：
 
-![](images/hedy-lamarr-hero-getty.jpg)
+
 
 Hedy Lamarr 是好莱坞最知名的演员之一，并且，她也是自学高手：
 
 > Although Lamarr had no formal training and was primarily self-taught, she worked in her spare time on various hobbies and inventions, which included an improved traffic stoplight and a tablet that would dissolve in water to create a carbonated drink. The beverage was unsuccessful; Lamarr herself said it tasted like Alka-Seltzer.
 
-<a href='#fn1b'><small>↑Back to Content↑</small></a>
+[↑Back to Content↑](#fn1b)
 
-<a href="./Part.3.G.the-golden-age-and-google.md" ><small>Next Page</small></a>
+[Next Page](./Part.3.G.the-golden-age-and-google.md)
