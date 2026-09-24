@@ -23,52 +23,52 @@ teachYourself(coding);
 
 ## 目录
 
-> - [01.preface（**前言**）](01.preface.md)
-> - [02.proof-of-work（**如何证明你真的读过这本书？**）](02.proof-of-work.md)
-> - [Part.1.A.better.teachyourself（**为什么一定要掌握自学能力？**）](Part.1.A.better.teachyourself.md)
-> - [Part.1.B.why.start.from.learning.coding（**为什么把编程当作自学的入口？**）](Part.1.B.why.start.from.learning.coding.md)
-> - [Part.1.C.must.learn.sth.only.by.reading（**只靠阅读习得新技能**）](Part.1.C.must.learn.sth.only.by.reading.md)
-> - [Part.1.D.preparation.for.reading（**开始阅读前的一些准备**）](Part.1.D.preparation.for.reading.md)
-> - [Part.1.E.1.entrance（**入口**）](Part.1.E.1.entrance.md)
-> - [Part.1.E.2.values-and-their-operators（**值及其相应的运算**）](Part.1.E.2.values-and-their-operators.md)
-> - [Part.1.E.3.controlflow（**流程控制**）](Part.1.E.3.controlflow.md)
-> - [Part.1.E.4.functions（**函数**）](Part.1.E.4.functions.md)
-> - [Part.1.E.5.strings（**字符串**）](Part.1.E.5.strings.md)
-> - [Part.1.E.6.containers（**数据容器**）](Part.1.E.6.containers.md)
-> - [Part.1.E.7.files（**文件**）](Part.1.E.7.files.md)
-> - [Part.1.F.deal-with-forward-references（**如何从容应对含有过多 “过早引用” 的知识？**）](Part.1.F.deal-with-forward-references.md)
-> - [Part.1.G.The-Javascript-Tutorial-local（**官方教程：Javascript@MDN**）](Part.1.G.The-Javascript-Tutorial-local.md)
-> - [Part.2.A.clumsy-and-patience（**笨拙与耐心**）](Part.2.A.clumsy-and-patience.md)
-> - [Part.2.B.deliberate-practicing（**刻意练习**）](Part.2.B.deliberate-practicing.md)
-> - [Part.2.C.why-start-from-writing-functions（**为什么从函数开始？**）](Part.2.C.why-start-from-writing-functions.md)
-> - [Part.2.D.1-args（**关于参数（上）**）](Part.2.D.1-args.md)
-> - [Part.2.D.2-aargs（**关于参数（下）**）](Part.2.D.2-aargs.md)
-> - [Part.2.D.3-lambda（**化名与匿名**）](Part.2.D.3-lambda.md)
-> - [Part.2.D.4-recursion（**递归函数**）](Part.2.D.4-recursion.md)
-> - [Part.2.D.5-docstrings（**函数的文档**）](Part.2.D.5-docstrings.md)
-> - [Part.2.D.6-modules（**保存到文件的函数**）](Part.2.D.6-modules.md)
-> - [Part.2.D.7-tdd（**测试驱动的开发**）](Part.2.D.7-tdd.md)
-> - [Part.2.D.8-main（**可执行的 Javascript 文件**）](Part.2.D.8-main.md)
-> - [Part.2.E.deliberate-thinking（**刻意思考**）](Part.2.E.deliberate-thinking.md)
-> - [Part.3.A.conquering-difficulties（**战胜难点**）](Part.3.A.conquering-difficulties.md)
-> - [Part.3.B.1.classes-1（**类 —— 面向对象编程**）](Part.3.B.1.classes-1.md)
-> - [Part.3.B.2.classes-2（**类 —— Javascript 的实现**）](Part.3.B.2.classes-2.md)
-> - [Part.3.B.3.decorator-iterator-generator（**函数工具**）](Part.3.B.3.decorator-iterator-generator.md)
-> - [Part.3.B.4.regex（**正则表达式**）](Part.3.B.4.regex.md)
-> - [Part.3.B.5.bnf-ebnf-pebnf（**BNF 以及 EBNF**）](Part.3.B.5.bnf-ebnf-pebnf.md)
-> - [Part.3.C.breaking-good-and-bad（**拆解**）](Part.3.C.breaking-good-and-bad.md)
-> - [Part.3.D.indispensable-illusion（**刚需幻觉**）](Part.3.D.indispensable-illusion.md)
-> - [Part.3.E.to-be-thorough（**全面 —— 自学的境界**）](Part.3.E.to-be-thorough.md)
-> - [Part.3.F.social-selfteaching（**自学者的社交**）](Part.3.F.social-selfteaching.md)
-> - [Part.3.G.the-golden-age-and-google（**这是自学者的黄金时代**）](Part.3.G.the-golden-age-and-google.md)
-> - [Part.3.H.prevent-focus-drifting（**避免注意力漂移**）](Part.3.H.prevent-focus-drifting.md)
-> - [Q.good-communication（**如何成为优秀沟通者**）](Q.good-communication.md)
-> - [R.finale（**自学者的终点**）](R.finale.md)
-> - [S.whats-next（**下一步干什么？**）](S.whats-next.md)
-> - [T-appendix.editor.vscode（**Visual Studio Code 的安装与配置**）](T-appendix.editor.vscode.md)
-> - [T-appendix.git-introduction（**Git 简介**）](T-appendix.git-introduction.md)
-> - [T-appendix.jupyter-installation-and-setup（**Node.js（与 Deno）的安装与配置**）](T-appendix.jupyter-installation-and-setup.md)
-> - [T-appendix.symbols（**这些符号都代表什么？**）](T-appendix.symbols.md)
+> - [01.preface（**前言**）](#01.preface)
+> - [02.proof-of-work（**如何证明你真的读过这本书？**）](#02.proof-of-work)
+> - [Part.1.A.better.teachyourself（**为什么一定要掌握自学能力？**）](#Part.1.A.better.teachyourself)
+> - [Part.1.B.why.start.from.learning.coding（**为什么把编程当作自学的入口？**）](#Part.1.B.why.start.from.learning.coding)
+> - [Part.1.C.must.learn.sth.only.by.reading（**只靠阅读习得新技能**）](#Part.1.C.must.learn.sth.only.by.reading)
+> - [Part.1.D.preparation.for.reading（**开始阅读前的一些准备**）](#Part.1.D.preparation.for.reading)
+> - [Part.1.E.1.entrance（**入口**）](#Part.1.E.1.entrance)
+> - [Part.1.E.2.values-and-their-operators（**值及其相应的运算**）](#Part.1.E.2.values-and-their-operators)
+> - [Part.1.E.3.controlflow（**流程控制**）](#Part.1.E.3.controlflow)
+> - [Part.1.E.4.functions（**函数**）](#Part.1.E.4.functions)
+> - [Part.1.E.5.strings（**字符串**）](#Part.1.E.5.strings)
+> - [Part.1.E.6.containers（**数据容器**）](#Part.1.E.6.containers)
+> - [Part.1.E.7.files（**文件**）](#Part.1.E.7.files)
+> - [Part.1.F.deal-with-forward-references（**如何从容应对含有过多 “过早引用” 的知识？**）](#Part.1.F.deal-with-forward-references)
+> - [Part.1.G.The-Javascript-Tutorial-local（**官方教程：Javascript@MDN**）](#Part.1.G.The-Javascript-Tutorial-local)
+> - [Part.2.A.clumsy-and-patience（**笨拙与耐心**）](#Part.2.A.clumsy-and-patience)
+> - [Part.2.B.deliberate-practicing（**刻意练习**）](#Part.2.B.deliberate-practicing)
+> - [Part.2.C.why-start-from-writing-functions（**为什么从函数开始？**）](#Part.2.C.why-start-from-writing-functions)
+> - [Part.2.D.1-args（**关于参数（上）**）](#Part.2.D.1-args)
+> - [Part.2.D.2-aargs（**关于参数（下）**）](#Part.2.D.2-aargs)
+> - [Part.2.D.3-lambda（**化名与匿名**）](#Part.2.D.3-lambda)
+> - [Part.2.D.4-recursion（**递归函数**）](#Part.2.D.4-recursion)
+> - [Part.2.D.5-docstrings（**函数的文档**）](#Part.2.D.5-docstrings)
+> - [Part.2.D.6-modules（**保存到文件的函数**）](#Part.2.D.6-modules)
+> - [Part.2.D.7-tdd（**测试驱动的开发**）](#Part.2.D.7-tdd)
+> - [Part.2.D.8-main（**可执行的 Javascript 文件**）](#Part.2.D.8-main)
+> - [Part.2.E.deliberate-thinking（**刻意思考**）](#Part.2.E.deliberate-thinking)
+> - [Part.3.A.conquering-difficulties（**战胜难点**）](#Part.3.A.conquering-difficulties)
+> - [Part.3.B.1.classes-1（**类 —— 面向对象编程**）](#Part.3.B.1.classes-1)
+> - [Part.3.B.2.classes-2（**类 —— Javascript 的实现**）](#Part.3.B.2.classes-2)
+> - [Part.3.B.3.decorator-iterator-generator（**函数工具**）](#Part.3.B.3.decorator-iterator-generator)
+> - [Part.3.B.4.regex（**正则表达式**）](#Part.3.B.4.regex)
+> - [Part.3.B.5.bnf-ebnf-pebnf（**BNF 以及 EBNF**）](#Part.3.B.5.bnf-ebnf-pebnf)
+> - [Part.3.C.breaking-good-and-bad（**拆解**）](#Part.3.C.breaking-good-and-bad)
+> - [Part.3.D.indispensable-illusion（**刚需幻觉**）](#Part.3.D.indispensable-illusion)
+> - [Part.3.E.to-be-thorough（**全面 —— 自学的境界**）](#Part.3.E.to-be-thorough)
+> - [Part.3.F.social-selfteaching（**自学者的社交**）](#Part.3.F.social-selfteaching)
+> - [Part.3.G.the-golden-age-and-google（**这是自学者的黄金时代**）](#Part.3.G.the-golden-age-and-google)
+> - [Part.3.H.prevent-focus-drifting（**避免注意力漂移**）](#Part.3.H.prevent-focus-drifting)
+> - [Q.good-communication（**如何成为优秀沟通者**）](#Q.good-communication)
+> - [R.finale（**自学者的终点**）](#R.finale)
+> - [S.whats-next（**下一步干什么？**）](#S.whats-next)
+> - [T-appendix.editor.vscode（**Visual Studio Code 的安装与配置**）](#T-appendix.editor.vscode)
+> - [T-appendix.git-introduction（**Git 简介**）](#T-appendix.git-introduction)
+> - [T-appendix.jupyter-installation-and-setup（**Node.js（与 Deno）的安装与配置**）](#T-appendix.jupyter-installation-and-setup)
+> - [T-appendix.symbols（**这些符号都代表什么？**）](#T-appendix.symbols)
 
 本书的版权协议为 [CC-BY-NC-ND license](https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)。
 
@@ -83,70 +83,71 @@ teachYourself(coding);
 
 
 
-- [01 前言](01.preface.md)
-- [02 如何证明你真的读过这本书？](02.proof-of-work.md)
+- [01 前言](#01.preface)
+- [02 如何证明你真的读过这本书？](#02.proof-of-work)
 
 ### PART 1
 
-- [Part.1.A 为什么一定要掌握自学能力？](Part.1.A.better.teachyourself.md)
-- [Part.1.B 为什么把编程当作自学的入口？](Part.1.B.why.start.from.learning.coding.md)
-- [Part.1.C 只靠阅读习得新技能](Part.1.C.must.learn.sth.only.by.reading.md)
-- [Part.1.D 开始阅读前的一些准备](Part.1.D.preparation.for.reading.md)
-- [Part.1.E.1 入口](Part.1.E.1.entrance.md)
-- [Part.1.E.2 值及其相应的运算](Part.1.E.2.values-and-their-operators.md)
-- [Part.1.E.3 流程控制](Part.1.E.3.controlflow.md)
-- [Part.1.E.4 函数](Part.1.E.4.functions.md)
-- [Part.1.E.5 字符串](Part.1.E.5.strings.md)
-- [Part.1.E.6 数据容器](Part.1.E.6.containers.md)
-- [Part.1.E.7 文件](Part.1.E.7.files.md)
-- [Part.1.F 如何从容应对含有过多 “过早引用” 的知识？](Part.1.F.deal-with-forward-references.md)
-- [Part.1.G 官方教程：Javascript@MDN](Part.1.G.The-Javascript-Tutorial-local.md)
+- [Part.1.A 为什么一定要掌握自学能力？](#Part.1.A.better.teachyourself)
+- [Part.1.B 为什么把编程当作自学的入口？](#Part.1.B.why.start.from.learning.coding)
+- [Part.1.C 只靠阅读习得新技能](#Part.1.C.must.learn.sth.only.by.reading)
+- [Part.1.D 开始阅读前的一些准备](#Part.1.D.preparation.for.reading)
+- [Part.1.E.1 入口](#Part.1.E.1.entrance)
+- [Part.1.E.2 值及其相应的运算](#Part.1.E.2.values-and-their-operators)
+- [Part.1.E.3 流程控制](#Part.1.E.3.controlflow)
+- [Part.1.E.4 函数](#Part.1.E.4.functions)
+- [Part.1.E.5 字符串](#Part.1.E.5.strings)
+- [Part.1.E.6 数据容器](#Part.1.E.6.containers)
+- [Part.1.E.7 文件](#Part.1.E.7.files)
+- [Part.1.F 如何从容应对含有过多 “过早引用” 的知识？](#Part.1.F.deal-with-forward-references)
+- [Part.1.G 官方教程：Javascript@MDN](#Part.1.G.The-Javascript-Tutorial-local)
 
 ### PART 2
 
-- [Part.2.A 笨拙与耐心](Part.2.A.clumsy-and-patience.md)
-- [Part.2.B 刻意练习](Part.2.B.deliberate-practicing.md)
-- [Part.2.C 为什么从函数开始？](Part.2.C.why-start-from-writing-functions.md)
-- [Part.2.D.1 关于参数（上）](Part.2.D.1-args.md)
-- [Part.2.D.2 关于参数（下）](Part.2.D.2-aargs.md)
-- [Part.2.D.3 化名与匿名](Part.2.D.3-lambda.md)
-- [Part.2.D.4 递归函数](Part.2.D.4-recursion.md)
-- [Part.2.D.5 函数的文档](Part.2.D.5-docstrings.md)
-- [Part.2.D.6 保存到文件的函数](Part.2.D.6-modules.md)
-- [Part.2.D.7 测试驱动的开发](Part.2.D.7-tdd.md)
-- [Part.2.D.8 可执行的 Javascript 文件](Part.2.D.8-main.md)
-- [Part.2.E 刻意思考](Part.2.E.deliberate-thinking.md)
+- [Part.2.A 笨拙与耐心](#Part.2.A.clumsy-and-patience)
+- [Part.2.B 刻意练习](#Part.2.B.deliberate-practicing)
+- [Part.2.C 为什么从函数开始？](#Part.2.C.why-start-from-writing-functions)
+- [Part.2.D.1 关于参数（上）](#Part.2.D.1-args)
+- [Part.2.D.2 关于参数（下）](#Part.2.D.2-aargs)
+- [Part.2.D.3 化名与匿名](#Part.2.D.3-lambda)
+- [Part.2.D.4 递归函数](#Part.2.D.4-recursion)
+- [Part.2.D.5 函数的文档](#Part.2.D.5-docstrings)
+- [Part.2.D.6 保存到文件的函数](#Part.2.D.6-modules)
+- [Part.2.D.7 测试驱动的开发](#Part.2.D.7-tdd)
+- [Part.2.D.8 可执行的 Javascript 文件](#Part.2.D.8-main)
+- [Part.2.E 刻意思考](#Part.2.E.deliberate-thinking)
 
 ### PART 3
 
-- [Part.3.A 战胜难点](Part.3.A.conquering-difficulties.md)
-- [Part.3.B.1 类 —— 面向对象编程](Part.3.B.1.classes-1.md)
-- [Part.3.B.2 类 —— Javascript 的实现](Part.3.B.2.classes-2.md)
-- [Part.3.B.3 函数工具](Part.3.B.3.decorator-iterator-generator.md)
-- [Part.3.B.4 正则表达式](Part.3.B.4.regex.md)
-- [Part.3.B.5 BNF 以及 EBNF](Part.3.B.5.bnf-ebnf-pebnf.md)
-- [Part.3.C 拆解](Part.3.C.breaking-good-and-bad.md)
-- [Part.3.D 刚需幻觉](Part.3.D.indispensable-illusion.md)
-- [Part.3.E 全面 —— 自学的境界](Part.3.E.to-be-thorough.md)
-- [Part.3.F 自学者的社交](Part.3.F.social-selfteaching.md)
-- [Part.3.G 这是自学者的黄金时代](Part.3.G.the-golden-age-and-google.md)
-- [Part.3.H 避免注意力漂移](Part.3.H.prevent-focus-drifting.md)
+- [Part.3.A 战胜难点](#Part.3.A.conquering-difficulties)
+- [Part.3.B.1 类 —— 面向对象编程](#Part.3.B.1.classes-1)
+- [Part.3.B.2 类 —— Javascript 的实现](#Part.3.B.2.classes-2)
+- [Part.3.B.3 函数工具](#Part.3.B.3.decorator-iterator-generator)
+- [Part.3.B.4 正则表达式](#Part.3.B.4.regex)
+- [Part.3.B.5 BNF 以及 EBNF](#Part.3.B.5.bnf-ebnf-pebnf)
+- [Part.3.C 拆解](#Part.3.C.breaking-good-and-bad)
+- [Part.3.D 刚需幻觉](#Part.3.D.indispensable-illusion)
+- [Part.3.E 全面 —— 自学的境界](#Part.3.E.to-be-thorough)
+- [Part.3.F 自学者的社交](#Part.3.F.social-selfteaching)
+- [Part.3.G 这是自学者的黄金时代](#Part.3.G.the-golden-age-and-google)
+- [Part.3.H 避免注意力漂移](#Part.3.H.prevent-focus-drifting)
 
 ### 附章
 
-- [Q 如何成为优秀沟通者](Q.good-communication.md)
-- [R 自学者的终点](R.finale.md)
-- [S 下一步干什么？](S.whats-next.md)
+- [Q 如何成为优秀沟通者](#Q.good-communication)
+- [R 自学者的终点](#R.finale)
+- [S 下一步干什么？](#S.whats-next)
 
 ### 附录
 
-- [Appendix A: Visual Studio Code 的安装与配置](T-appendix.editor.vscode.md)
-- [Appendix B: Git 简介](T-appendix.git-introduction.md)
-- [Appendix C: Node.js（与 Deno）的安装与配置](T-appendix.jupyter-installation-and-setup.md)
-- [Appendix D: 这些符号都代表什么？](T-appendix.symbols.md)
+- [Appendix A: Visual Studio Code 的安装与配置](#T-appendix.editor.vscode)
+- [Appendix B: Git 简介](#T-appendix.git-introduction)
+- [Appendix C: Node.js（与 Deno）的安装与配置](#T-appendix.jupyter-installation-and-setup)
+- [Appendix D: 这些符号都代表什么？](#T-appendix.symbols)
 
 
 
+<a id="01.preface"></a>
 # 01. 前言
 
 想写一本关于自学能力的书，还真的不是一天两天的事，所以肯定不是心血来潮。
@@ -314,6 +315,7 @@ teachYourself(coding);
 
 
 
+<a id="02.proof-of-work"></a>
 # 02. 如何证明你真的读过这本书？
 
 ## 積ん読
@@ -497,6 +499,7 @@ git pull
 
 
 
+<a id="Part.1.A.better.teachyourself"></a>
 # Part.1.A. 为什么一定要掌握自学能力？
 
 一句话解释清楚：
@@ -668,6 +671,7 @@ plt.show()
 
 
 
+<a id="Part.1.B.why.start.from.learning.coding"></a>
 # Part.1.B. 为什么把编程当作自学的入口？
 
 很多人误以为 “编程” 是很难的事情。
@@ -823,6 +827,7 @@ print('Hello, world!')
 
 
 
+<a id="Part.1.C.must.learn.sth.only.by.reading"></a>
 # Part.1.C. 只靠阅读习得新技能
 
 习得自学能力的终极目标就是：
@@ -910,6 +915,7 @@ print('Hello, world!')
 
 
 
+<a id="Part.1.D.preparation.for.reading"></a>
 # Part.1.D. 开始阅读前的一些准备
 
 ## 内容概要
@@ -1006,6 +1012,7 @@ r = random.randrange(1, 1000)
 另外，如果你使用的是 [nteract](https://nteract.io) 桌面版 App 浏览 `.ipynb` 文件，那么有些使用了 `input()` 函数的代码是无法在 nteract 中执行的。
 
 
+<a id="Part.1.E.1.entrance"></a>
 # Part.1.E.1. 前言：如何快速执行本系列的代码？
 
 在过去，我们学习编程的第一个环节，免不了是「本地环境配置」。不得不说，随着时代的发展，尤其是人工智能技术的进步，「开始」的门槛大大降低了……
@@ -1542,6 +1549,7 @@ console.log(i);
 <a name='fn1'>[1]</a>：对于自学能力强、有很多自学经验的人来说，速成往往是真的是可能、可行的。因为他们已经积累的知识与经验会在习得新技能时发挥巨大的作用，乃至于他们看起来相对别人花极少的时间就能完成整个自学任务。也就是说，将来的那个已经习得自学能力、且自学能力已经磨练得很强的你，常常真的可以做到在别人眼里“速成”。
 
 
+<a id="Part.1.E.2.values-and-their-operators"></a>
 # Part.1.E.2. 值及其相应的运算
 
 > 💡`00` 到 `Part.1.D` 部分请直接浏览本书的 Github 仓库： 
@@ -2075,6 +2083,7 @@ console.log(c)
 > 🤔思考题：在 `Deno` 中实现一个`GET API`，实现这样的功能，在参数中传入一个变量 x，判断其是否为数字类型，如果是，返回其平方，否则返回提示信息。
 
 
+<a id="Part.1.E.3.controlflow"></a>
 # Part.1.E.3. 流程控制
 
 查看前文：
@@ -2575,6 +2584,7 @@ while (true) { //除 for 之外的另外一个循环语句
 
 > [#前端](https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzI0NTM0MzE5Mw==&scene=1&album_id=3953635132766044162&count=3#wechat_redirect)
 
+<a id="Part.1.E.4.functions"></a>
 # Part.1.E.4. 函数
 
 函数，实际上是可被调用的完整的程序。它具备输入、处理、输出的功能。又因为它经常在主程序里被调用，所以它总是更像是个子程序。
@@ -2847,6 +2857,7 @@ router
 * 这个函数的返回值是什么？
 
 
+<a id="Part.1.E.5.strings"></a>
 # Part.1.E.5. 字符串
 
 在任何一本编程书籍之中，关于字符串的内容总是很长 —— 就好像每本英语语法书中，关于动词的内容总是占全部内容的至少三分之二。这也没什么办法，因为处理字符串是计算机程序中最普遍的需求 —— 因为程序的主要功能就是完成人机交互，人们所用的就是字符串而不是二进制数字。
@@ -3141,6 +3152,7 @@ a) 为什么要在 msg 中加入随机数和时间戳？
 b) 为什么要将私钥存储在本地的环境变量中，这样做安全吗？
 
 
+<a id="Part.1.E.6.containers"></a>
 # Part.1.E.6. 数据容器
 
 前文回顾（来自李笑来的 Python 版本请点击「阅读原文」）：
@@ -3448,6 +3460,7 @@ console.log(result);
 1. 在 `deno` 中设计一个接口，实现传入数量不定的 Arrays，然后把它们拼接在一起返回。
 
 
+<a id="Part.1.E.7.files"></a>
 # Part.1.E.7. 文件
 
 > #前端
@@ -3560,6 +3573,7 @@ console.log(data);
 > * 可以用 `fs` 模块把相关操作都简化处理……
 
 
+<a id="Part.1.F.deal-with-forward-references"></a>
 # Part.1.F. 如何从容应对含有过多 “过早引用” 的知识？
 
 “过早引用”（[Forward References](https://en.wikipedia.org/wiki/Forward_declaration#id=Forward_reference)，另译为 “前置引用”），原本是计算机领域的术语。
@@ -3844,6 +3858,7 @@ Python 中有一个概念叫 PEP，Python Enhancement Proposals，必须找时�
 <a href="./Part.1.G.The-Javascript-Tutorial-local.ipynb" ><small>Next Page</small></a>
 
 
+<a id="Part.1.G.The-Javascript-Tutorial-local"></a>
 # Part.1.G. 官方教程：Javascript@MDN Web Docs
 
 虽然，第一部分总计七章关于编程内容的编排是非常特别且相当有效的：
@@ -3983,6 +3998,7 @@ Python 的官方文档网址是：
 这个原则对任何语言都适用。将来你在学习任何新软件包（库）、语言更新后的新特性、甚至另外一个新语言的时候，都要这么做。所谓的超强自学能力，基本上就是由一些类似这样的小习惯和另外一些特别基础的方法构成的强大能力。
 
 
+<a id="Part.2.A.clumsy-and-patience"></a>
 # Part.2.A. 笨拙与耐心
 
 自学的过程，实际上需要拆解为以下四个阶段，虽然它们之间常常有部分重叠：
@@ -4124,6 +4140,7 @@ if (c = 1) {
 <a href="./Part.2.B.deliberate-practicing.ipynb" ><small>Next Page</small></a>
 
 
+<a id="Part.2.B.deliberate-practicing"></a>
 # Part.2.B. 刻意练习
 
 在自学的过程中，总是有一些部分需要刻意练习。就好像小时候我们学习汉字，有些人总是把 “武” 这个字上加上一个撇 —— 对他们来说，不去写那个不该有的撇，就是需要刻意练习的。另外一些人倒是不在这个字上出错，但候和侯傻傻地分不清楚（类似的例子不计其数），那么，对他们来说就有了另外需要刻意练习的地方……
@@ -4209,6 +4226,7 @@ if (c = 1) {
 <a href="./Part.2.C.why-start-from-writing-functions.ipynb" ><small>Next Page</small></a>
 
 
+<a id="Part.2.C.why-start-from-writing-functions"></a>
 # Part.2.C. 为什么从函数开始？
 
 读完第一部分之后，你多多少少已经 “写” 了一些程序，虽然我们总是说，“这就是让你脱盲”；也就是说，从此之后，你多多少少能够读懂程序，这就已经很好了。
@@ -4281,6 +4299,7 @@ Javascript 的主流运行时大多是开源的。以 Node.js 为例，它的代
 <a href="./Part.2.D.1-args.ipynb" ><small>Next Page</small></a>
 
 
+<a id="Part.2.D.1-args"></a>
 # Part.2.D.1. 关于参数（上）
 
 之前就提到过，从结构上来看，每个函数都是一个完整的程序，因为一个程序，核心构成部分就是输入、处理、输出：
@@ -4542,6 +4561,7 @@ console.log(a, b);
 <a href="./Part.2.D.2-aargs.md" ><small>Next Page</small></a>
 
 
+<a id="Part.2.D.2-aargs"></a>
 # Part.2.D.2. 关于参数（下）
 
 ## 可以接收一系列值的位置参数
@@ -4910,6 +4930,7 @@ Javascript 都会认为接收到的第一个值是 Positional Argument，并赋�
 <a href="./Part.2.D.3-lambda.md" ><small>Next Page</small></a>
 
 
+<a id="Part.2.D.3-lambda"></a>
 # Part.2.D.3. 化名与匿名
 
 ## 化名
@@ -5142,6 +5163,7 @@ console.log(pairs);
 <a href="./Part.2.D.4-recursion.md" ><small>Next Page</small></a>
 
 
+<a id="Part.2.D.4-recursion"></a>
 # Part.2.D.4. 递归函数
 
 ## 递归（Recursion）
@@ -5514,6 +5536,7 @@ https://introcs.cs.princeton.edu/java/23recursion/
 <a href="./Part.2.D.5-docstrings.md" ><small>Next Page</small></a>
 
 
+<a id="Part.2.D.5-docstrings"></a>
 # Part.2.D.5. 函数的文档
 
 你在调用函数的时候，你像是函数这个产品的用户。
@@ -5695,6 +5718,7 @@ class Vehicle {
 <a href="./Part.2.D.6-modules.md" ><small>Next Page</small></a>
 
 
+<a id="Part.2.D.6-modules"></a>
 # Part.2.D.6. 保存到文件的函数
 
 写好的函数，当然最好保存起来，以便将来随时调用。
@@ -5972,6 +5996,7 @@ console.log(mycode);
 <a href="./Part.2.D.7-tdd.md" ><small>Next Page</small></a>
 
 
+<a id="Part.2.D.7-tdd"></a>
 # Part.2.D.7. 测试驱动的开发
 
 写一个函数，或者写一个程序，换一种说法，其实就是 “实现一个算法” —— 而所谓的 “算法”，Wikipedia 上的定义是这样的：
@@ -6272,6 +6297,7 @@ try {
 <a href="./Part.2.D.8-main.md" ><small>Next Page</small></a>
 
 
+<a id="Part.2.D.8-main"></a>
 # Part.2.D.8. 可执行的 Javascript 文件
 
 理论上来讲，你最终可以把任何一个程序，无论大小，都封装（或者囊括）到仅仅一个函数之中。按照惯例（Convention），这个函数的名称叫做 `main()`：
@@ -6636,6 +6662,7 @@ Javascript 的操作符优先级，完整表格在这里：
 [Next Page](./Part.2.E.deliberate-thinking.md)
 
 
+<a id="Part.2.E.deliberate-thinking"></a>
 # Part.2.E. 刻意思考
 
 随着时间的推移，你会体会到它的威力：
@@ -6720,6 +6747,7 @@ Javascript 的操作符优先级，完整表格在这里：
 <a href="./Part.3.A.conquering-difficulties.ipynb" ><small>Next Page</small></a>
 
 
+<a id="Part.3.A.conquering-difficulties"></a>
 # Part.3.A. 战胜难点
 
 无论学什么，都有难点。所谓的 “学习曲线陡峭”，无非就是难点靠前、难点很多、难点貌似很难而已。
@@ -6791,6 +6819,7 @@ Javascript 的操作符优先级，完整表格在这里：
 <a href="./Part.3.B.1.classes-1.ipynb" ><small>Next Page</small></a>
 
 
+<a id="Part.3.B.1.classes-1"></a>
 # Part.3.B.1. 类 —— 面向对象编程
 
 ## 面向对象编程
@@ -6893,6 +6922,7 @@ Javascript 的操作符优先级，完整表格在这里：
 <a href="./Part.3.B.2.classes-2.ipynb" ><small>Next Page</small></a>
 
 
+<a id="Part.3.B.2.classes-2"></a>
 # Part.3.B.2. 类 —— Javascript 的实现
 
 既然已经在不碰代码的情况下，把 OOP 中的主要概念梳理清楚了，以下的行文中，那些概念就直接用英文罢，省得理解上还得再绕个弯……
@@ -7409,6 +7439,7 @@ console.log(g.population);
 <a href="./Part.3.B.3.decorator-iterator-generator.md" ><small>Next Page</small></a>
 
 
+<a id="Part.3.B.3.decorator-iterator-generator"></a>
 # Part.3.B.3. 函数工具
 
 这一章要讲的是迭代器、生成器和装饰器（更高阶一点说：用函数包装函数），这些都是函数工具。有人把它们称为 **DIG**（Decorator，Iterator，Generator）—— 在 Python 里它们是真正掌握语言的关键；在 Javascript 里，同样一组概念也极度重要，只是语法细节不同。
@@ -8008,6 +8039,7 @@ Oreilly.com 上有篇文章，《5 reasons you need to learn to write Python dec
 <a href="./Part.3.B.4.regex.md" ><small>Next Page</small></a>
 
 
+<a id="Part.3.B.4.regex"></a>
 # Part.3.B.4. 正则表达式
 
 正则表达式本质上是个独立的语言，短小却格外强悍 —— 乃至于，如果你竟然没学会它的话，你的之前学的编程技能干脆与残疾无异。
@@ -9221,6 +9253,7 @@ export { Eliza, gPats, gReflections, commandInterface, demoSketch };
 <a href="./Part.3.B.5.bnf-ebnf-pebnf.md" ><small>Next Page</small></a>
 
 
+<a id="Part.3.B.5.bnf-ebnf-pebnf"></a>
 # Part.3.B.5. BNF 以及 EBNF
 
 通常情况下，你很少会在入门书籍里读到关于 Backus-Naur Form（BNF，巴科斯-诺尔范式）和 Extended Backus-Naur Form（EBNF）的话题 —— 它们都被普遍认为是 “非专业人士无需了解的话题”，隐含的另外一层含义是 “反正就算给他们讲他们也无论如何看不懂”……
@@ -9457,6 +9490,7 @@ Robert D. Cameron November 29 - December 1, 1999
 <a href="./Part.3.C.breaking-good-and-bad.md" ><small>Next Page</small></a>
 
 
+<a id="Part.3.C.breaking-good-and-bad"></a>
 # Part.3.C. 拆解
 
 在学习编程的过程中，你会不由自主地学会一个重要技能：
@@ -9642,6 +9676,7 @@ for (const item of items) {
 [Next Page](./Part.3.D.indispensable-illusion.md)
 
 
+<a id="Part.3.D.indispensable-illusion"></a>
 # Part.3.D. 刚需幻觉
 
 在前言之中，就举过一个例子，人们一不小心就把自己搭了进去…… 只不过因为没搞明白，道理就是道理，跟讲道理的老生其实全然没什么关系。
@@ -9877,6 +9912,7 @@ for (const f of files) {
 <a href="./Part.3.E.to-be-thorough.md" ><small>Next Page</small></a>
 
 
+<a id="Part.3.E.to-be-thorough"></a>
 # Part.3.E. 全面 —— 自学的境界
 
 之前提到过那些 “貌似一出手就已然是高手” 的人，也为此做过一番解释：
@@ -10073,6 +10109,7 @@ for (const f of files) {
 <a href="./Part.3.F.social-selfteaching.md" ><small>Next Page</small></a>
 
 
+<a id="Part.3.F.social-selfteaching"></a>
 # Part.3.F. 自学者的社交
 
 很多人有莫名其妙的误解，以为 “自学”（self-teaching）就一定是 “自己独自学”（solo-learning），殊不知，自学也需要社交。也有另外一些人，因为 “专心” 到一定程度，觉得社交很累，所以开始抵触一切社交。这些都不是全面的看法。
@@ -10210,6 +10247,7 @@ Hedy Lamarr 是好莱坞最知名的演员之一，并且，她也是自学高�
 <a href="./Part.3.G.the-golden-age-and-google.md" ><small>Next Page</small></a>
 
 
+<a id="Part.3.G.the-golden-age-and-google"></a>
 # Part.3.G. 这是自学者的黄金时代
 
 历史上，自学者从未像今天这样幸福。
@@ -10293,6 +10331,7 @@ Google 还有更为强大的工具给你使用，叫做 Google Custom Search，�
 <a href="./Part.3.H.prevent-focus-drifting.ipynb" ><small>Next Page</small></a>
 
 
+<a id="Part.3.H.prevent-focus-drifting"></a>
 # Part.3.H. 避免注意力漂移
 
 **注意力漂移**，是我杜撰的一个词，用来作为 “注意力集中” 的反义词 —— 因为更多的时候，我们并不是 “注意力不集中”，而是…… 而是更令人恼火的一个现象：
@@ -10364,6 +10403,7 @@ Google 还有更为强大的工具给你使用，叫做 Google Custom Search，�
 虽然我还是做不到桌面上图标很乱，虽然我是因为改用了 Mac OS，所以不装杀毒软件，但注意力要放到应该放的地方，这事我记住了，牢牢记住，从此之后许多年，从未忘过。每次发现自己轻重不分的时候，就会想起他，然后就改过自新。
 
 
+<a id="Q.good-communication"></a>
 # Q. 如何成为优秀沟通者
 
 一般认为，“手艺人”的普遍特征之一就是缺乏沟通能力，或者沟通能力差 —— 也许是因为平时把所有的时间精力都投入到磨练手艺上去了罢。
@@ -10602,6 +10642,7 @@ Google 还有更为强大的工具给你使用，叫做 Google Custom Search，�
 没有什么比“热爱”和“尊重”更为高级的了。就这样。
 
 
+<a id="R.finale"></a>
 # R. 自学者的终点
 
 …… 磨练自学手艺的你，早晚会遇到这种情况：
@@ -10749,6 +10790,7 @@ Google 还有更为强大的工具给你使用，叫做 Google Custom Search，�
 <p style="text-align: right">初稿完成于 <em>2019</em> 年 <em>2</em> 月 <em>27</em> 日</p>
 
 
+<a id="S.whats-next"></a>
 # S. 下一步干什么？
 
 理论上，下一步你的选择很多。自学是门手艺，你可以用它去学任何你想要掌握的其它手艺。如果，你有意在编程这个领域继续深入，那么，以下就是一些不错的线索。
@@ -10846,6 +10888,7 @@ Github 上的 “居民” 现在已经养成了一个惯例，无论什么好�
 
 
 
+<a id="T-appendix.editor.vscode"></a>
 # T-appendix.editor.vscode. Visual Studio Code / Cursor 的安装与配置
 
 官方文档请查询：
@@ -10931,6 +10974,7 @@ fs.writeFileSync('results.txt', out.join('\n') + '\n');
 
 
 
+<a id="T-appendix.git-introduction"></a>
 # T-appendix.git-introduction. Git 简介
 
 --- You should've learned Git yesterday.
@@ -11136,6 +11180,7 @@ Git 的图形化版本客户端，有很多种选择，以下几个跨平台的�
 
 
 
+<a id="T-appendix.jupyter-installation-and-setup"></a>
 # T-appendix.jupyter-installation-and-setup. Node.js（与 Deno）的安装与配置
 
 学完本书正文后，日常写 Javascript 最常见的环境是 **Node.js**；也可以并行了解 **Deno**。两者都能在终端里直接运行 `.js` 文件，并提供模块系统、文件系统与网络等能力。
@@ -11274,6 +11319,7 @@ deno repl               # Deno 交互环境
 
 
 
+<a id="T-appendix.symbols"></a>
 # T-appendix.symbols. 这些符号都代表什么？
 
 以下的表格你可以用很多次 —— 每次学一门新语言的时候，都可以拿它整理一遍思路……
